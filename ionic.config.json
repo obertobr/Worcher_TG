@@ -1,0 +1,7 @@
+{
+  "name": "Worcher_TG",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
