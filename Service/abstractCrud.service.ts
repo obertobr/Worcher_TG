@@ -1,7 +1,7 @@
 import axios from 'axios';
 import BaseEntity from '../Models/base.entity';
 
-export default class AbstractService<T extends BaseEntity> {
+export default class AbstractCrudService<T extends BaseEntity> {
 
     private urlApi = "http://localhost:3000/"
     

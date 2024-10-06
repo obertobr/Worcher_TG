@@ -1,7 +1,7 @@
 import User from "../../Models/User/user.entity";
-import AbstractService from "../abstract.service";
+import AbstractCrudService from "../abstractCrud.service";
 
-export default class UserService extends AbstractService<User>{
+export default class UserService extends AbstractCrudService<User>{
 
     constructor(){
         super("user")
