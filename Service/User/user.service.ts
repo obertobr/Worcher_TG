@@ -7,5 +7,4 @@ export default class UserService extends AbstractService<User>{
         super("user")
     }
 
-
 }
