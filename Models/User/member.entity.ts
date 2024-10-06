@@ -1,11 +1,12 @@
+import BaseEntity from "../base.entity";
 import Role from "../Instituition/role.entity";
 import User from "./user.entity";
 
-export default class Member {
-  id: number;
-  user: User;
-  role: Role;
+export default class Member extends BaseEntity {
+  id: number | undefined;
+  user: User | undefined;
+  role: Role | undefined;
 
-  createdEventList: Event[];
-  particepatedEventList: Event[];
+  createdEventList: Event[] | undefined;
+  particepatedEventList: Event[] | undefined;
 }

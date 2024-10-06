@@ -1,8 +1,10 @@
+import BaseEntity from "../base.entity";
 import User from "./user.entity";
 
-export default class Account {
-  email: string;
-  password: string;
+export default class Account extends BaseEntity {
+  id: number | undefined;
+  email: string | undefined;
+  password: string | undefined;
 
-  user: User;
+  user: User | undefined;
 }

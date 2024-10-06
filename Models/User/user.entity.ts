@@ -1,14 +1,15 @@
+import BaseEntity from "../base.entity";
 import Account from "./account.entity";
 import Config from "./config.entity";
 import Member from "./member.entity";
 
-export default class User {
-  id: number;
-  name: string;
-  cpf: string;
-  dateOfBirth: Date;
+export default class User extends BaseEntity {
+  id: number | undefined;
+  name: string | undefined;
+  cpf: string | undefined;
+  dateOfBirth: Date | undefined;
 
-  config: Config;
-  account: Account;
-  memberList: Member[];
+  config: Config | undefined;
+  account: Account | undefined;
+  memberList: Member[] | undefined;
 }
