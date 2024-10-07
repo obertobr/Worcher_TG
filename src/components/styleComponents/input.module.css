@@ -1,0 +1,9 @@
+.textInput {
+    font-size: 30px;
+    color: var(--colorInput);
+    background-color: var(--backgroundcolorInput);
+}
+
+.textLabel {
+    font-size: 20px;
+}

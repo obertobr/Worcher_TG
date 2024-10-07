@@ -1,2 +1,9 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+
+
+:root{
+
+    --backgroundcolorInput: #f6f5f5;
+    --colorInput: #0e0b15;
+}
