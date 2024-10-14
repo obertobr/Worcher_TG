@@ -1,42 +1,49 @@
 import { ReactNode } from "react";
 import BaseComponent from "../../../classes/base.component";
 import { IonInput, IonLabel } from "@ionic/react";
-import style from '../../styleComponents/input.module.css'
 
 type TextFieldTypes = 'text' | 'password';
 
 interface TextInputComponentProps {
-    useLabel?: boolean;
     textLabel?: string;
     typeInput?: TextFieldTypes;
     placeHolder?: string;
     style: CSSModuleClasses;
 }
 
+interface StateInput {
+    textInput: string
+}
+
 export default class TextInputComponent extends BaseComponent<TextInputComponentProps> {
 
+     constructor(props: TextInputComponentProps){
+        super(props)
+
+        this.state = {
+            inputValue: ''
+        }
+     }
+
+      handleInputChange = (event: CustomEvent) => {
+        this.setState({ inputValue: event.detail.value!});
+      };
 
     render(): ReactNode {
-        const { useLabel = false } = this.props;
         const { typeInput = 'text' } = this.props;
 
         return (
             <>
-                { useLabel ? (
-                    <IonLabel className={this.props.style.textLabel}
-                    > {this.props.textLabel} </IonLabel>
-                ): (
-                    <></>
-                ) 
-                }
+            <div className={this.props.style.containerInput}>
 
-                <IonInput  className={this.props.style.textInput}
-                           type={typeInput}
-                           placeholder={this.props.placeHolder}
+                <IonLabel position="floating" className={this.state.inputValue != ''  ? 'active' : this.props.style.labelInput}>{this.props.textLabel}</IonLabel>
+
+                <IonInput className={this.props.style.textInput}
+                        onIonInput={this.handleInputChange}
+                        type={typeInput}
+                        placeholder={' s'}
                 ></IonInput>
-                
-
-
+            </div>
             </>
         )
     }

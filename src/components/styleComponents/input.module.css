@@ -1,9 +1,43 @@
-.textInput {
-    font-size: 30px;
-    color: var(--colorInput);
-    background-color: var(--backgroundcolorInput);
+.containerInput{
+    width: 100vw;
+    height: 32px;
+    position: relative;
+    margin: 20px 0;
+    background-color: aliceblue;
 }
 
-.textLabel {
+.labelInput {
+    position: absolute;
+    left: 10px;
+    top: 0%;
+    padding: 0 5px;
+    z-index: 10;
+    color: #999;
+    font-size: 16px;
+    transition: 0.3s;
+    transform: translateY(50%);
+    pointer-events: none;
+}
+
+.textInput {
+    position: relative;
+    margin-top: 10px;
+    width: 90%;
+    min-height: 0px;
+    height: 32px;
+    border-radius: 10px;
+    text-indent: 10px;
     font-size: 20px;
+    color: var(--colorInput);
+    background-color: var(--backgroundcolorInput);
+    border: var(--borderInput);
+    outline: 0;
+}
+
+
+
+
+
+.textInput:hover {
+    outline: var(--outlineInput);
 }

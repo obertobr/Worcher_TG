@@ -13,7 +13,8 @@ export default class Home extends Component {
           <br />
           <button onClick={() => ThemeManager.setDark()}>Theme escuro</button>
 
-          <TextInputComponent useLabel={true}
+
+          <TextInputComponent 
                               textLabel='Lucas'
                               typeInput='text'
                               placeHolder='Digite algo'
