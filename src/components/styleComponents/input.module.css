@@ -1,30 +1,29 @@
 .containerInput{
     width: 100vw;
-    height: 32px;
-    position: relative;
-    margin: 20px 0;
-    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.labelInput {
-    position: absolute;
-    left: 10px;
-    top: 0%;
-    padding: 0 5px;
-    z-index: 10;
-    color: #999;
+.labelInput {    
+    color: #eee;
     font-size: 16px;
-    transition: 0.3s;
-    transform: translateY(50%);
-    pointer-events: none;
+    margin-left: 10px;
+}
+
+.centerInput {
+    width: 90%;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .textInput {
-    position: relative;
-    margin-top: 10px;
     width: 90%;
-    min-height: 0px;
+    max-width: 540px;
     height: 32px;
+    min-height: 0px;
     border-radius: 10px;
     text-indent: 10px;
     font-size: 20px;
@@ -33,10 +32,6 @@
     border: var(--borderInput);
     outline: 0;
 }
-
-
-
-
 
 .textInput:hover {
     outline: var(--outlineInput);

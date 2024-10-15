@@ -1,6 +1,6 @@
+import { IonInput, IonLabel } from "@ionic/react";
 import { ReactNode } from "react";
 import BaseComponent from "../../../classes/base.component";
-import { IonInput, IonLabel } from "@ionic/react";
 
 type TextFieldTypes = 'text' | 'password';
 
@@ -36,13 +36,16 @@ export default class TextInputComponent extends BaseComponent<TextInputComponent
             <>
             <div className={this.props.style.containerInput}>
 
-                <IonLabel position="floating" className={this.state.inputValue != ''  ? 'active' : this.props.style.labelInput}>{this.props.textLabel}</IonLabel>
 
+                <div className={this.props.style.centerInput}>
+                <IonLabel className={this.props.style.labelInput}>{this.props.textLabel}</IonLabel>
+                
                 <IonInput className={this.props.style.textInput}
                         onIonInput={this.handleInputChange}
                         type={typeInput}
-                        placeholder={' s'}
-                ></IonInput>
+                        placeholder={this.props.placeHolder}
+                        />
+                </div>
             </div>
             </>
         )

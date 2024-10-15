@@ -1,8 +1,8 @@
-import './Home.css';
 import { Component, ReactNode } from 'react';
-import TextInputComponent from '../components/basicComponents/text-input-component/text.input.component'
-import style from '../components/styleComponents/input.module.css'
+import TextInputComponent from '../components/basicComponents/text-input-component/text.input.component';
+import style from '../components/styleComponents/input.module.css';
 import { ThemeManager } from '../components/themeManager/theme.manager';
+import './Home.css';
 
 export default class Home extends Component {
 
@@ -15,7 +15,7 @@ export default class Home extends Component {
 
 
           <TextInputComponent 
-                              textLabel='Lucas'
+                              textLabel='NOME'
                               typeInput='text'
                               placeHolder='Digite algo'
                               style={style}
