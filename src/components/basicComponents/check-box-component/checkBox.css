@@ -1,0 +1,35 @@
+.remember-password {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: var(--primaryColorFont);
+  }
+  
+  .remember-password input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .remember-password .checkmark {
+    width: 20px;
+    height: 20px;
+    background-color: var(--backgroundColorCheckbox);
+    border: 1px solid var(--primaryColorFont);
+    margin-right: 7px;
+    display: inline-block;
+    position: relative;
+  }
+  
+  .remember-password input:checked + .checkmark::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--colorCheck);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  

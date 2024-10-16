@@ -1,0 +1,11 @@
+.buttonList{
+    padding-top: 20px;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    overflow-y: auto;
+}

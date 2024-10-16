@@ -1,5 +1,7 @@
 const variables = {
 
+    backgroundColor: '#FFFFFF',
+
     backgroundcolorInput: '#f6f5f5',
     colorInput: '#0e0b15',
     borderInput: '1px solid rgba(0, 0, 0, 0.4)',

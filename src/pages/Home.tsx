@@ -1,10 +1,24 @@
 import { Component, ReactNode } from 'react';
 import TextInputComponent from '../components/basicComponents/text-input-component/text.input.component';
-import style from '../components/styleComponents/input.module.css';
 import { ThemeManager } from '../components/themeManager/theme.manager';
 import './Home.css';
 
-export default class Home extends Component {
+interface HomeState {
+  inputValue: string;
+}
+
+export default class Home extends Component<{}, HomeState> {
+
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      inputValue: ''
+    };
+  }
+
+  handleInputChange = (value: string) => {
+    this.setState({ inputValue: value })
+  }
 
   render(): ReactNode {
       return (
@@ -18,8 +32,11 @@ export default class Home extends Component {
                               textLabel='NOME'
                               typeInput='text'
                               placeHolder='Digite algo'
-                              style={style}
+                              onInputChange={this.handleInputChange}
           ></TextInputComponent>
+        
+        <br/>
+        <p>{this.state.inputValue}</p>
         </div>
       )
   }

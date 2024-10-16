@@ -4,9 +4,39 @@ http://ionicframework.com/docs/theming/ */
 
 :root{
 
+    /* FONT */
+
+    --primaryColorFont: #000000;
+    --primaryColorFontTransparent: rgba(0, 0, 0, 0.6);
+
+    /* THEME COLOR */
+
+    --backgroundColor: #FFFFFF;
+    --principalColor: #4479D7;
+    --principalColorLight: rgba(129, 169, 242, 0.4);
+
+    --iconColor: rgba(4, 1, 8, 0.85);
+
+    /* SHADOWS */
+
+    --lightShadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+    --mediumShadow: 1px 2px 5px rgba(0, 0, 0, 0.4);
+    --strongShadow: 1px 2px 5px rgba(0, 0, 0, 0.6);
+
     /* INPUT */
-    --backgroundcolorInput: #f6f5f5;
-    --colorInput: #0e0b15;
+    --backgroundcolorInput: #fdfdfd;
+    --colorInput: rgba(14, 11, 21, 0.8);
     --borderInput:  1px solid rgba(0, 0, 0, 0.4);
-    --outlineInput: 1px solid rgba(110, 126, 197, 0.5);
+    --outlineInput: 1px solid rgba(68, 122, 215, 0.6);
+
+    /* BUTTON */
+
+    --backgroundColorButton: #6291E5;
+    --borderColor: rgba(0, 0, 0, 0.9);
+    --textColorButton: #ffffff;
+
+    /* CHECKBOX */
+
+    --backgroundColorCheckbox: #ffffff;
+    --colorCheck: #000000;
 }

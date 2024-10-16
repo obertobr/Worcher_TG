@@ -1,6 +1,7 @@
-import { IonInput, IonLabel } from "@ionic/react";
-import { ReactNode } from "react";
-import BaseComponent from "../../../classes/base.component";
+import React, { useState } from "react";
+import { IonIcon, IonInput, IonLabel } from "@ionic/react";
+import { eye, eyeOff } from "ionicons/icons";
+import style from '../../styleComponents/input.module.css';
 
 type TextFieldTypes = 'text' | 'password';
 
@@ -8,46 +9,55 @@ interface TextInputComponentProps {
     textLabel?: string;
     typeInput?: TextFieldTypes;
     placeHolder?: string;
-    style: CSSModuleClasses;
+    onInputChange: (value: string) => void; 
 }
 
-interface StateInput {
-    textInput: string
-}
+const TextInputComponent: React.FC<TextInputComponentProps> = ({
+    textLabel,
+    typeInput = 'text',
+    placeHolder,
+    onInputChange,
+}) => {
+    const [inputValue, setInputValue] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
-export default class TextInputComponent extends BaseComponent<TextInputComponentProps> {
+    const handleInputChange = (event: CustomEvent) => {
+        const value = event.detail.value!;
+        setInputValue(value);
+        onInputChange(value);
+    };
 
-     constructor(props: TextInputComponentProps){
-        super(props)
+    const togglePasswordVisibility = () => {
+        setShowPassword(prevState => !prevState);
+    };
 
-        this.state = {
-            inputValue: ''
-        }
-     }
+    return (
+        <div className={style.centerInput}>
 
-      handleInputChange = (event: CustomEvent) => {
-        this.setState({ inputValue: event.detail.value!});
-      };
+            <IonLabel className={style.labelInput}>
+                {textLabel}
+            </IonLabel>
 
-    render(): ReactNode {
-        const { typeInput = 'text' } = this.props;
+            <IonInput
+                maxlength={25}
+                className={style.textInput}
+                onIonInput={handleInputChange}
+                type={showPassword ? 'text' : typeInput}
+                placeholder={placeHolder}
+            />
 
-        return (
-            <>
-            <div className={this.props.style.containerInput}>
+            { typeInput == 'password' ? 
+                (
+                    <IonIcon 
+                        icon={showPassword ? eye : eyeOff} 
+                        onClick={togglePasswordVisibility}
+                        className={style.checkmark}
+                    />
+                ) : (<></>) }
 
+            
+        </div>
+    );
+};
 
-                <div className={this.props.style.centerInput}>
-                <IonLabel className={this.props.style.labelInput}>{this.props.textLabel}</IonLabel>
-                
-                <IonInput className={this.props.style.textInput}
-                        onIonInput={this.handleInputChange}
-                        type={typeInput}
-                        placeholder={this.props.placeHolder}
-                        />
-                </div>
-            </div>
-            </>
-        )
-    }
-}
+export default TextInputComponent;

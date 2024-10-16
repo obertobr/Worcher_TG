@@ -1,18 +1,12 @@
-.containerInput{
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .labelInput {    
-    color: #eee;
+    color: var(--primaryColorFont);
     font-size: 16px;
     margin-left: 10px;
 }
 
 .centerInput {
-    width: 90%;
+    position: relative;
+    width: 80%;
     max-width: 540px;
     display: flex;
     flex-direction: column;
@@ -20,19 +14,33 @@
 }
 
 .textInput {
-    width: 90%;
+    width: 100%;
     max-width: 540px;
+    margin-right: 10px;
     height: 32px;
     min-height: 0px;
-    border-radius: 10px;
+    border-radius: 4px;
     text-indent: 10px;
-    font-size: 20px;
+    font-size: 18px;
     color: var(--colorInput);
     background-color: var(--backgroundcolorInput);
     border: var(--borderInput);
     outline: 0;
+    box-shadow: var(--lightShadow);
 }
 
 .textInput:hover {
     outline: var(--outlineInput);
+}
+
+.checkmark {
+    z-index: 10;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 2%;
+    top: 50%; 
+    transform: translateY(0%);
+    cursor: pointer;
+    color: var(--iconColor);
 }
