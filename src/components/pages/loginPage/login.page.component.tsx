@@ -50,12 +50,12 @@ const LoginPage: React.FC<{}> = () => {
                     <div className="actionsSenha">
                         <CheckBoxComponent textCheckBox="Lembrar dados" />
 
-                        <LinkTextComponent text="Esqueceu a senha?" onClick={() => {}} />
+                        <LinkTextComponent text="Esqueceu a senha?" onClick={() => {} } />
                     </div>
 
                 <div className="buttonActions">
-                    <ButtonComponent width="230px" text="Entrar" onClick={() => {}} />
-                    <LinkTextComponent text="Novo Cadastro? Crie sua conta aqui." onClick={() => {}} />
+                    <ButtonComponent width="230px" text="Entrar" onClick={() => {} } />
+                    <LinkTextComponent text="Novo Cadastro? Crie sua conta aqui." onClick={() => {} } />
                 </div>
 
                 </main>

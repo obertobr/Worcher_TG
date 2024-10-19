@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import { IonIcon, IonInput, IonLabel } from "@ionic/react";
 import { eye, eyeOff } from "ionicons/icons";
+import React, { useState } from "react";
 import style from '../../styleComponents/input.module.css';
 
 type TextFieldTypes = 'text' | 'password';
@@ -39,7 +39,7 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
             </IonLabel>
 
             <IonInput
-                maxlength={25}
+                maxlength={32}
                 className={style.textInput}
                 onIonInput={handleInputChange}
                 type={showPassword ? 'text' : typeInput}
