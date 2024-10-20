@@ -1,0 +1,17 @@
+.authCodeContainer {
+  display: flex;
+  align-items: center;  
+  justify-content: center;
+  gap: 20px;
+
+  .auth_code {
+    width: 48px;
+    height: 64px;
+    border: 1px solid black;
+    border-radius: 12px;
+    outline: none;
+
+    font-size: 32px;
+    text-indent: 30%;
+  }
+}

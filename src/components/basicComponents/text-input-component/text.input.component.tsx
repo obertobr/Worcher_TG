@@ -53,9 +53,7 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
                         onClick={togglePasswordVisibility}
                         className={style.checkmark}
                     />
-                ) : (<></>) }
-
-            
+                ) : (<></>) }  
         </div>
     );
 };
