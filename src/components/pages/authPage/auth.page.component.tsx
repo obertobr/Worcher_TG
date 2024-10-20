@@ -11,6 +11,11 @@ const AuthPage: React.FC<{}> = () => {
   return(
     <>
     <div className="contentAuth">
+
+      <header>
+        {/* componente para o header padrão das páginas */}
+      </header>
+      
       <main>
         <div className="authContainer">
 
@@ -21,6 +26,10 @@ const AuthPage: React.FC<{}> = () => {
           <ButtonComponent width="80dvw" text="Confirmar" onClick={() => {} }/>
         </div>
       </main>
+
+      <footer>
+        {/* componente para o footer padrão das páginas */}
+      </footer>
     </div>
     </>
   )
