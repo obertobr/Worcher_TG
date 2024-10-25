@@ -30,7 +30,7 @@ const SingUpPage: React.FC<{}> = () => {
       <AlertComponent
         isOpen={showModal}
         onDidDismiss={() => setShowModal(false)}
-        messages={"message error -".repeat(10).split('-')} 
+        messages={"A senha deve ter pelo menos 8 caracteres -".repeat(1).split('-')} 
         titleText={"Title"}      
       />
 

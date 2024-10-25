@@ -39,4 +39,8 @@ http://ionicframework.com/docs/theming/ */
 
     --backgroundColorCheckbox: #ffffff;
     --colorCheck: #000000;
+
+
+    /* ALERT MODAL */
+    --headerBackgroundColor: rgb(195, 133, 137);
 }

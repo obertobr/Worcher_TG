@@ -20,7 +20,7 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
   closeButtonText = "Fechar",
 }) => {
   return (
-    <IonModal isOpen={true} onDidDismiss={onDidDismiss} className={style.modalAlert} >
+    <IonModal isOpen={isOpen} onDidDismiss={onDidDismiss} className={style.modalAlert} >
       <IonHeader className={style.titleText}>
        <h1>Erro ao criar o cadastro</h1>
       </IonHeader>

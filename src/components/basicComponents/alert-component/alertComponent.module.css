@@ -2,14 +2,21 @@
     --width: 90%;
     --max-width: 500px;
     --height: 300px;
-    --border-radius: 0px 0px 5px 5px;
+    --border-radius: 5px 5px 5px 5px;
+    --border: none;
+    --background-color: transparent;
+    --border: 0;
 
     .titleText{
         display: flex;
         align-items: center;
         justify-content: center;
         height: 50px;
-        background-color: rgb(195, 133, 137);
+        background-color: var(--headerBackgroundColor);
+        border-radius: 5px 5px 0px 0px;
+        border: 1px solid rgba(0, 0, 0, 0);
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0);
+        
     }
 
 }
@@ -23,10 +30,10 @@
     overflow: auto;
     gap: 5px;
     font-size: 20px;
-    background-color: #c0b1b1;
-    color: black;
+    background-color: var(--backgroundColor);
+    color: var(--primaryColorFont);
 }
 
 .footer{
-    background-color: blue;
+    background-color: var(--backgroundColor);
 }
