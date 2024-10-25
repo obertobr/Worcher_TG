@@ -1,5 +1,6 @@
 const variables = {
 
+    primaryColorFont: '#FFFFFF',
     backgroundColor: '#1B1C1E',
 
     backgroundcolorInput: '#0e0b15',

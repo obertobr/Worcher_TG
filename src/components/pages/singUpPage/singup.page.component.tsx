@@ -1,8 +1,14 @@
+import { IonButton } from "@ionic/react";
+
 import ButtonComponent from "../../basicComponents/button-component/button.components";
+import DateComponent from "../../basicComponents/date-component/date.component";
+import InputCpfComponent from "../../basicComponents/input-cpf-component/input.cpf.component";
 import TextInputComponent from "../../basicComponents/text-input-component/text.input.component";
 
 import "./singupPageFooter.css";
 import "./singupPageMain.css";
+import { useState } from "react";
+import AlertComponent from "../../basicComponents/alert-component/alert.component";
 
 const SingUpPage: React.FC<{}> = () => {
 
@@ -10,8 +16,24 @@ const SingUpPage: React.FC<{}> = () => {
         
   };
 
+  const cpfInputChange = (event: string) => {
+    
+  }
+
+  const [showModal, setShowModal] = useState(false);
+  
+
   return(
     <>
+      
+      <IonButton onClick={() => setShowModal(true)}>Click Me</IonButton>
+      <AlertComponent
+        isOpen={showModal}
+        onDidDismiss={() => setShowModal(false)}
+        messages={"message error -".repeat(10).split('-')} 
+        titleText={"Title"}      
+      />
+
       <div className="contentSingUp">
         <main>
           <h1>Cadastro</h1>
@@ -23,11 +45,14 @@ const SingUpPage: React.FC<{}> = () => {
               onInputChange={handleInputChange} 
             />
 
-            <TextInputComponent
-              textLabel="CPF"
-              placeHolder="CPF"
-              onInputChange={handleInputChange} 
-            />
+            <InputCpfComponent textLabel="CPF"
+                              placeHolder="CPF"
+                              onInputChange={cpfInputChange}
+                              ></InputCpfComponent>
+
+            {/* <DateComponent type="date"
+                           onDateTimeChange={() => {}}
+            ></DateComponent> */}
 
             <TextInputComponent
               textLabel="Data de Nascimento"
@@ -45,6 +70,7 @@ const SingUpPage: React.FC<{}> = () => {
               textLabel="Senha"
               typeInput="password"
               placeHolder="Digite sua senha..."
+              maxlength={26}
               onInputChange={handleInputChange}
             />
 
@@ -52,6 +78,7 @@ const SingUpPage: React.FC<{}> = () => {
               textLabel="Confirme sua Senha"
               typeInput="password"
               placeHolder="Confirme sua senha..."
+              maxlength={26}
               onInputChange={handleInputChange}
             />
           </div>

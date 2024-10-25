@@ -1,0 +1,34 @@
+.labelInput {    
+    color: var(--primaryColorFont);
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.centerInput {
+    position: relative;
+    width: 80%;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.textInput {
+    width: 100%;
+    max-width: 540px;
+    margin-right: 10px;
+    height: 32px;
+    min-height: 0px;
+    border-radius: 4px;
+    text-indent: 10px;
+    font-size: 18px;
+    color: var(--colorInput);
+    background-color: var(--backgroundcolorInput);
+    border: var(--borderInput);
+    outline: 0;
+    box-shadow: var(--lightShadow);
+}
+
+.textInput:hover {
+    outline: var(--outlineInput);
+}

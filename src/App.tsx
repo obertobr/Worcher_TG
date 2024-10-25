@@ -36,10 +36,38 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { useEffect } from 'react';
+import { ThemeManager } from './components/themeManager/theme.manager';
+import TestPage from './components/pages/testPage/test.page.component';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const App: React.FC = () => {
+  
+  let theme = true;
+
+  // PRESS (CRTL + 1) TO CHANGE THEME (LIGHT,DARK)
+  const handleKeyDown = (event: KeyboardEvent) => {
+    
+    if ((event.ctrlKey || event.metaKey) && event.key === '1') {
+      event.preventDefault(); 
+      
+      if(theme){
+        ThemeManager.setDark()
+      }else{
+        ThemeManager.setLight()
+      }
+      
+      theme = !theme;
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown )
+  }, [])
+
+  
+  return (
   <IonApp>
     <IonReactRouter>
     <div className={style.contentMain}>
@@ -51,7 +79,9 @@ const App: React.FC = () => (
 
           <Route exact path="/login" component={LoginPage}/>
 
-          <Route exact path="/test" component={AuthPage} />
+          <Route exact path="/auth-page" component={AuthPage} />
+
+          <Route exact path='/test' component={TestPage} />
 
           <Route exact path="/">
             <Redirect to="/test" />
@@ -60,6 +90,6 @@ const App: React.FC = () => (
       </div>
     </IonReactRouter>
   </IonApp>
-);
+)};
 
 export default App;

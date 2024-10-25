@@ -1,48 +1,67 @@
 import { IonIcon, IonInput, IonLabel } from "@ionic/react";
-import { eye, eyeOff } from "ionicons/icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from '../../styleComponents/input.module.css';
+import { eye, eyeOff } from "ionicons/icons";
 
 type TextFieldTypes = 'text' | 'password';
 
 interface TextInputComponentProps {
     textLabel?: string;
-    typeInput?: TextFieldTypes;
     placeHolder?: string;
-    onInputChange: (value: string) => void; 
+    typeInput?: TextFieldTypes;
+    maxlength?: number;
+    value?: string;
+    onInputChange: (value: string) => void;
+    allowOnlyNumbers?: boolean;
 }
 
 const TextInputComponent: React.FC<TextInputComponentProps> = ({
     textLabel,
-    typeInput = 'text',
     placeHolder,
+    typeInput = 'text',
+    maxlength = 50,
+    value,
     onInputChange,
+    allowOnlyNumbers = false,
 }) => {
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState(value);
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleInputChange = (event: CustomEvent) => {
-        const value = event.detail.value!;
+    useEffect(() => {
         setInputValue(value);
-        onInputChange(value);
+    }, [value]);
+
+    const handleInputChange = (event: CustomEvent) => {
+        const newValue = event.detail.value || '';
+        setInputValue(newValue); 
+        onInputChange(newValue); 
     };
 
     const togglePasswordVisibility = () => {
         setShowPassword(prevState => !prevState);
     };
 
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLIonInputElement>) => {
+    
+        if (allowOnlyNumbers) {
+            const char = String.fromCharCode(event.charCode);
+           
+            if (!/\d/.test(char)) {
+                event.preventDefault(); 
+            }
+        }
+    };
+
     return (
         <div className={style.centerInput}>
-
-            <IonLabel className={style.labelInput}>
-                {textLabel}
-            </IonLabel>
-
+            <IonLabel className={style.labelInput}>{textLabel}</IonLabel>
             <IonInput
-                maxlength={32}
+                maxlength={maxlength}
                 className={style.textInput}
-                onIonInput={handleInputChange}
                 type={showPassword ? 'text' : typeInput}
+                onIonInput={handleInputChange}
+                onKeyPress={handleKeyPress}
+                value={inputValue}
                 placeholder={placeHolder}
             />
 

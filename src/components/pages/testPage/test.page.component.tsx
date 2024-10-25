@@ -2,10 +2,13 @@ import { IonButton } from "@ionic/react";
 import { useHistory } from "react-router";
 import RouterUtil from '../../../../Utils/Components/RouterUtil'
 import "./testPage.css"
+import { text } from "ionicons/icons";
 
 const buttons = [
     {path: 'home', text: 'HOME'},
     {path: 'login', text: 'LOGIN'},
+    {path: 'singup', text: "SINGUP"},
+    {path: 'auth-page', text: 'AUTENTICATION'}
 ]
 
 const TestPage: React.FC<{}> = () => {
