@@ -8,6 +8,7 @@ const buttons = [
     {path: 'home', text: 'HOME'},
     {path: 'login', text: 'LOGIN'},
     {path: 'singup', text: "SINGUP"},
+    {path: 'institution-register', text: "INSTITUTION-REGISTER"},
     {path: 'auth-page', text: 'AUTENTICATION'}
 ]
 

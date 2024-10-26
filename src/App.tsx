@@ -39,6 +39,7 @@ import './theme/variables.css';
 import { useEffect } from 'react';
 import { ThemeManager } from './components/themeManager/theme.manager';
 import TestPage from './components/pages/testPage/test.page.component';
+import InstitutionRegister from './components/pages/institutionRegisterPage/institutionRegister.page.component';
 
 setupIonicReact();
 
@@ -80,6 +81,8 @@ const App: React.FC = () => {
           <Route exact path="/login" component={LoginPage}/>
 
           <Route exact path="/auth-page" component={AuthPage} />
+
+          <Route exact path="/institution-register" component={InstitutionRegister} />
 
           <Route exact path='/test' component={TestPage} />
 
