@@ -1,0 +1,82 @@
+import ButtonComponent from "../../basicComponents/button-component/button.components"
+import TextInputComponent from "../../basicComponents/text-input-component/text.input.component"
+import "./intitutionRegisterContent.css"
+
+
+const InstitutionRegister: React.FC<{}> = () => {
+
+    const handleInputChange = (event: string) => {
+
+    };
+
+    return (
+        <>
+            <div className="contentInstitutionRegister">
+                <main>
+                    <h1>Cadastro de Instituição</h1>
+
+
+                    <div className="inputsSection" >
+                        <TextInputComponent
+                            textLabel="Nome da Instituição"
+                            placeHolder="Nome da Instituição"
+                            onInputChange={handleInputChange}
+                        />
+
+                        <TextInputComponent
+                            textLabel='Estado'
+                            placeHolder='Estado'
+                            onInputChange={handleInputChange}
+                        ></TextInputComponent>
+
+                        <TextInputComponent
+                            textLabel='Cidade'
+                            placeHolder='Cidade'
+                            onInputChange={handleInputChange}
+                        ></TextInputComponent>
+
+                        <TextInputComponent
+                            textLabel='Bairro'
+                            placeHolder='Bairro'
+                            onInputChange={handleInputChange}
+                        ></TextInputComponent>
+
+                        <TextInputComponent
+                            textLabel='Rua'
+                            placeHolder='Rua'
+                            onInputChange={handleInputChange}
+                        ></TextInputComponent>
+
+                        <TextInputComponent
+                            textLabel='Numero'
+                            placeHolder='Numero'
+                            onInputChange={handleInputChange}
+                        ></TextInputComponent>
+
+                        <TextInputComponent
+                            textLabel='Descrição'
+                            placeHolder='Descrição'
+                            onInputChange={handleInputChange}
+                        ></TextInputComponent>
+
+                        <TextInputComponent
+                            textLabel='Imagem da Instituição'
+                            placeHolder='Imagem da Instituição'
+                            onInputChange={handleInputChange}
+                        ></TextInputComponent>
+                    </div>
+
+                    <div className="buttonActions">
+                        <ButtonComponent width="230px" text="Cancelar" onClick={() => { }} />
+                        <ButtonComponent width="230px" text="Criar" onClick={() => { }} />
+                    </div>
+
+                </main>
+
+
+            </div>
+        </>
+    )
+}
+
+export default InstitutionRegister;
