@@ -47,7 +47,7 @@ const App: React.FC = () => {
   let theme = true;
 
   // PRESS (CRTL + 1) TO CHANGE THEME (LIGHT,DARK)
-  const handleKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown: any = (event: KeyboardEvent) => {
     
     if ((event.ctrlKey || event.metaKey) && event.key === '1') {
       event.preventDefault(); 

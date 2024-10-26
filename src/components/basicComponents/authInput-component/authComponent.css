@@ -7,9 +7,9 @@
   .auth_code {
     width: 48px;
     height: 64px;
-    border: 1px solid black;
+    border: var(--borderInput);
     border-radius: 12px;
-    outline: none;
+    outline: 0;
 
     font-size: 32px;
     text-indent: 30%;

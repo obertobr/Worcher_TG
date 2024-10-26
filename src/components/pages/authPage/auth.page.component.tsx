@@ -5,8 +5,11 @@ import './authPageContainer.css';
 import './authPageContent.css';
 import './authPageMain.css';
 
+interface propos {
+  p: string;
+}
 
-const AuthPage: React.FC<{}> = () => {
+const AuthPage: React.FC<propos> = ({p = 'Informe o código de autenticação:'}) => {
 
   return(
     <>
@@ -19,7 +22,7 @@ const AuthPage: React.FC<{}> = () => {
       <main>
         <div className="authContainer">
 
-          <h3>Informe o código de autenticação:</h3>
+          <h3>{p}</h3>
           
           <AuthComponent />
           

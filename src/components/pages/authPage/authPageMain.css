@@ -6,6 +6,6 @@
     align-items: center;
     justify-content: center;
 
-    color: black;
+    color: var(--primaryColorFont);
   }
 }
