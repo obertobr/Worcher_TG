@@ -10,7 +10,8 @@ const buttons = [
     {path: 'institution-register', text: "INSTITUTION-REGISTER"},
     {path: 'auth-page', text: 'AUTENTICATION'},
     {path: 'inst-page', text: 'INSTITUTION VIEW PAGE'},
-    {path: 'category-registration', text: 'CATEGORY REGISTRATION'}
+    {path: 'category-registration', text: 'CATEGORY REGISTRATION'},
+    {path: 'position-registration', text: 'POSITION REGISTRATION'}
 ]
 
 const TestPage: React.FC<{}> = () => {
