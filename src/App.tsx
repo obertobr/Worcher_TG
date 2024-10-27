@@ -35,11 +35,15 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
-import './theme/variables.css';
 import { useEffect } from 'react';
-import { ThemeManager } from './components/themeManager/theme.manager';
-import TestPage from './components/pages/testPage/test.page.component';
+import CategoryRegistrationPage from './components/pages/categoryRegistrationPage/categoryRegistration.page.component';
 import InstitutionRegister from './components/pages/institutionRegisterPage/institutionRegister.page.component';
+import InstituitionViewPage from './components/pages/institutionViewPage/institutionView.page.component';
+import MyInstitutionPage from './components/pages/myInstitutionPage/myInstitution.page.component';
+import PositionRegistrationPage from './components/pages/positionRegistrationPage/positionRegistration.page.component';
+import TestPage from './components/pages/testPage/test.page.component';
+import { ThemeManager } from './components/themeManager/theme.manager';
+import './theme/variables.css';
 
 setupIonicReact();
 
@@ -48,7 +52,7 @@ const App: React.FC = () => {
   let theme = true;
 
   // PRESS (CRTL + 1) TO CHANGE THEME (LIGHT,DARK)
-  const handleKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown: any = (event: KeyboardEvent) => {
     
     if ((event.ctrlKey || event.metaKey) && event.key === '1') {
       event.preventDefault(); 
@@ -85,6 +89,14 @@ const App: React.FC = () => {
           <Route exact path="/institution-register" component={InstitutionRegister} />
 
           <Route exact path='/test' component={TestPage} />
+
+          <Route exact path='/inst-page' component={InstituitionViewPage} />
+
+          <Route exact path='/category-registration' component={CategoryRegistrationPage} />
+
+          <Route exact path='/position-registration' component={PositionRegistrationPage} />
+
+          <Route exact path='/my-institution' component={MyInstitutionPage} />
 
           <Route exact path="/">
             <Redirect to="/test" />

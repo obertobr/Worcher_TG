@@ -1,0 +1,13 @@
+/* CONTAINER */
+
+.contentIntView {
+
+  padding: 40px;
+  
+  .intViewContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+  }
+
+}
