@@ -30,7 +30,7 @@ const PositionRegistrationPage: React.FC<positionRegistrationInterface> = ({
 
           <div className="positionRegInputContainer">
             <TextInputComponent textLabel="Nome do Cargo" onInputChange={() => {} } placeHolder="Nome da Cargo" />
-            <TextInputComponent textLabel="Permissões" onInputChange={() => {} } placeHolder="Permissões" />
+            <TextInputComponent textLabel="Permissões" onInputChange={() => {} } placeHolder="Permissões" /> {/* Criar um componente de select para listar as permissões disponíveis para cada cargo */}
             
             <ButtonComponent width="60%" text="Criar" onClick={() => {} }/>
           </div>

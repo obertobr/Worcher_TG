@@ -1,0 +1,6 @@
+.contentInst {
+  width: 100vw;
+  min-height: 100%;
+
+  color: var(--primaryColorFont);
+}

@@ -1,0 +1,37 @@
+.institutionCard {
+  width: 90%;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px;
+
+  background-color: var(--backgroundcolorInput);
+
+  border: var(--borderInput);
+  border-radius: 12px;
+  box-shadow: var(--mediumShadow);
+  
+  .institutionLogo {
+    width: 64px;
+    border-radius: 50%;
+  }
+}
+
+.institutionCardInfo {
+  display: flex;
+  flex-direction: column;
+
+  color: var(--primaryColorFont);
+
+  .title {
+    font-weight: bolder;
+  }
+
+  .memberCount {
+    font-size: 80%;
+    font-weight: lighter;
+  }
+}
