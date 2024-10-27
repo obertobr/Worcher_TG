@@ -1,0 +1,33 @@
+.colorContent { 
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  position: relative;
+  
+  .colorLabel {
+    color: var(--primaryColorFont);
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  .colorInput {
+    width: 100%;
+    max-width: 540px;
+    
+    text-align: center;
+    
+    padding: 8px;
+    border: var(--borderInput);
+    border-radius: 4px;
+    cursor: pointer;
+    outline: 0;
+    box-shadow: var(--lightShadow);
+  }
+
+  .colorModal {
+    position: absolute;
+    top: 100%;
+    z-index: 2;
+  }
+}

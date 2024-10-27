@@ -35,11 +35,13 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
-import './theme/variables.css';
 import { useEffect } from 'react';
-import { ThemeManager } from './components/themeManager/theme.manager';
-import TestPage from './components/pages/testPage/test.page.component';
+import CategoryRegistrationPage from './components/pages/categoryRegistrationPage/categoryRegistration.page.component';
 import InstitutionRegister from './components/pages/institutionRegisterPage/institutionRegister.page.component';
+import InstituitionViewPage from './components/pages/institutionViewPage/institutionView.page.component';
+import TestPage from './components/pages/testPage/test.page.component';
+import { ThemeManager } from './components/themeManager/theme.manager';
+import './theme/variables.css';
 
 setupIonicReact();
 
@@ -85,6 +87,10 @@ const App: React.FC = () => {
           <Route exact path="/institution-register" component={InstitutionRegister} />
 
           <Route exact path='/test' component={TestPage} />
+
+          <Route exact path='/inst-page' component={InstituitionViewPage} />
+
+          <Route exact path='/category-registration' component={CategoryRegistrationPage} />
 
           <Route exact path="/">
             <Redirect to="/test" />

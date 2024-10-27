@@ -1,0 +1,17 @@
+.categoryRegContent {
+  main {
+    width: 100%;
+    padding: 20px;
+    
+    color: var(--primaryColorFont);
+  }
+  
+  .categoryRegInputContainer {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+    
+    align-items: center;
+  }
+}
