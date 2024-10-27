@@ -31,7 +31,8 @@ http://ionicframework.com/docs/theming/ */
 
     /* BUTTON */
 
-    --backgroundColorButton: #6291E5;
+    --backgroundColorButtonConfirm: #6291E5;
+    --backgroundColorButtonCancel: #e56278;
     --borderColor: rgba(0, 0, 0, 0.9);
     --textColorButton: #ffffff;
 

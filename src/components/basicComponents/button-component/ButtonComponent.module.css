@@ -1,16 +1,24 @@
-.custom-ion-button {
-    --background: var(--backgroundColorButton); 
-    --color: var(--textColorButton);
+.customIonButton {
     --border-radius: 50px; 
     --box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
     --border-width: 2px;
     --border-color: var(--borderColor); 
+    color: white;
     font-size: 16px;
     padding: 10px 20px;
+  }
+
+  .red{
+    --background: var(--backgroundColorButtonCancel);
+  }
+
+  .blue {
+    --background: var(--backgroundColorButtonConfirm); 
   }
   
   .custom-ion-button:hover {
     --box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
+    --background: aliceblue;
+    
   }
-  

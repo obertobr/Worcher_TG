@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import style from './alertComponent.module.css';
+import style from './popupComponent.module.css';
 import ButtonComponent from '../button-component/button.components';
 import { IonIcon } from '@ionic/react';
-import { alertCircleOutline, closeCircleOutline } from 'ionicons/icons';
+import { closeCircleOutline } from 'ionicons/icons';
 
-interface AlertComponentProps {
+interface PopupComponentProps {
   isOpen: boolean;
   onDidDismiss: () => void;
-  messages: string[];
+  content: React.ReactNode;
   titleText: string;
   closeButtonText?: string;
+  confirmButtonText?: string;
 }
 
-const AlertComponent: React.FC<AlertComponentProps> = ({
+const PopupComponent: React.FC<PopupComponentProps> = ({
   isOpen,
   onDidDismiss,
-  messages,
+  content,
   titleText,
   closeButtonText = "Fechar",
+  confirmButtonText = "Confirmar",
 }) => {
   const [visible, setVisible] = useState(isOpen);
 
@@ -42,16 +44,24 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
         >
           <div className={style.modal}>
             <div className={style.header}>
-            <IonIcon icon={closeCircleOutline} className={style.errorIcon} />
               <h1 className={style.titleText}>{titleText}</h1>
             </div>
             <div className={style.content}>
-              {messages.map((msg, index) => (
-                <div className={style.message} key={index}>{msg}</div>
-              ))}
+              {content}
             </div>
             <div className={style.footer}>
-              <ButtonComponent isCancel={true} text={closeButtonText} width={'100%'} onClick={handleClose} />
+              <ButtonComponent
+                isCancel={true}
+                text={closeButtonText}
+                width={'100%'}
+                onClick={handleClose}
+              />
+
+              <ButtonComponent
+                text={confirmButtonText}
+                width={'100%'}
+                onClick={handleClose}
+              />
             </div>
           </div>
         </div>
@@ -60,4 +70,4 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
   );
 };
 
-export default AlertComponent;
+export default PopupComponent;

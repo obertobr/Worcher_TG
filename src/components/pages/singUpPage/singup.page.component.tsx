@@ -9,6 +9,7 @@ import "./singupPageFooter.css";
 import "./singupPageMain.css";
 import { useState } from "react";
 import AlertComponent from "../../basicComponents/alert-component/alert.component";
+import PopupComponent from "../../basicComponents/popup-component/popup.component";
 
 const SingUpPage: React.FC<{}> = () => {
 
@@ -21,22 +22,29 @@ const SingUpPage: React.FC<{}> = () => {
   }
 
   const [showModal, setShowModal] = useState(false);
-  
+  const [showModalDate, setShowModalDate] = useState(true);
 
   return(
     <>
       
-      <IonButton onClick={() => setShowModal(true)}>Click Me</IonButton>
+      <PopupComponent isOpen={showModalDate} 
+                      onDidDismiss={() => {setShowModalDate(false)}} 
+                      content={ <DateComponent type="date"
+                        onDateTimeChange={() => {}}
+         ></DateComponent> } 
+                      titleText={"Selecione uma data"}
+      ></PopupComponent>
+
       <AlertComponent
         isOpen={showModal}
         onDidDismiss={() => setShowModal(false)}
-        messages={"A senha deve ter pelo menos 8 caracteres -".repeat(1).split('-')} 
-        titleText={"Title"}      
+        messages={["Senha não informada", "Email invalido"]} 
+        titleText={"Não foi possível realizar o cadastro"}      
       />
 
       <div className="contentSingUp">
         <main>
-          <h1>Cadastro</h1>
+          <h1 className="titleText">Cadastro</h1>
 
           <div className="inputsSection">
             <TextInputComponent
@@ -50,9 +58,7 @@ const SingUpPage: React.FC<{}> = () => {
                               onInputChange={cpfInputChange}
                               ></InputCpfComponent>
 
-            {/* <DateComponent type="date"
-                           onDateTimeChange={() => {}}
-            ></DateComponent> */}
+            {/* */}
 
             <TextInputComponent
               textLabel="Data de Nascimento"
@@ -84,7 +90,7 @@ const SingUpPage: React.FC<{}> = () => {
           </div>
 
           <div className="buttonActions">
-            <ButtonComponent width="168px" text="Cancelar" onClick={() => {} }/>
+            <ButtonComponent width="168px" text="Cancelar" isCancel={true} onClick={() => {} }/>
             <ButtonComponent width="168px" text="Criar" onClick={() => {} }/>
           </div>
           

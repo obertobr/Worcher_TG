@@ -1,39 +1,96 @@
-.modalAlert{
-    --width: 90%;
-    --max-width: 500px;
-    --height: 300px;
-    --border-radius: 5px 5px 5px 5px;
-    --border: none;
-    --background-color: transparent;
-    --border: 0;
-
-    .titleText{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 50px;
-        background-color: var(--headerBackgroundColor);
-        border-radius: 5px 5px 0px 0px;
-        border: 1px solid rgba(0, 0, 0, 0);
-        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0);
-        
-    }
-
+:root {
+    --modal-animation-duration: 0.3s;
 }
 
-.content{
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity var(--modal-animation-duration) ease;
+}
+
+.fadeIn {
+    animation: fadeIn var(--modal-animation-duration) forwards;
+}
+
+.fadeOut {
+    animation: fadeOut var(--modal-animation-duration) forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.modal {
+    width:  90%;
+    max-width: 500px;
+    height: 300px;
+    background-color: var(--backgroundColor);
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 1001;
+    color: black;
+    animation: slideIn var(--modal-animation-duration) ease;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.header{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.errorIcon{
+    width: 25px;
+    height: 25px;
+    color: rgb(199, 78, 78);
+}
+
+.titleText {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(199, 78, 78);
+    border-radius: var(--modal-border-radius) var(--modal-border-radius) 0 0;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0);
+}
+
+.content {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 5px;
     height: 200px;
-    overflow: auto;
-    gap: 5px;
+    overflow-y: auto;
+    gap: 3px;
     font-size: 20px;
-    background-color: var(--backgroundColor);
-    color: var(--primaryColorFont);
+    color: #e47080;
 }
 
-.footer{
-    background-color: var(--backgroundColor);
+.footer {
+    text-align: center;
+    padding: 1rem;
 }

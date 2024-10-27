@@ -1,6 +1,11 @@
+.dateComponent{
+    background: var(--backgroundColor);
+    color: var(--primaryColorFont, #e0b3b3);
+}
+
 .labelInput {    
     color: var(--primaryColorFont);
-    font-size: 16px;
+    font-size: 18px;
     margin-left: 10px;
 }
 
@@ -11,24 +16,21 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
+    display: flex;
+    align-items: center;
 }
 
-.textInput {
-    width: 100%;
-    max-width: 540px;
-    margin-right: 10px;
-    height: 32px;
-    min-height: 0px;
-    border-radius: 4px;
-    text-indent: 10px;
-    font-size: 18px;
-    color: var(--colorInput);
-    background-color: var(--backgroundcolorInput);
-    border: var(--borderInput);
-    outline: 0;
-    box-shadow: var(--lightShadow);
-}
 
-.textInput:hover {
-    outline: var(--outlineInput);
-}
+  
+  ion-datetime.md::part(calendar-day active),
+  ion-datetime.md::part(calendar-day active):focus {
+    background-color: var(--principalColor);
+    color: #fff;
+  }
+  
+  
+  ion-datetime.ios::part(calendar-day active),
+  ion-datetime.ios::part(calendar-day active):focus {
+    background-color: var(--principalColor);
+    color: #fff;
+  }

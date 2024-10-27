@@ -10,8 +10,8 @@
       align-items: center;
       justify-content: center;
 
-      color: black;
-      
+      color: var(--primaryColorFont);
+
       .inputsSection{
           width: 100%;
           display: flex;

@@ -1,16 +1,23 @@
 import React from "react";
 import { IonButton } from "@ionic/react";
-import "./ButtonComponent.css";
+import style from "./ButtonComponent.module.css"
 
 interface ButtonComponentProps {
   text: string;
   width: string;
+  isCancel?: boolean;
   onClick: () => void;
 }
 
-const ButtonComponent: React.FC<ButtonComponentProps> = ({ text,width, onClick }) => {
+const ButtonComponent: React.FC<ButtonComponentProps> = (
+  { text,
+    width,
+    isCancel = false,
+    onClick 
+
+  }) => {
   return (
-    <IonButton className="custom-ion-button" 
+    <IonButton className={ (isCancel ? style.red : style.blue) + " " + style.customIonButton} 
                 style={{width}}
                onClick={onClick} expand="block">
       {text}
