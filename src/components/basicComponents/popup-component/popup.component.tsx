@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import style from './popupComponent.module.css';
 import ButtonComponent from '../button-component/button.components';
-import { IonIcon } from '@ionic/react';
-import { closeCircleOutline } from 'ionicons/icons';
 
 interface PopupComponentProps {
   isOpen: boolean;
   onDidDismiss: () => void;
-  content: React.ReactNode;
+  content: ReactElement<ContentProps>;
   titleText: string;
   closeButtonText?: string;
   confirmButtonText?: string;
+  valueChangePopup: (e: any) => any;
+  validateValue?: Function
+}
+
+interface ContentProps {
+   value: any;
+   valueChange: (e: any) => any;
 }
 
 const PopupComponent: React.FC<PopupComponentProps> = ({
@@ -20,8 +25,11 @@ const PopupComponent: React.FC<PopupComponentProps> = ({
   titleText,
   closeButtonText = "Fechar",
   confirmButtonText = "Confirmar",
+  valueChangePopup,
+  validateValue,
 }) => {
   const [visible, setVisible] = useState(isOpen);
+  const [value, setValue] = useState();
 
   useEffect(() => {
     if (isOpen) setVisible(true);
@@ -31,6 +39,13 @@ const PopupComponent: React.FC<PopupComponentProps> = ({
     setVisible(false);
     setTimeout(onDidDismiss, 300);
   };
+
+  const handleConfirm = () => {
+    //console.log(validateValue) Aqui temos uma função que pode ser passada como prop para validação do valor antes de confirmar
+
+    valueChangePopup(value)
+    handleClose()
+  }
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) handleClose();
@@ -47,7 +62,13 @@ const PopupComponent: React.FC<PopupComponentProps> = ({
               <h1 className={style.titleText}>{titleText}</h1>
             </div>
             <div className={style.content}>
-              {content}
+
+            {React.cloneElement(content, {
+              valueChange: (e: any) => {
+                setValue(e)
+              }
+            })}
+
             </div>
             <div className={style.footer}>
               <ButtonComponent
@@ -60,7 +81,7 @@ const PopupComponent: React.FC<PopupComponentProps> = ({
               <ButtonComponent
                 text={confirmButtonText}
                 width={'100%'}
-                onClick={handleClose}
+                onClick={handleConfirm}
               />
             </div>
           </div>

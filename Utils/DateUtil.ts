@@ -1,7 +1,11 @@
 export default class DateUtil {
   
-    static formatToDDMMYYYYAndDay(date: Date): string {
-      return this.formatToDDMMYYYY(date) + " - " + this.getDayOfWeek(date)
+    static formatToDDMMYYYYAndDay(date: Date | undefined): string {
+      if(date){
+        return this.formatToDDMMYYYY(date) + " - " + this.getDayOfWeek(date)
+      }
+      
+      return "";
     }
 
     static formatToDDMMYYYY(date: Date): string {

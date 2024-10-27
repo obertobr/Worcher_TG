@@ -10,8 +10,16 @@ import "./singupPageMain.css";
 import { useState } from "react";
 import AlertComponent from "../../basicComponents/alert-component/alert.component";
 import PopupComponent from "../../basicComponents/popup-component/popup.component";
+import DateUtil from "../../../../Utils/DateUtil";
 
 const SingUpPage: React.FC<{}> = () => {
+
+  const [showModal, setShowModal] = useState(false);
+  const [showModalDate, setShowModalDate] = useState(false);
+
+  // VALUES of Singup
+
+  const [date, setDate] = useState<Date>();
 
   const handleInputChange = (event: string) => {
         
@@ -21,18 +29,21 @@ const SingUpPage: React.FC<{}> = () => {
     
   }
 
-  const [showModal, setShowModal] = useState(false);
-  const [showModalDate, setShowModalDate] = useState(true);
+ 
+
+  const dateValueChangePopup = (e: Date) => {
+    setDate(e)
+  }
 
   return(
     <>
       
-      <PopupComponent isOpen={showModalDate} 
-                      onDidDismiss={() => {setShowModalDate(false)}} 
-                      content={ <DateComponent type="date"
-                        onDateTimeChange={() => {}}
-         ></DateComponent> } 
-                      titleText={"Selecione uma data"}
+      <PopupComponent isOpen={showModalDate}
+      onDidDismiss={() => { setShowModalDate(false); } }
+      content={<DateComponent type="date" valueChange={() => {}}></DateComponent>}
+      titleText={"Selecione uma data"} 
+      valueChangePopup={(e) => dateValueChangePopup(e)}
+      validateValue={() => {console.log("validate")}}      
       ></PopupComponent>
 
       <AlertComponent
@@ -61,8 +72,11 @@ const SingUpPage: React.FC<{}> = () => {
             {/* */}
 
             <TextInputComponent
+              isReadOnly={true}
+              onClick={() => setShowModalDate(true)}
               textLabel="Data de Nascimento"
-              placeHolder="__ /__ /____"
+              placeHolder="Clique aqui para selecionar a data"
+              value={DateUtil.formatToDDMMYYYYAndDay(date)}
               onInputChange={handleInputChange} 
             />
 

@@ -9,12 +9,12 @@ type DateTimePickerType = "date" | "time";
 interface DateComponentProps {
   type: DateTimePickerType;
   textLabel?: string;
-  onDateTimeChange: (value: Date) => void;
+  valueChange: (value: Date) => void;
 }
 
 const DateComponent: React.FC<DateComponentProps> = ({
   type,
-  onDateTimeChange,
+  valueChange,
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
@@ -30,7 +30,7 @@ const DateComponent: React.FC<DateComponentProps> = ({
     }
 
     setSelectedDate(newDate);
-    onDateTimeChange(newDate);
+    valueChange(newDate);
   };
 
   return (

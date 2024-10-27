@@ -1,6 +1,7 @@
 .dateComponent{
     background: var(--backgroundColor);
     color: var(--primaryColorFont, #e0b3b3);
+    --ion-background-color-rgb: 0;
 }
 
 .labelInput {    
@@ -28,9 +29,10 @@
     color: #fff;
   }
   
-  
   ion-datetime.ios::part(calendar-day active),
   ion-datetime.ios::part(calendar-day active):focus {
     background-color: var(--principalColor);
     color: #fff;
   }
+
+  
