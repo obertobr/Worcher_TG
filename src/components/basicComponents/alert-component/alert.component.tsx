@@ -47,7 +47,7 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
             </div>
             <div className={style.content}>
               {messages.map((msg, index) => (
-                <div className={style.message} key={index}>{msg}</div>
+                <div className={style.message} key={index}>{ ++index + " - " + msg}</div>
               ))}
             </div>
             <div className={style.footer}>

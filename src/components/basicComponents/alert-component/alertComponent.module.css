@@ -70,12 +70,21 @@
 }
 
 .titleText {
+    text-align: center;
     margin: 0;
     font-size: 18px;
     font-weight: 600;
     color: rgb(199, 78, 78);
     border-radius: var(--modal-border-radius) var(--modal-border-radius) 0 0;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0);
+}
+
+.message{
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .content {

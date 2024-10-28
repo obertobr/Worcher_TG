@@ -13,7 +13,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
         try{
             return (await axios.get(`${this.urlApi}count`)).data.data
         } catch (error: any){
-            throw new Error(error);
+            return error.response.data.errors
         }
     }
 
@@ -21,7 +21,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
     try {
       return (await axios.get(`${this.urlApi}list`)).data.data;
     } catch (error: any) {
-      throw new Error(error);
+      return error.response.data.errors
     }
   }
 
@@ -29,7 +29,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
     try {
       return (await axios.get(`${this.urlApi}id/${id}`)).data.data;
     } catch (error: any) {
-      throw new Error(error);
+      return error.response.data.errors
     }
   }
 
@@ -37,7 +37,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
     try {
       return (await axios.post(`${this.urlApi}`, item)).data.data;
     } catch (error: any) {
-      throw new Error(error);
+      return error.response.data.errors
     }
   }
 
@@ -45,7 +45,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
     try {
       return (await axios.post(`${this.urlApi}all`, items)).data.data;
     } catch (error: any) {
-      throw new Error(error);
+      return error.response.data.errors
     }
   }
 
@@ -53,7 +53,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
     try {
       return (await axios.put(`${this.urlApi}`, item)).data.data;
     } catch (error: any) {
-      throw new Error(error);
+      return error.response.data.errors
     }
   }
 
@@ -61,7 +61,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
     try {
       await axios.delete(`${this.urlApi}${id}`);
     } catch (error: any) {
-      throw new Error(error);
+      return error.response.data.errors
     }
   }
 

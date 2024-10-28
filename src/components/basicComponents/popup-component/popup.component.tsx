@@ -14,7 +14,6 @@ interface PopupComponentProps {
 }
 
 interface ContentProps {
-   value: any;
    valueChange: (e: any) => any;
 }
 
