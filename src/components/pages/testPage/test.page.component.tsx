@@ -12,7 +12,7 @@ const buttons = [
     {path: 'inst-page', text: 'INSTITUTION VIEW PAGE'},
     {path: 'category-registration', text: 'CATEGORY REGISTRATION'},
     {path: 'position-registration', text: 'POSITION REGISTRATION'},
-    {path: 'my-institution', text: 'MY INSTITUTION'}
+    {path: 'member-view', text: 'MEMBER VIEW'}
 ]
 
 const TestPage: React.FC<{}> = () => {

@@ -39,7 +39,7 @@ import { useEffect } from 'react';
 import CategoryRegistrationPage from './components/pages/categoryRegistrationPage/categoryRegistration.page.component';
 import InstitutionRegister from './components/pages/institutionRegisterPage/institutionRegister.page.component';
 import InstituitionViewPage from './components/pages/institutionViewPage/institutionView.page.component';
-import MyInstitutionPage from './components/pages/myInstitutionPage/myInstitution.page.component';
+import MemberViewPage from './components/pages/memberManegerPage/memberManager.page.component';
 import PositionRegistrationPage from './components/pages/positionRegistrationPage/positionRegistration.page.component';
 import TestPage from './components/pages/testPage/test.page.component';
 import { ThemeManager } from './components/themeManager/theme.manager';
@@ -96,7 +96,7 @@ const App: React.FC = () => {
 
           <Route exact path='/position-registration' component={PositionRegistrationPage} />
 
-          <Route exact path='/my-institution' component={MyInstitutionPage} />
+          <Route exact path='/member-view' component={MemberViewPage} />
 
           <Route exact path="/">
             <Redirect to="/test" />

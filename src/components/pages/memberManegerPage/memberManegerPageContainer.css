@@ -1,0 +1,27 @@
+.contentMember {
+
+  .memberHeader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    h2{
+      text-align: center;
+    }
+  }
+
+  .containerMember{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+
+    height: 100vh;
+    overflow-y: auto;
+
+    padding: 10px 20px;
+  }
+}

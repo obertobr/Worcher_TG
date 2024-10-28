@@ -1,0 +1,54 @@
+.memberCard {
+  width: 90%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px;
+
+  background-color: var(--backgroundcolorInput);
+
+  border: var(--borderInput);
+  border-radius: 12px;
+  box-shadow: var(--mediumShadow);
+
+  .memberPic {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    
+    box-shadow: var(--lightShadow);
+  }
+
+  .editButton{
+    width: 24px;
+    height: 24px;
+
+    border-radius: 50%;
+    background: var(--backgroundColorButtonConfirm);
+    color: var(--textColorButton);
+
+    box-shadow: var(--lightShadow);
+  }
+}
+
+.memberCardInfo {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+
+  justify-content: left;
+
+  color: var(--primaryColorFont);
+
+  .memberName {
+    font-weight: bolder;
+  }
+
+  .memberPosition {
+    font-size: 80%;
+    font-weight: lighter;
+  }
+}
