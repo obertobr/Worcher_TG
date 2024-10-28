@@ -60,7 +60,6 @@ const SingUpPage: React.FC<{}> = () => {
     const service = new UserService()
     const response = await service.save(user)
     
-    console.log(response)
     if(Array.isArray(response)){
       setMessagesErrorModal(response)
       setShowModal(true)
@@ -134,8 +133,7 @@ const SingUpPage: React.FC<{}> = () => {
           </div>
 
           <div className="buttonActions">
-            <ButtonComponent width="168px" text="Cancelar" isCancel={true} onClick={() => {} }/>
-            <ButtonComponent width="168px" text="Criar" onClick={createNewUser}/>
+            <ButtonComponent width="300px" text="Criar" onClick={createNewUser}/>
           </div>
           
         </main>
