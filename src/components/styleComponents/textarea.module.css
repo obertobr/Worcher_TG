@@ -1,0 +1,46 @@
+.labelInput {    
+    color: var(--primaryColorFont);
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.centerInput {
+    position: relative;
+    width: 80%;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.textInput {
+    width: 100%;
+    max-width: 540px;
+    margin-right: 10px;
+    min-height: 0px;
+    border-radius: 4px;
+    font-size: 18px;
+    color: var(--colorInput);
+    background-color: var(--backgroundcolorInput);
+    border: var(--borderInput);
+    outline: 0;
+    box-shadow: var(--lightShadow);
+    --padding-top: 5px;
+    --padding-start: 10px;
+}
+
+.textInput:hover {
+    outline: var(--outlineInput);
+}
+
+.checkmark {
+    z-index: 10;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 2%;
+    top: 50%; 
+    transform: translateY(0%);
+    cursor: pointer;
+    color: var(--iconColor);
+}

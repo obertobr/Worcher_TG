@@ -1,3 +1,7 @@
+ion-router-outlet {
+    overflow-y: scroll;
+}
+
 .contentInstitutionRegister{
     main {
         padding-top: 40px;

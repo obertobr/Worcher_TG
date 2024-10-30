@@ -1,5 +1,6 @@
 import ButtonComponent from "../../basicComponents/button-component/button.components"
 import TextInputComponent from "../../basicComponents/text-input-component/text.input.component"
+import TextAreaInputComponent from "../../basicComponents/textarea-input-component/textarea.input.component";
 import "./intitutionRegisterContent.css"
 
 
@@ -53,11 +54,11 @@ const InstitutionRegister: React.FC<{}> = () => {
                             onInputChange={handleInputChange}
                         ></TextInputComponent>
 
-                        <TextInputComponent
+                        <TextAreaInputComponent
                             textLabel='Descrição'
                             placeHolder='Descrição'
                             onInputChange={handleInputChange}
-                        ></TextInputComponent>
+                        ></TextAreaInputComponent>
 
                         <TextInputComponent
                             textLabel='Imagem da Instituição'
