@@ -2,6 +2,7 @@ import ButtonComponent from "../../basicComponents/button-component/button.compo
 import SelectInputComponent, { selectInputItens } from "../../basicComponents/select-input-component/select.input.component";
 import TextInputComponent from "../../basicComponents/text-input-component/text.input.component"
 import TextAreaInputComponent from "../../basicComponents/textarea-input-component/textarea.input.component";
+import UploadImageComponent from "../../basicComponents/upload-image-component/uploadImage.input.component";
 import "./intitutionRegisterContent.css"
 
 
@@ -73,11 +74,11 @@ const InstitutionRegister: React.FC<{}> = () => {
                             onInputChange={handleInputChange}
                         ></TextAreaInputComponent>
 
-                        <TextInputComponent
+                        <UploadImageComponent
                             textLabel='Imagem da Instituição'
-                            placeHolder='Imagem da Instituição'
+                            text="Imagem da Instituição"
                             onInputChange={handleInputChange}
-                        ></TextInputComponent>
+                        ></UploadImageComponent>
                     </div>
 
                     <div className="buttonActions">
