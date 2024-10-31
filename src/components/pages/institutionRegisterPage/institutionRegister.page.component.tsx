@@ -1,4 +1,5 @@
 import ButtonComponent from "../../basicComponents/button-component/button.components"
+import SelectInputComponent, { selectInputItens } from "../../basicComponents/select-input-component/select.input.component";
 import TextInputComponent from "../../basicComponents/text-input-component/text.input.component"
 import TextAreaInputComponent from "../../basicComponents/textarea-input-component/textarea.input.component";
 import "./intitutionRegisterContent.css"
@@ -7,8 +8,18 @@ import "./intitutionRegisterContent.css"
 const InstitutionRegister: React.FC<{}> = () => {
 
     const handleInputChange = (event: string) => {
-
     };
+
+    const itens: selectInputItens[] = [
+        {
+            id: 1,
+            name: 'cidade',
+        },
+        {
+            id: 2,
+            name: 'cidade 2',
+        }
+    ];
 
     return (
         <>
@@ -24,17 +35,19 @@ const InstitutionRegister: React.FC<{}> = () => {
                             onInputChange={handleInputChange}
                         />
 
-                        <TextInputComponent
+                        <SelectInputComponent
                             textLabel='Estado'
                             placeHolder='Estado'
+                            itens={itens}
                             onInputChange={handleInputChange}
-                        ></TextInputComponent>
+                        ></SelectInputComponent>
 
-                        <TextInputComponent
+                        <SelectInputComponent
                             textLabel='Cidade'
                             placeHolder='Cidade'
+                            itens={itens}
                             onInputChange={handleInputChange}
-                        ></TextInputComponent>
+                        ></SelectInputComponent>
 
                         <TextInputComponent
                             textLabel='Bairro'

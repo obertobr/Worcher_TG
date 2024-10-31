@@ -26,7 +26,6 @@ const TextAreaInputComponent: React.FC<TextInputComponentProps> = ({
     onClick = () => {},
 }) => {
     const [inputValue, setInputValue] = useState(value);
-    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         setInputValue(value);

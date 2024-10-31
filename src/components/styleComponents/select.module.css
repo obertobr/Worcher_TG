@@ -1,0 +1,39 @@
+.labelInput {    
+    color: var(--primaryColorFont);
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.centerInput {
+    position: relative;
+    width: 80%;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.selectListInput {
+    width: 100%;
+    max-width: 540px;
+    margin-right: 10px;
+    background-color: transparent;
+    outline: 0;
+    border-radius: 4px;
+    padding: 0px;
+    box-shadow: var(--lightShadow);
+}
+
+.selectListInput:hover {
+    outline: var(--outlineInput);
+}
+
+.selectItemInput {
+    --background: var(--backgroundcolorInput);
+    --border-color: transparent;
+    --padding-start: 10px;
+    color: var(--colorInput);
+    font-size: 18px;
+    border: var(--borderInput);
+    border-radius: 4px;
+}
