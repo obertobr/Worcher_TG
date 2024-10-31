@@ -7,7 +7,7 @@ export interface selectInputItens {
     name: string;
 }
 
-interface TextInputComponentProps {
+interface SelectInputComponentProps {
     itens: selectInputItens[];
     isDisabled?: boolean;
     isReadOnly?: boolean;
@@ -18,7 +18,7 @@ interface TextInputComponentProps {
     onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-const SelectInputComponent: React.FC<TextInputComponentProps> = ({
+const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
     itens,
     isReadOnly = false,
     textLabel,

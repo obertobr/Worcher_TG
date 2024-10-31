@@ -2,7 +2,7 @@ import { IonLabel, IonTextarea } from "@ionic/react";
 import React, { useState, useEffect, MouseEventHandler } from "react";
 import style from '../../styleComponents/textarea.module.css';
 
-interface TextInputComponentProps {
+interface TextAreaInputComponentProps {
     isDisabled?: boolean;
     isReadOnly?: boolean;
     autoGrow?: boolean;
@@ -14,7 +14,7 @@ interface TextInputComponentProps {
     onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-const TextAreaInputComponent: React.FC<TextInputComponentProps> = ({
+const TextAreaInputComponent: React.FC<TextAreaInputComponentProps> = ({
     isDisabled = false,
     isReadOnly = false,
     autoGrow = true,
