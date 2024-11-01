@@ -6,9 +6,9 @@ export default class StateService extends AbstractCrudService<State> {
     super("state")
   }
 
-  convertToEntity(object: any): State | null {
-    const test = object as State
-    console.log(new State())
-    return test
-  }
+  // convertToEntity(object: any): State | null {
+  //   const state = Object.assign(new State(), object);
+
+  //   return state
+  // }
 }

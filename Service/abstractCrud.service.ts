@@ -9,9 +9,12 @@ export default class AbstractCrudService<T extends BaseEntity> {
     this.urlApi += pathController + "/"
   }
 
-  convertToEntity(object: any): T | null {
-    return  null
-  } 
+  convertToEntity<T extends object>(object: any, entityClass: { new(): T }): T | null {
+    if (!object) return null;
+
+    const entity = new entityClass();
+    return Object.assign(entity, object);
+  }
 
   async count(): Promise<number> {
     try {
@@ -26,7 +29,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
       const list = (await axios.get(`${this.urlApi}list`)).data.data
 
       const typedList: T[] = list.map((item: any) => {
-        return this.convertToEntity(item);
+        return this.convertToEntity<T>(item, T);
       });
       return typedList;
     } catch (error: any) {
