@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ButtonComponent from "../../basicComponents/button-component/button.components"
-import SelectInputComponent, { selectInputItens } from "../../basicComponents/select-input-component/select.input.component";
+import SelectInputComponent from "../../basicComponents/select-input-component/select.input.component";
 import TextInputComponent from "../../basicComponents/text-input-component/text.input.component"
 import TextAreaInputComponent from "../../basicComponents/textarea-input-component/textarea.input.component";
 import UploadImageComponent from "../../basicComponents/upload-image-component/uploadImage.input.component";
@@ -8,7 +8,7 @@ import State from "../../../../Models/Address/state.entity"
 import City from "../../../../Models/Address/city.entity"
 import StateService from "../../../../Service/Address/state.service"
 import "./intitutionRegisterContent.css"
-import { construct } from "ionicons/icons";
+import selectInputItens from "../../../../Models/Interfaces/selectInput";
 
 
 const InstitutionRegister: React.FC<{}> = () => {
@@ -18,7 +18,6 @@ const InstitutionRegister: React.FC<{}> = () => {
     const loadStates = async () => {
         const stateService = new StateService()
         setStates(await stateService.list())
-        console.log(await stateService.list())
     }
 
     useEffect(() => {
@@ -31,11 +30,15 @@ const InstitutionRegister: React.FC<{}> = () => {
     const itens: selectInputItens[] = [
         {
             id: 1,
-            name: 'cidade',
+            getDisplayName: () => {
+                return "Cidade 1"
+            }
         },
         {
             id: 2,
-            name: 'cidade 2',
+            getDisplayName: () => {
+                return "Cidade 2"
+            }
         }
     ];
 

@@ -35,8 +35,6 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
         const newValue = event.detail.value || '';
         setInputValue(newValue);
         onInputChange(newValue);
-
-        console.log(newValue)
     };
 
     return (
