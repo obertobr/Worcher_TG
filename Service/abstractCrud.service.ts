@@ -3,23 +3,32 @@ import BaseEntity from '../Models/base.entity';
 
 export default class AbstractCrudService<T extends BaseEntity> {
 
-    private urlApi = "http://localhost:3000/"
-    
-    constructor(pathController: string){
-        this.urlApi += pathController + "/"
-    }
+  private urlApi = "http://localhost:3000/"
 
-    async count(): Promise<number> {
-        try{
-            return (await axios.get(`${this.urlApi}count`)).data.data
-        } catch (error: any){
-            return error.response.data.errors
-        }
+  constructor(pathController: string) {
+    this.urlApi += pathController + "/"
+  }
+
+  convertToEntity(object: any): T | null {
+    return  null
+  } 
+
+  async count(): Promise<number> {
+    try {
+      return (await axios.get(`${this.urlApi}count`)).data.data
+    } catch (error: any) {
+      return error.response.data.errors
     }
+  }
 
   async list(): Promise<T[]> {
     try {
-      return (await axios.get(`${this.urlApi}list`)).data.data;
+      const list = (await axios.get(`${this.urlApi}list`)).data.data
+
+      const typedList: T[] = list.map((item: any) => {
+        return this.convertToEntity(item);
+      });
+      return typedList;
     } catch (error: any) {
       return error.response.data.errors
     }

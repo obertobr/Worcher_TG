@@ -1,11 +1,7 @@
 import { IonItem, IonLabel, IonList, IonSelect, IonSelectOption } from "@ionic/react";
 import React, { useState, useEffect, MouseEventHandler } from "react";
+import selectInputItens from "../../../../Models/Interfaces/selectInput"
 import style from '../../styleComponents/select.module.css';
-
-export interface selectInputItens {
-    id: number;
-    name: string;
-}
 
 interface SelectInputComponentProps {
     itens: selectInputItens[];
@@ -39,6 +35,8 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
         const newValue = event.detail.value || '';
         setInputValue(newValue);
         onInputChange(newValue);
+
+        console.log(newValue)
     };
 
     return (
@@ -51,9 +49,9 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
                         value={inputValue}
                         onIonChange={handleSelectChange}
                     >
-                        {itens.map((item) => (
+                        {itens.map((item: selectInputItens) => (
                             <IonSelectOption key={item.id} value={item}>
-                                {item.name}
+                                {item.getDisplayName ? item.getDisplayName() : "Nome indisponível"}
                             </IonSelectOption>
                         ))}
                     </IonSelect>
