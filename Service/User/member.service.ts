@@ -4,7 +4,7 @@ import AbstractCrudService from "../abstractCrud.service";
 export default class MemberService extends AbstractCrudService<Member> {
 
   constructor() {
-    super("member")
+    super("member",Member)
   }
 
 }

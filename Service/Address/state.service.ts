@@ -3,12 +3,6 @@ import AbstractCrudService from "../abstractCrud.service";
 
 export default class StateService extends AbstractCrudService<State> {
   constructor() {
-    super("state")
+    super("state", State); 
   }
-
-  // convertToEntity(object: any): State | null {
-  //   const state = Object.assign(new State(), object);
-
-  //   return state
-  // }
 }

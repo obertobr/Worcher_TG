@@ -3,6 +3,6 @@ import AbstractCrudService from "../abstractCrud.service";
 
 export default class EventService extends AbstractCrudService<Event> {
   constructor() {
-    super("event")
+    super("event",Event)
   }
 }

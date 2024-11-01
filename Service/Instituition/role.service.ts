@@ -3,6 +3,6 @@ import AbstractCrudService from "../abstractCrud.service";
 
 export default class RoleService extends AbstractCrudService<Role> {
   constructor() {
-    super("role");
+    super("role",Role);
   }
 }
