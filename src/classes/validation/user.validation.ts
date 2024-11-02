@@ -46,8 +46,8 @@ export default class UserValidation extends AbstractValidation {
     validateEmail(email: string | undefined): string | null {
         if (!email) return "O e-mail deve ser preenchido!";
 
-        // const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        // if(regex.test(email)) return "Email inválido!"
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!regex.test(email)) return "Email inválido!"
 
         return null;
     }

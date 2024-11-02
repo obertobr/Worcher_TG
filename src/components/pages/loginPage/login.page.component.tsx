@@ -9,7 +9,7 @@ import "./loginPageHeader.css"
 import "./loginPageMain.css"
 import AlertComponent from "../../basicComponents/alert-component/alert.component"
 import LoginValidation from "../../../classes/validation/login.validation"
-
+import logo from "../../../assets/logo.jpg"
 
 const LoginPage: React.FC<{}> = () => {
 
@@ -56,7 +56,7 @@ const LoginPage: React.FC<{}> = () => {
                     </div>
 
                     <div className="logo">
-                        Logo
+                        <img className="logoImage" src={logo} alt="logo" />
                     </div>
                 </header>
 
