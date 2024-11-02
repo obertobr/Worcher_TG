@@ -33,12 +33,6 @@
             align-items: center;
             justify-content: center;
             box-shadow: var(--lightShadow);
-
-            .logoImage{
-                width: 76px;
-                height: 76px;
-                border-radius: 100%;
-            }
         }
     }
 

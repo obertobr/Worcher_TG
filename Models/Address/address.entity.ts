@@ -8,5 +8,5 @@ export default class Address extends BaseEntity {
   number: number | undefined;
   cep: string | undefined;
   
-  city: City | undefined;
+  city: City;
 }

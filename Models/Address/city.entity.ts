@@ -6,5 +6,5 @@ export default class City extends BaseEntity {
   name: string | undefined;
   state: string | undefined;
 
-  addressList: Address[] = [];
+  addressList: Address[];
 }
