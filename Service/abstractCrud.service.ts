@@ -3,7 +3,7 @@ import BaseEntity from '../Models/base.entity';
 
 export default class AbstractCrudService<T extends BaseEntity> {
 
-  private urlApi = "http://localhost:3000/";
+  urlApi = "http://localhost:3000/";
   private entityClass: { new(): T };
 
   constructor(pathController: string, entityClass: { new(): T }) {

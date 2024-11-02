@@ -21,4 +21,8 @@ export default abstract class AbstractValidation {
     get errors(){
         return this._errors
     }
+
+    hasErrors(): boolean{
+        return this._errors && this._errors.length > 0;
+    }
 }
