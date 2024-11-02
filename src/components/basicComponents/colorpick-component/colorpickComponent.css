@@ -1,5 +1,6 @@
 .colorContent { 
   width: 80%;
+  max-width: 540px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,6 +8,7 @@
   position: relative;
   
   .colorLabel {
+    width: 100px;
     color: var(--primaryColorFont);
     font-size: 16px;
     margin-left: 10px;
