@@ -5,6 +5,7 @@ import TextInputComponent from "../../basicComponents/text-input-component/text.
 import "./loginPageContent.css"
 import "./loginPageHeader.css"
 import "./loginPageMain.css"
+import logo from "../../../assets/logo.jpg"
 
 
 const LoginPage: React.FC<{}> = () => {
@@ -22,7 +23,7 @@ const LoginPage: React.FC<{}> = () => {
                     </div>
 
                     <div className="logo">
-                        Logo
+                        <img className="logoImage" src={logo} alt="logo" />
                     </div>
                 </header>
 
