@@ -14,8 +14,11 @@ import Account from "../../../../Models/User/account.entity";
 import UserValidation from "../../../classes/validation/user.validation";
 import UserService from "../../../../Service/User/user.service"
 import Config from "../../../../Models/User/config.entity";
+import RouterUtil from "../../../../Utils/Components/RouterUtil";
+import { useHistory } from "react-router";
 
 const SingUpPage: React.FC<{}> = () => {
+  const history = useHistory();
 
   const [showModal, setShowModal] = useState(false);
   const [messagesErrorModal, setMessagesErrorModal] = useState<string[]>([])
@@ -37,9 +40,7 @@ const SingUpPage: React.FC<{}> = () => {
     user.name = name;
     user.dateOfBirth = date;
     user.cpf = cpf;
-    user.account = new Account();
-    user.account.email = email;
-    user.account.password = senha;
+    user.account = new Account(email ? email : "",senha ? senha : "");
 
     user.config = new Config()
     user.config.recieveEmails = false
@@ -63,6 +64,9 @@ const SingUpPage: React.FC<{}> = () => {
     if(Array.isArray(response)){
       setMessagesErrorModal(response)
       setShowModal(true)
+    }else{
+      alert("Cadastro feito com sucesso!")
+      RouterUtil.goToPage(history, "login")
     }
   }
 

@@ -12,9 +12,12 @@ import LoginValidation from "../../../classes/validation/login.validation"
 import logo from "../../../assets/logo.jpg"
 import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils"
 import Account from "../../../../Models/User/account.entity"
+import RouterUtil from "../../../../Utils/Components/RouterUtil"
+import { useHistory } from "react-router"
 
 const LoginPage: React.FC<{}> = () => {
 
+    const history = useHistory();
     const localStorageLoginUtils = new LocalStorageLoginUtils();
 
     const [showModal, setShowModal] = useState(false);
@@ -125,7 +128,7 @@ const LoginPage: React.FC<{}> = () => {
 
                 <div className="buttonActions">
                     <ButtonComponent width="230px" text="Entrar" onClick={login} />
-                    <LinkTextComponent text="Novo Cadastro? Crie sua conta aqui." onClick={() => {} } />
+                    <LinkTextComponent text="Novo Cadastro? Crie sua conta aqui." onClick={() => {RouterUtil.goToPage(history, "singup")} } />
                 </div>
 
                 </main>
