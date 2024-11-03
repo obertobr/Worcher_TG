@@ -44,6 +44,7 @@ import PositionRegistrationPage from './components/pages/positionRegistrationPag
 import TestPage from './components/pages/testPage/test.page.component';
 import { ThemeManager } from './components/themeManager/theme.manager';
 import './theme/variables.css';
+import LoadAplicationManager from './classes/LoadAplication/load.aplication.manager';
 
 setupIonicReact();
 
@@ -69,6 +70,9 @@ const App: React.FC = () => {
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown )
+
+    const loadAplicationManager = new LoadAplicationManager()
+    loadAplicationManager.init()
   }, [])
 
   

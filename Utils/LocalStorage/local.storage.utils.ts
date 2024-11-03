@@ -33,6 +33,4 @@ export default class LocalStorageUtils<T> {
             console.error('Erro ao serializar e armazenar o item no localStorage:', error)
         }
     }
-    
-
 }
