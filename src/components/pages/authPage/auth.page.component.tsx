@@ -1,9 +1,13 @@
 import AuthComponent from "../../basicComponents/authInput-component/auth.component";
 import ButtonComponent from "../../basicComponents/button-component/button.components";
+import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component";
 
 import './authPageContainer.css';
 import './authPageContent.css';
 import './authPageMain.css';
+
+import logo from "../../../assets/rafael.png"
+
 
 interface propos {
   p: string;
@@ -15,9 +19,7 @@ const AuthPage: React.FC<propos> = ({p = 'Informe o código de autenticação:'}
     <>
     <div className="contentAuth">
 
-      <header>
-        {/* componente para o header padrão das páginas */}
-      </header>
+      <HeaderComponent showCircleImage={false}></HeaderComponent>
       
       <main>
         <div className="authContainer">

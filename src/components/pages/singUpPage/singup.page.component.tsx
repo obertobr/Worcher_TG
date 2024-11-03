@@ -16,6 +16,7 @@ import UserService from "../../../../Service/User/user.service"
 import Config from "../../../../Models/User/config.entity";
 import RouterUtil from "../../../../Utils/Components/RouterUtil";
 import { useHistory } from "react-router";
+import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component";
 
 const SingUpPage: React.FC<{}> = () => {
   const history = useHistory();
@@ -87,6 +88,7 @@ const SingUpPage: React.FC<{}> = () => {
         messages={messagesErrorModal} 
         titleText={"Não foi possível realizar o cadastro"}      
       />
+      <HeaderComponent showCircleImage={false}></HeaderComponent>
 
       <div className="contentSingUp">
         <main>

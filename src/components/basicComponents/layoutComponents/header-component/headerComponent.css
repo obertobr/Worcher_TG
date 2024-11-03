@@ -1,0 +1,53 @@
+.header {
+    width: 100%;
+    height: 70px;
+    background-color: #4479D7;
+    position: relative;
+
+    .imageBackground{
+        width: 100%;
+        height: 100%;
+
+        img{
+            width: 100%;
+            height: 100%;
+        }
+
+    }
+
+    .back-arrow-icon{
+        width: 24px;
+        height: 24px;
+        color: #ffffff;
+
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    .circleImage{
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+
+        position: absolute;
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        box-shadow: var(--lightShadow);
+        z-index: 50;
+        
+    }
+
+    .circleSimple{
+        top: calc(50% - 25px);
+        right: 20px;
+    }
+
+    .circleComplex {
+        top: calc(100% - 40px);
+        right: calc(50% - 35px);
+
+        width: 70px;
+        height: 70px;
+    }
+
+}

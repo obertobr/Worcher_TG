@@ -24,7 +24,8 @@ const InstitutionRegister: React.FC<{}> = () => {
         loadStates()
     }, []);
 
-    const handleInputChange = (event: string) => {
+    const handleInputChange = (event: any) => {
+        
     };
 
     const itens: selectInputItens[] = [
@@ -102,7 +103,6 @@ const InstitutionRegister: React.FC<{}> = () => {
                     </div>
 
                     <div className="buttonActions">
-                        <ButtonComponent width="230px" text="Cancelar" onClick={() => { }} />
                         <ButtonComponent width="230px" text="Criar" onClick={() => { }} />
                     </div>
 

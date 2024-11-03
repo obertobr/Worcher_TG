@@ -10,7 +10,6 @@ const functions: CustomFunction[] = [
     new CustomFunction((e: string) => {console.warn(e)}, ["-- Aplication init: " + DateUtil.formatFullDateTime(new Date())]), 
     new CustomFunction(localStorageThemeUtils.setThemeLightIfNotExistisValueInLocalStorage, []),
     new CustomFunction(ThemeManager.setThemeDeafultInLocalStorage, [])
-    
 ]
 
 export default functions

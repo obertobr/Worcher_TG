@@ -37,3 +37,17 @@
     border: var(--borderInput);
     border-radius: 4px;
 }
+
+.selectItemInput ion-select {
+    --color: var(--primaryColorFont);
+    --placeholder-color: var(--primaryColorFont);
+    --highlight-color-focused: var(--primaryColorFont);
+}
+
+.selectItemInput ion-select::part(placeholder) {
+    color: var(--primaryColorFont);
+}
+
+.selectItemInput ion-select::part(text) {
+    color: var(--primaryColorFont); 
+}

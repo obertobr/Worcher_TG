@@ -1,5 +1,6 @@
 import ButtonComponent from "../../basicComponents/button-component/button.components";
 import ColorPicker from "../../basicComponents/colorpick-component/colorpick.component";
+import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component";
 import TextInputComponent from "../../basicComponents/text-input-component/text.input.component";
 
 import './categoryRegistrationPageContainer.css';
@@ -18,10 +19,9 @@ const CategoryRegistrationPage: React.FC<categoryRegistrationInterface> = ({
 
   return(
     <>
+      <HeaderComponent type='simple' showCircleImage={false}></HeaderComponent>
+
       <div className="categoryRegContent">
-        <header>
-          {/* componente para o header padrão das páginas */}
-        </header>
 
         <main>
           <div className="categoryRegContainer">
@@ -30,7 +30,7 @@ const CategoryRegistrationPage: React.FC<categoryRegistrationInterface> = ({
           </div>
 
           <div className="categoryRegInputContainer">
-            <TextInputComponent textLabel="Nome da Categoria" onInputChange={() => {} } placeHolder="Nome da Categoria" />
+            <TextInputComponent textLabel="Nome da Categoria" onInputChange={() => {} } placeHolder="Digite aqui..." />
             
             <ColorPicker />
 

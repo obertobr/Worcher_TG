@@ -1,11 +1,15 @@
 import ButtonComponent from '../../basicComponents/button-component/button.components';
+import HeaderComponent from '../../basicComponents/layoutComponents/header-component/header.component';
 import './institutionViewPageConteiner.css';
 import './institutionViewPageContent.css';
 import './institutionViewPageMain.css';
 
+
+import logo from "../../../assets/rafael.png"
+
 interface instituitionViewInterface {
-  title?: string;
-  desc?: string;
+  title: string;
+  desc: string;
   intAddress?: string;
 }
 
@@ -17,21 +21,18 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
 
   return(
     <>
+    <HeaderComponent type='complex' circleImage={logo}></HeaderComponent>
       <div className="contentIntView">
-        <header>
-          {/* componente para o header padrão das páginas */}
-        </header>
-
+      
         <main>
           <div className="intViewContainer">
-            <h2>{title}</h2>
-            <br />
-            <p>{desc}</p>
+            <h2 className='title center'>{title}</h2>
+            <p className='center'>{desc}</p>
           </div>
 
           <div className="intViewAddressContainer">
-            <h2>ENDEREÇO</h2>
-            <h3>{intAddress}</h3>
+            <h2 className='titleSecond'>ENDEREÇO</h2>
+            <p>{intAddress}</p>
           </div>
 
           <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => {} } />
