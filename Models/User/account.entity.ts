@@ -7,4 +7,11 @@ export default class Account extends BaseEntity {
   password: string | undefined;
 
   user: User | undefined;
+
+  constructor(email: string, password: string){
+    super();
+
+    this.email = email
+    this.password = password
+  }
 }

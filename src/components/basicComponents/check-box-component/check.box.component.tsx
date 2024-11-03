@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./checkBox.css"
 
 interface CheckBoxComponentProps {
-    textCheckBox: string
+    textCheckBox: string,
+    changeValue: Function,
+    value?: boolean
 }
 
-const CheckBoxComponent: React.FC<CheckBoxComponentProps> = ({ textCheckBox }) => {
+const CheckBoxComponent: React.FC<CheckBoxComponentProps> = ({ textCheckBox, changeValue, value }) => {
+  useEffect( () => {
+      if(value) setChecked(value)
+    },[value]
+  )
+
   const [checked, setChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    setChecked(!checked);
+    const valueChecked = !checked
+    setChecked(valueChecked);
+    changeValue(valueChecked)
   };
 
   return (

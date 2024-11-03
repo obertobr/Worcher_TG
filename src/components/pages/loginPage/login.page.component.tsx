@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import UserService from "../../../../Service/User/user.service"
 import ButtonComponent from "../../basicComponents/button-component/button.components"
 import CheckBoxComponent from "../../basicComponents/check-box-component/check.box.component"
@@ -10,8 +10,12 @@ import "./loginPageMain.css"
 import AlertComponent from "../../basicComponents/alert-component/alert.component"
 import LoginValidation from "../../../classes/validation/login.validation"
 import logo from "../../../assets/logo.jpg"
+import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils"
+import Account from "../../../../Models/User/account.entity"
 
 const LoginPage: React.FC<{}> = () => {
+
+    const localStorageLoginUtils = new LocalStorageLoginUtils();
 
     const [showModal, setShowModal] = useState(false);
     const [messagesErrorModal, setMessagesErrorModal] = useState<string[]>([])
@@ -19,15 +23,35 @@ const LoginPage: React.FC<{}> = () => {
     // VALUES
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [rememberData,setRememberData] = useState<boolean>(localStorageLoginUtils.getRememberData())
 
-    const login = async () => {
+    useEffect(() => {
+        if(rememberData){
+           const account = localStorageLoginUtils.getAccount()
+
+           if(account){
+                setEmail(account.email ? account.email : "")
+                setPassword(account.password ? account.password : "")
+           }
+        }
+    },[])
+
+    const applyLoginValidation = () => {
         const loginValidation = new LoginValidation()
         loginValidation.validate(email,password)
 
         if(loginValidation.hasErrors()){
             setMessagesErrorModal(loginValidation.errors)
             setShowModal(true)
-        }else{
+
+            return false
+        }
+
+        return true
+    }
+
+    const login = async () => {
+        if(applyLoginValidation()){
             const userService = new UserService()
             const response = await userService.login(email,password)
 
@@ -35,9 +59,19 @@ const LoginPage: React.FC<{}> = () => {
                 setMessagesErrorModal(response)
                 setShowModal(true)
             }else{
-                alert("login feito com sucesso!")
+                executeAfterLogin()
             }
         }
+    }
+
+    const executeAfterLogin = () => {
+        localStorageLoginUtils.setRememberData(rememberData)
+
+        if(rememberData){
+            localStorageLoginUtils.setAccount(new Account(email,password))
+        }
+
+        alert("login feito com sucesso!")
     }
     
     return (
@@ -67,13 +101,15 @@ const LoginPage: React.FC<{}> = () => {
 
 
                 <div className="inputsSection" >
-                    <TextInputComponent 
+                    <TextInputComponent
+                              value={email}
                               textLabel='Email'
                               placeHolder='Digite seu email...'
                               onInputChange={(e) => setEmail(e)}
                     ></TextInputComponent>
 
                     <TextInputComponent 
+                            value={password}
                               textLabel='Senha'
                               typeInput='password'
                               placeHolder='Digite sua senha...'
@@ -82,7 +118,7 @@ const LoginPage: React.FC<{}> = () => {
                 </div>
 
                     <div className="actionsSenha">
-                        <CheckBoxComponent textCheckBox="Lembrar dados" />
+                        <CheckBoxComponent value={rememberData} textCheckBox="Lembrar dados" changeValue={(e: boolean) => {setRememberData(e)}}  />
 
                         <LinkTextComponent text="Esqueceu a senha?" onClick={() => {} } />
                     </div>

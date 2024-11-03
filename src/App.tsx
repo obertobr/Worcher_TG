@@ -42,7 +42,6 @@ import InstituitionViewPage from './components/pages/institutionViewPage/institu
 import MemberViewPage from './components/pages/memberManegerPage/memberManager.page.component';
 import PositionRegistrationPage from './components/pages/positionRegistrationPage/positionRegistration.page.component';
 import TestPage from './components/pages/testPage/test.page.component';
-import { ThemeManager } from './components/themeManager/theme.manager';
 import './theme/variables.css';
 import LoadAplicationManager from './classes/LoadAplication/load.aplication.manager';
 import handleKeyDown from './components/themeManager/handle.key.down.theme.change'
@@ -52,11 +51,7 @@ setupIonicReact();
 
 const App: React.FC = () => {
   
-  let theme = true;
-
-  // PRESS (CRTL + 1) TO CHANGE THEME (LIGHT,DARK)
-  
-
+  // useEffect chamado uma vez na inicialização da aplicação
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown )
 
