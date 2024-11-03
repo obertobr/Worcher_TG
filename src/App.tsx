@@ -45,6 +45,8 @@ import TestPage from './components/pages/testPage/test.page.component';
 import { ThemeManager } from './components/themeManager/theme.manager';
 import './theme/variables.css';
 import LoadAplicationManager from './classes/LoadAplication/load.aplication.manager';
+import handleKeyDown from './components/themeManager/handle.key.down.theme.change'
+
 
 setupIonicReact();
 
@@ -53,20 +55,7 @@ const App: React.FC = () => {
   let theme = true;
 
   // PRESS (CRTL + 1) TO CHANGE THEME (LIGHT,DARK)
-  const handleKeyDown: any = (event: KeyboardEvent) => {
-    
-    if ((event.ctrlKey || event.metaKey) && event.key === '1') {
-      event.preventDefault(); 
-      
-      if(theme){
-        ThemeManager.setDark()
-      }else{
-        ThemeManager.setLight()
-      }
-      
-      theme = !theme;
-    }
-  };
+  
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown )
