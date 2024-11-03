@@ -45,6 +45,7 @@ import TestPage from './components/pages/testPage/test.page.component';
 import './theme/variables.css';
 import LoadAplicationManager from './classes/LoadAplication/load.aplication.manager';
 import handleKeyDown from './components/themeManager/handle.key.down.theme.change'
+import RememberPasswordPageComponent from './components/pages/rememberPassword/remember.password.page.component'
 
 
 setupIonicReact();
@@ -71,6 +72,8 @@ const App: React.FC = () => {
           <Route exact path="/home" component={Home} />
 
           <Route exact path="/login" component={LoginPage}/>
+
+          <Route exact path="/rememberPassword" component={RememberPasswordPageComponent} />
 
           <Route exact path="/auth-page" component={AuthPage} />
 

@@ -7,18 +7,21 @@ interface ButtonComponentProps {
   width: string;
   isCancel?: boolean;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 const ButtonComponent: React.FC<ButtonComponentProps> = (
   { text,
     width,
     isCancel = false,
-    onClick 
+    onClick, 
+    disabled = false
 
   }) => {
   return (
     <IonButton className={ (isCancel ? style.red : style.blue) + " " + style.customIonButton} 
                 style={{width}}
+                disabled={disabled}
                onClick={onClick} expand="block">
       {text}
     </IonButton>

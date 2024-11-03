@@ -17,4 +17,24 @@ export default class UserService extends AbstractCrudService<User>{
         }
     }
 
+    async recoveryPassword(email: string): Promise<{accountId: number }> {
+        try {
+            const response = await axios.post(`${this.urlApi}recovery_password`, { email });
+            return response.data.data;
+        } catch (error: any) {
+            return error.response.data.errors;
+        }
+    }
+    
+
+    async recoveryCheck(id: number, code: number): Promise<void> {
+        try {
+            await axios.post(`${this.urlApi}recovery_check`, { id, code });
+        } catch (error: any) {
+            return error.response.data.errors;
+        }
+      }
+
+
+
 }

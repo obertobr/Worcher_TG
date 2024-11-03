@@ -83,7 +83,7 @@ const LoginPage: React.FC<{}> = () => {
                 isOpen={showModal}
                 onDidDismiss={() => setShowModal(false)}
                 messages={messagesErrorModal} 
-                titleText={"Não foi possível realizar o cadastro"}      
+                titleText={"Não foi possível realizar o login"}      
             />
 
             <div className="contentLogin">
@@ -123,7 +123,7 @@ const LoginPage: React.FC<{}> = () => {
                     <div className="actionsSenha">
                         <CheckBoxComponent value={rememberData} textCheckBox="Lembrar dados" changeValue={(e: boolean) => {setRememberData(e)}}  />
 
-                        <LinkTextComponent text="Esqueceu a senha?" onClick={() => {} } />
+                        <LinkTextComponent text="Esqueceu a senha?" onClick={() => {RouterUtil.goToPage(history, "rememberPassword")} } />
                     </div>
 
                 <div className="buttonActions">
