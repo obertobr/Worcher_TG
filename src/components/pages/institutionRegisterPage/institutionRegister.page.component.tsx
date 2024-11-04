@@ -10,6 +10,8 @@ import StateService from "../../../../Service/Address/state.service"
 import "./intitutionRegisterContent.css"
 import selectInputItens from "../../../../Models/Interfaces/selectInput";
 import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component";
+import InstitutionRegisterValidation from "../../../classes/validation/institutionRegister.validation";
+import AlertComponent from "../../basicComponents/alert-component/alert.component";
 
 
 const InstitutionRegister: React.FC<{}> = () => {
@@ -18,10 +20,13 @@ const InstitutionRegister: React.FC<{}> = () => {
     const [states, setStates] = useState<State[]>([])
     const [cities, setCities] = useState<City[]>([])
 
+    const [showModal, setShowModal] = useState(false);
+    const [messagesErrorModal, setMessagesErrorModal] = useState<string[]>([])
+
     // Value
 
-    const [nameOfInstitition,setNameOfInstitition] = useState<string>("")
-    const [state,setState] = useState<State>()
+    const [nameOfInstitition, setNameOfInstitition] = useState<string>("")
+    const [state, setState] = useState<State>()
     const [city, setCity] = useState<City>()
     const [neighborhood, setNeighborhood] = useState<string>("")
     const [street, setStreet] = useState<string>("")
@@ -29,7 +34,7 @@ const InstitutionRegister: React.FC<{}> = () => {
     const [description, setDescription] = useState<string>("")
 
     const loadStates = async () => {
-        
+
         setStates(await stateService.list())
     }
 
@@ -47,19 +52,59 @@ const InstitutionRegister: React.FC<{}> = () => {
 
     }
 
-    const createListOfCity = (list: City[] | undefined) : City[] => {
-        if(!list) return [];
+    const createListOfCity = (list: City[] | undefined): City[] => {
+        if (!list) return [];
 
-        return list.map( item => {
-            const city =  new City()
+        return list.map(item => {
+            const city = new City()
             city.id = item.id
             city.name = item.name
             return city
-        } )
+        })
+    }
+
+    const applyRegisterValidation = () => {
+        const registerValidation = new InstitutionRegisterValidation()
+        registerValidation.validate(nameOfInstitition,
+            state,
+            city,
+            neighborhood,
+            street,
+            number)
+
+        if (registerValidation.hasErrors()) {
+            setMessagesErrorModal(registerValidation.errors)
+            setShowModal(true)
+
+            return false
+        }
+
+        return true
+    }
+
+    const register = async () => {
+        if (applyRegisterValidation()) {
+            // const userService = new UserService()
+            // const response = await userService.login(email,password)
+
+            // if(Array.isArray(response)){
+            //     setMessagesErrorModal(response)
+            //     setShowModal(true)
+            // }else{
+            //     executeAfterLogin()
+            // }
+        }
     }
 
     return (
         <>
+            <AlertComponent
+                isOpen={showModal}
+                onDidDismiss={() => setShowModal(false)}
+                messages={messagesErrorModal}
+                titleText={"Não foi possível realizar o registro da instituição"}
+            />
+
             <HeaderComponent type='simple' showCircleImage={false}></HeaderComponent>
 
             <div className="contentInstitutionRegister">
@@ -120,7 +165,7 @@ const InstitutionRegister: React.FC<{}> = () => {
                     </div>
 
                     <div className="buttonActions">
-                        <ButtonComponent width="230px" text="Criar" onClick={() => { }} />
+                        <ButtonComponent width="230px" text="Criar" onClick={register} />
                     </div>
 
                 </main>
