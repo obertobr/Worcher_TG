@@ -75,11 +75,11 @@ const SingUpPage: React.FC<{}> = () => {
     <>
       
       <PopupComponent isOpen={showModalDate}
-      onDidDismiss={() => { setShowModalDate(false); } }
-      content={<DateComponent type="date" valueChange={() => {}}></DateComponent>}
-      titleText={"Selecione uma data"} 
-      valueChangePopup={(e) => setDate(e)}
-      validateValue={() => {console.log("validate")}}      
+        onDidDismiss={() => { setShowModalDate(false); } }
+        content={<DateComponent type="date" valueChange={() => {}}></DateComponent>}
+        titleText={"Selecione uma data"} 
+        valueChangePopup={(e) => setDate(e)}
+        validateValue={() => {console.log("validate")}}      
       ></PopupComponent>
 
       <AlertComponent

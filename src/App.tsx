@@ -46,6 +46,7 @@ import './theme/variables.css';
 import LoadAplicationManager from './classes/LoadAplication/load.aplication.manager';
 import handleKeyDown from './components/themeManager/handle.key.down.theme.change'
 import RememberPasswordPageComponent from './components/pages/rememberPassword/remember.password.page.component'
+import EventRegisterPage from './components/pages/registerEventPage/register.event.page.component';
 
 
 setupIonicReact();
@@ -88,6 +89,8 @@ const App: React.FC = () => {
           <Route exact path='/position-registration' component={PositionRegistrationPage} />
 
           <Route exact path='/member-view' component={MemberViewPage} />
+
+          <Route exact path='/event-register' component={EventRegisterPage} />
 
           <Route exact path="/">
             <Redirect to="/test" />

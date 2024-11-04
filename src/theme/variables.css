@@ -44,4 +44,7 @@ http://ionicframework.com/docs/theming/ */
 
     /* ALERT MODAL */
     --headerBackgroundColor: rgb(195, 133, 137);
+
+    /* FILE INPUT */
+    --borderFile: #00000066 ;
 }

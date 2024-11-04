@@ -10,6 +10,7 @@ interface SelectInputComponentProps {
     textLabel?: string;
     placeHolder?: string;
     value?: string;
+    disabled?: boolean;
     onInputChange: (value: string) => void;
     onClick?: MouseEventHandler<HTMLDivElement>;
 }
@@ -20,6 +21,7 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
     textLabel,
     placeHolder,
     value,
+    disabled = false,
     onInputChange,
     onClick = () => { },
 }) => {
@@ -43,6 +45,7 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
             <IonList className={style.selectListInput}>
                 <IonItem className={style.selectItemInput}>
                     <IonSelect
+                        disabled={disabled}
                         placeholder={placeHolder}
                         value={inputValue}
                         onIonChange={handleSelectChange}

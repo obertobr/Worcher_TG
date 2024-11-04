@@ -7,12 +7,16 @@ import UploadImageComponent from "../../basicComponents/upload-image-component/u
 import State from "../../../../Models/Address/state.entity"
 import City from "../../../../Models/Address/city.entity"
 import StateService from "../../../../Service/Address/state.service"
-import "./intitutionRegisterContent.css"
-import selectInputItens from "../../../../Models/Interfaces/selectInput";
+import "./registerEventContent.css"
 import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component";
+import DateUtil from "../../../../Utils/DateUtil";
+import PopupComponent from "../../basicComponents/popup-component/popup.component";
+import DateComponent from "../../basicComponents/date-component/date.component";
 
 
-const InstitutionRegister: React.FC<{}> = () => {
+const EventRegisterPage: React.FC<{}> = () => {
+
+    const [showModalDate, setShowModalDate] = useState(false);
 
     const stateService = new StateService()
     const [states, setStates] = useState<State[]>([])
@@ -20,7 +24,8 @@ const InstitutionRegister: React.FC<{}> = () => {
 
     // Value
 
-    const [nameOfInstitition,setNameOfInstitition] = useState<string>("")
+    const [name,setName] = useState<string>("")
+    const [date, setDate] = useState<Date>();
     const [state,setState] = useState<State>()
     const [city, setCity] = useState<City>()
     const [neighborhood, setNeighborhood] = useState<string>("")
@@ -64,14 +69,29 @@ const InstitutionRegister: React.FC<{}> = () => {
 
             <div className="contentInstitutionRegister">
                 <main>
-                    <h1 className="mainTitle">Cadastro de Instituição</h1>
+                    <h1 className="mainTitle">Cadastro de Evento</h1>
 
 
                     <div className="inputsSection" >
                         <TextInputComponent
-                            textLabel="Nome da Instituição"
-                            placeHolder="Nome da Instituição"
-                            onInputChange={(e) => setNameOfInstitition(e)}
+                            textLabel="Nome do evento"
+                            placeHolder="Nome do evento"
+                            onInputChange={(e) => setName(e)}
+                        />
+
+                        <TextAreaInputComponent
+                            textLabel='Descrição'
+                            placeHolder='Descreva seu evento em detalhes aqui...'
+                            onInputChange={(e) => setDescription(e)}
+                        ></TextAreaInputComponent>
+
+                        <TextInputComponent
+                            isReadOnly={true}
+                            onClick={() => setShowModalDate(true)}
+                            textLabel="Data do evento"
+                            placeHolder="Clique aqui para selecionar a data"
+                            value={DateUtil.formatToDDMMYYYYAndDay(date)}
+                            onInputChange={(e) => setDate(date)} 
                         />
 
                         <SelectInputComponent
@@ -107,14 +127,10 @@ const InstitutionRegister: React.FC<{}> = () => {
                             onInputChange={(e) => setNumber(e)}
                         ></TextInputComponent>
 
-                        <TextAreaInputComponent
-                            textLabel='Descrição'
-                            placeHolder='Descrição'
-                            onInputChange={(e) => setDescription(e)}
-                        ></TextAreaInputComponent>
+                        
 
                         <UploadImageComponent
-                            text="Imagem da Instituição"
+                            text="Imagem do evento"
                             onInputChange={handleInputChange}
                         ></UploadImageComponent>
                     </div>
@@ -127,8 +143,16 @@ const InstitutionRegister: React.FC<{}> = () => {
 
 
             </div>
+
+            <PopupComponent isOpen={showModalDate}
+                onDidDismiss={() => { setShowModalDate(false); } }
+                content={ <DateComponent type="date" valueChange={() => {}}></DateComponent>}
+                titleText={"Selecione uma data"} 
+                valueChangePopup={(e) => setDate(e)}
+                validateValue={() => {console.log("validate")}}      
+            ></PopupComponent>
         </>
     )
 }
 
-export default InstitutionRegister;
+export default EventRegisterPage;

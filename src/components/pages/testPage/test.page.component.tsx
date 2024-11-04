@@ -6,13 +6,14 @@ import "./testPage.css";
 const buttons = [
     {path: 'home', text: 'HOME'},
     {path: 'login', text: 'LOGIN'},
-    {path: 'singup', text: "SINGUP"},
-    {path: 'institution-register', text: "INSTITUTION-REGISTER"},
-    {path: 'auth-page', text: 'AUTENTICATION'},
-    {path: 'inst-page', text: 'INSTITUTION VIEW PAGE'},
-    {path: 'category-registration', text: 'CATEGORY REGISTRATION'},
-    {path: 'position-registration', text: 'POSITION REGISTRATION'},
-    {path: 'member-view', text: 'MEMBER VIEW'}
+    {path: 'singup', text: "CADASTRO DE USUARIO "},
+    {path: 'institution-register', text: "CADASTRO DE INSTITUIÇÃO"},
+    {path: 'auth-page', text: 'AUTENTICAÇÃO'},
+    {path: 'inst-page', text: 'VIEW INSTITUIÇÃO'},
+    {path: 'category-registration', text: 'CADASTRO DE CATEGORIA'},
+    {path: 'position-registration', text: 'CADASTRO DE CARGO'},
+    {path: 'member-view', text: 'GERENCIAR MEMBROS'},
+    {path: 'event-register', text: 'CRIAR EVENTOS'}
 ]
 
 const TestPage: React.FC<{}> = () => {

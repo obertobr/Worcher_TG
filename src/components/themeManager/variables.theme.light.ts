@@ -8,6 +8,8 @@ const variables = {
     colorInput: '#0e0b15',
     borderInput: '1px solid rgba(0, 0, 0, 0.4)',
     outlineInput: '1px solid rgba(110, 126, 197, 0.5)',
+
+    borderFile: '#00000066',
 }
 
 export default variables ;
