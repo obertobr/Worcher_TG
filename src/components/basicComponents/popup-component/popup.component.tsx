@@ -52,6 +52,8 @@ const PopupComponent: React.FC<PopupComponentProps> = ({
 
   return (
     <>
+      <div className='hiddenOverflow'></div>
+
       {isOpen && (
         <div className={`${style.overlay} ${visible ? style.fadeIn : style.fadeOut}`}
              onClick={handleOverlayClick}

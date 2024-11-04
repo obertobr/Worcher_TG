@@ -7,3 +7,5 @@
 ion-router-outlet {
     overflow-y: scroll;
 }
+
+/*  TODO => CRIAR UMA VARIAVEL NO CSS PARA CONTROLAR O ESTADO DE OVERFLOW DA PAGINA - ScrollUtils   */

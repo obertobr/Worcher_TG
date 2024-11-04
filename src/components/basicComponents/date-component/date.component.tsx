@@ -41,7 +41,7 @@ const DateComponent: React.FC<DateComponentProps> = ({
         className="dateComponent"
         onIonChange={handleDateTimeChange}
         value={selectedDate ? selectedDate.toISOString() : undefined}
-        presentation={type === "date" ? "date" : "date-time"}
+        presentation={type === "date" ? "date" : "time"}
       />
 
       <IonLabel className="labelInput">{selectedDate != null ? DateUtil.formatToDDMMYYYYAndDay(selectedDate) : ""}</IonLabel>

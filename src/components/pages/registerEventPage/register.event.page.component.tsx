@@ -12,11 +12,13 @@ import HeaderComponent from "../../basicComponents/layoutComponents/header-compo
 import DateUtil from "../../../../Utils/DateUtil";
 import PopupComponent from "../../basicComponents/popup-component/popup.component";
 import DateComponent from "../../basicComponents/date-component/date.component";
+import HourMinuteSelectorComponent from "../../basicComponents/time-component/time.component";
 
 
 const EventRegisterPage: React.FC<{}> = () => {
 
     const [showModalDate, setShowModalDate] = useState(false);
+    const [showModalDateTime, setShowModalDateTime] = useState(false);
 
     const stateService = new StateService()
     const [states, setStates] = useState<State[]>([])
@@ -92,6 +94,12 @@ const EventRegisterPage: React.FC<{}> = () => {
                             placeHolder="Clique aqui para selecionar a data"
                             value={DateUtil.formatToDDMMYYYYAndDay(date)}
                             onInputChange={(e) => setDate(date)} 
+                        />
+
+                        <HourMinuteSelectorComponent 
+                                label="Selecione a hora"
+                                onTimeChangeString={(hour, minute) => {}} 
+                                onTimeChange={(e) => console.log(e)}
                         />
 
                         <SelectInputComponent
