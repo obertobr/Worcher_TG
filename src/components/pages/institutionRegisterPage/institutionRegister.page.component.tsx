@@ -7,11 +7,14 @@ import UploadImageComponent from "../../basicComponents/upload-image-component/u
 import State from "../../../../Models/Address/state.entity"
 import City from "../../../../Models/Address/city.entity"
 import StateService from "../../../../Service/Address/state.service"
+import InstitutionService from "../../../../Service/Instituition/institution.service"
 import "./intitutionRegisterContent.css"
-import selectInputItens from "../../../../Models/Interfaces/selectInput";
 import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component";
 import InstitutionRegisterValidation from "../../../classes/validation/institutionRegister.validation";
 import AlertComponent from "../../basicComponents/alert-component/alert.component";
+import Institution from "../../../../Models/Instituition/institution.entity";
+import Address from "../../../../Models/Address/address.entity";
+import DigitalFile from "../../../../Models/DigitalFile/digitalFile.entity";
 
 
 const InstitutionRegister: React.FC<{}> = () => {
@@ -32,6 +35,7 @@ const InstitutionRegister: React.FC<{}> = () => {
     const [street, setStreet] = useState<string>("")
     const [number, setNumber] = useState<string>("")
     const [description, setDescription] = useState<string>("")
+    const [image, setImage] = useState<File>()
 
     const loadStates = async () => {
 
@@ -48,8 +52,12 @@ const InstitutionRegister: React.FC<{}> = () => {
         setCities(createListOfCity(state?.citiesList))
     };
 
-    const handleInputChange = () => {
+    const cityChange = async (event: any) => {
+        setCity(event)
+    };
 
+    const handleInputChange = (event: any) => {
+        console.log(event)
     }
 
     const createListOfCity = (list: City[] | undefined): City[] => {
@@ -82,17 +90,28 @@ const InstitutionRegister: React.FC<{}> = () => {
         return true
     }
 
+    const createNewInstitution = (): Institution => {
+        const institution = new Institution();
+        institution.name = nameOfInstitition;
+        institution.description = description;
+        institution.address = new Address(neighborhood, street, number, "", city)
+
+        return institution
+    }
+
     const register = async () => {
         if (applyRegisterValidation()) {
-            // const userService = new UserService()
-            // const response = await userService.login(email,password)
+            const institution = createNewInstitution()
 
-            // if(Array.isArray(response)){
-            //     setMessagesErrorModal(response)
-            //     setShowModal(true)
-            // }else{
-            //     executeAfterLogin()
-            // }
+            const service = new InstitutionService()
+            const response = await service.save(institution, image)
+            console.log(response)
+            if(Array.isArray(response)){
+                setMessagesErrorModal(response)
+                setShowModal(true)
+            }else{
+                //executeAfterLogin()
+            }
         }
     }
 
@@ -131,7 +150,7 @@ const InstitutionRegister: React.FC<{}> = () => {
                             textLabel='Cidade'
                             placeHolder='Cidade'
                             itens={cities}
-                            onInputChange={handleInputChange}
+                            onInputChange={cityChange}
                         ></SelectInputComponent>
 
                         <TextInputComponent
@@ -160,7 +179,7 @@ const InstitutionRegister: React.FC<{}> = () => {
 
                         <UploadImageComponent
                             text="Imagem da Instituição"
-                            onInputChange={handleInputChange}
+                            onInputChange={setImage}
                         ></UploadImageComponent>
                     </div>
 
