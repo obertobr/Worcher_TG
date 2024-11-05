@@ -10,11 +10,12 @@ import "./uploadImageInputComponent.css"
 
 interface TextInputComponentProps {
     text: string;
-    onInputChange: (value: string) => void;
+    onInputChange: (value: File) => void;
 }
 
 const UploadImageComponent: React.FC<TextInputComponentProps> = ({
     text,
+    onInputChange
 }) => {
     const [image, setImage] = useState<string | undefined>(undefined);
 
@@ -29,7 +30,16 @@ const UploadImageComponent: React.FC<TextInputComponentProps> = ({
       
         var imageUrl = image.webPath;
       
-        setImage(imageUrl)
+        if(imageUrl){
+            setImage(imageUrl)
+
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            
+            const fileName = "image"
+            const file = new File([blob], fileName, { type: blob.type });
+            onInputChange(file);
+        }
       };
 
     return (
