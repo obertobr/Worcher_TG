@@ -5,8 +5,24 @@ export default class Address extends BaseEntity {
   id: number | undefined;
   neighborhood: string | undefined;
   street: string | undefined;
-  number: number | undefined;
+  number: string | undefined;
   cep: string | undefined;
   
   city: City | undefined;
+
+  constructor(neighborhood: string | undefined,
+              street: string | undefined,
+              number: string | undefined, 
+              cep: string | undefined, 
+              city: City | undefined
+            ){
+              
+    super();
+
+    this.neighborhood = neighborhood
+    this.street = street
+    this.number = number
+    this.cep = cep
+    this.city = city
+  }
 }
