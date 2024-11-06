@@ -14,7 +14,6 @@ import InstitutionRegisterValidation from "../../../classes/validation/instituti
 import AlertComponent from "../../basicComponents/alert-component/alert.component";
 import Institution from "../../../../Models/Instituition/institution.entity";
 import Address from "../../../../Models/Address/address.entity";
-import DigitalFile from "../../../../Models/DigitalFile/digitalFile.entity";
 import LocalStorageInstitutionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils"
 
 
@@ -52,14 +51,6 @@ const InstitutionRegister: React.FC<{}> = () => {
         const state: State | null = await stateService.getById(event.id)
         setCities(createListOfCity(state?.citiesList))
     };
-
-    const cityChange = async (event: any) => {
-        setCity(event)
-    };
-
-    const handleInputChange = (event: any) => {
-        console.log(event)
-    }
 
     const createListOfCity = (list: City[] | undefined): City[] => {
         if (!list) return [];
@@ -117,8 +108,7 @@ const InstitutionRegister: React.FC<{}> = () => {
                     localStorageInstitutionUtils.setId(response.id)
                     console.log(localStorageInstitutionUtils.getId())
                 }
-                
-                //executeAfterLogin()
+
             }
         }
     }
@@ -158,7 +148,7 @@ const InstitutionRegister: React.FC<{}> = () => {
                             textLabel='Cidade'
                             placeHolder='Cidade'
                             itens={cities}
-                            onInputChange={cityChange}
+                            onInputChange={setCity}
                         ></SelectInputComponent>
 
                         <TextInputComponent

@@ -11,7 +11,7 @@ interface SelectInputComponentProps {
     placeHolder?: string;
     value?: string;
     disabled?: boolean;
-    onInputChange: (value: selectInputItens) => void;
+    onInputChange: (value: any) => void;
     onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
