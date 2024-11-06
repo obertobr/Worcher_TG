@@ -13,12 +13,22 @@ import DateUtil from "../../../../Utils/DateUtil";
 import PopupComponent from "../../basicComponents/popup-component/popup.component";
 import DateComponent from "../../basicComponents/date-component/date.component";
 import HourMinuteSelectorComponent from "../../basicComponents/time-component/time.component";
+import RegisterEventValidation from "../../../classes/validation/registerEvent.validation";
+import AlertComponent from "../../basicComponents/alert-component/alert.component";
+import Event from "../../../../Models/Event/event.entity";
+import Address from "../../../../Models/Address/address.entity";
+import EventService from "../../../../Service/Event/event.service"
+import Institution from "../../../../Models/Instituition/institution.entity";
+import Member from "../../../../Models/User/member.entity";
+import localStorageInstitutionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils";
+import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils";
 
 
 const EventRegisterPage: React.FC<{}> = () => {
 
     const [showModalDate, setShowModalDate] = useState(false);
-    const [showModalDateTime, setShowModalDateTime] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [messagesErrorModal, setMessagesErrorModal] = useState<string[]>([])
 
     const stateService = new StateService()
     const [states, setStates] = useState<State[]>([])
@@ -28,9 +38,9 @@ const EventRegisterPage: React.FC<{}> = () => {
 
     // Value
 
-    const [name,setName] = useState<string>("")
+    const [name, setName] = useState<string>("")
     const [dateTime, setDateTime] = useState<Date>();
-    const [state,setState] = useState<State>()
+    const [state, setState] = useState<State>()
     const [city, setCity] = useState<City>()
     const [neighborhood, setNeighborhood] = useState<string>("")
     const [street, setStreet] = useState<string>("")
@@ -39,7 +49,7 @@ const EventRegisterPage: React.FC<{}> = () => {
     const [image, setImage] = useState<File>()
 
     const loadStates = async () => {
-        
+
         setStates(await stateService.list())
     }
 
@@ -57,23 +67,19 @@ const EventRegisterPage: React.FC<{}> = () => {
         setCities(createListOfCity(state?.citiesList))
     };
 
-    const handleInputChange = () => {
+    const createListOfCity = (list: City[] | undefined): City[] => {
+        if (!list) return [];
 
-    }
-
-    const createListOfCity = (list: City[] | undefined) : City[] => {
-        if(!list) return [];
-
-        return list.map( item => {
-            const city =  new City()
+        return list.map(item => {
+            const city = new City()
             city.id = item.id
             city.name = item.name
             return city
-        } )
+        })
     }
 
     const fillDateTime = () => {
-        if(date && time){
+        if (date && time) {
             setDateTime(new Date(
                 date.getFullYear(),
                 date.getMonth(),
@@ -85,8 +91,70 @@ const EventRegisterPage: React.FC<{}> = () => {
         }
     }
 
+    const applyRegisterValidation = () => {
+        const registerValidation = new RegisterEventValidation()
+        registerValidation.validate(
+            name,
+            date,
+            time,
+            state,
+            city,
+            neighborhood,
+            street,
+            number,
+            description,
+            image
+        )
+
+        if (registerValidation.hasErrors()) {
+            setMessagesErrorModal(registerValidation.errors)
+            setShowModal(true)
+
+            return false
+        }
+
+        return true
+    }
+    
+    const createNewEvent = (): Event => {
+        const localStorageInstitution = new localStorageInstitutionUtils()
+        const LocalStorageLogin = new LocalStorageLoginUtils()
+
+        const event = new Event();
+        event.name = name;
+        event.description = description;
+        event.dateTimeOfExecution = dateTime
+        event.address = new Address(neighborhood, street, number, "", city)
+
+        event.institution = new Institution(localStorageInstitution.getId())
+        event.member = new Member(LocalStorageLogin.getIdUser())
+
+        return event
+    }
+
+    const register = async () => {
+        if (applyRegisterValidation()) {
+            const event = createNewEvent()
+
+            const service = new EventService()
+            const response = await service.save(event, image)
+            console.log(response)
+            if(Array.isArray(response)){
+                setMessagesErrorModal(response)
+                setShowModal(true)
+            }
+        }
+    }
+
     return (
         <>
+            <AlertComponent
+                isOpen={showModal}
+                onDidDismiss={() => setShowModal(false)}
+                messages={messagesErrorModal}
+                titleText={"Não foi possível realizar o registro da instituição"}
+            />
+            
             <HeaderComponent type='simple' showCircleImage={false}></HeaderComponent>
 
             <div className="contentInstitutionRegister">
@@ -115,10 +183,10 @@ const EventRegisterPage: React.FC<{}> = () => {
                             value={DateUtil.formatToDDMMYYYYAndDay(date)}
                         />
 
-                        <HourMinuteSelectorComponent 
-                                label="Selecione a hora"
-                                onTimeChangeString={(hour, minute) => {}} 
-                                onTimeChange={(e) => setTime(e)}
+                        <HourMinuteSelectorComponent
+                            label="Selecione a hora"
+                            onTimeChangeString={(hour, minute) => { }}
+                            onTimeChange={(e) => setTime(e)}
                         />
 
                         <SelectInputComponent
@@ -133,7 +201,7 @@ const EventRegisterPage: React.FC<{}> = () => {
                             textLabel='Cidade'
                             placeHolder='Cidade'
                             itens={cities}
-                            onInputChange={handleInputChange}
+                            onInputChange={setCity}
                         ></SelectInputComponent>
 
                         <TextInputComponent
@@ -154,7 +222,7 @@ const EventRegisterPage: React.FC<{}> = () => {
                             onInputChange={(e) => setNumber(e)}
                         ></TextInputComponent>
 
-                        
+
 
                         <UploadImageComponent
                             text="Imagem do evento"
@@ -163,7 +231,7 @@ const EventRegisterPage: React.FC<{}> = () => {
                     </div>
 
                     <div className="buttonActions">
-                        <ButtonComponent width="230px" text="Criar" onClick={() => { }} />
+                        <ButtonComponent width="230px" text="Criar" onClick={() => {register()}} />
                     </div>
 
                 </main>
@@ -172,11 +240,11 @@ const EventRegisterPage: React.FC<{}> = () => {
             </div>
 
             <PopupComponent isOpen={showModalDate}
-                onDidDismiss={() => { setShowModalDate(false); } }
-                content={ <DateComponent type="date" valueChange={() => {}}></DateComponent>}
-                titleText={"Selecione uma data"} 
+                onDidDismiss={() => { setShowModalDate(false); }}
+                content={<DateComponent type="date" valueChange={() => { }}></DateComponent>}
+                titleText={"Selecione uma data"}
                 valueChangePopup={(e) => setDate(e)}
-                validateValue={() => {console.log("validate")}}      
+                validateValue={() => { console.log("validate") }}
             ></PopupComponent>
         </>
     )

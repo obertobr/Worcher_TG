@@ -1,7 +1,7 @@
 import Event from "../../Models/Event/event.entity";
-import AbstractCrudService from "../abstractCrud.service";
+import AbstractFormDataCrud from "../abstractFormDataCrud.service";
 
-export default class EventService extends AbstractCrudService<Event> {
+export default class EventService extends AbstractFormDataCrud<Event> {
   constructor() {
     super("event",Event)
   }
