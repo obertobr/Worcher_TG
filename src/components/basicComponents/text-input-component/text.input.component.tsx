@@ -13,7 +13,7 @@ interface TextInputComponentProps {
     typeInput?: TextFieldTypes;
     maxlength?: number;
     value?: string;
-    onInputChange: (value: string) => void;
+    onInputChange?: (value: string) => void;
     onClick?: MouseEventHandler<HTMLDivElement>;
     allowOnlyNumbers?: boolean;
 }

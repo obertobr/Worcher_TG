@@ -23,17 +23,20 @@ const EventRegisterPage: React.FC<{}> = () => {
     const stateService = new StateService()
     const [states, setStates] = useState<State[]>([])
     const [cities, setCities] = useState<City[]>([])
+    const [date, setDate] = useState<Date>();
+    const [time, setTime] = useState<Date>();
 
     // Value
 
     const [name,setName] = useState<string>("")
-    const [date, setDate] = useState<Date>();
+    const [dateTime, setDateTime] = useState<Date>();
     const [state,setState] = useState<State>()
     const [city, setCity] = useState<City>()
     const [neighborhood, setNeighborhood] = useState<string>("")
     const [street, setStreet] = useState<string>("")
     const [number, setNumber] = useState<string>("")
     const [description, setDescription] = useState<string>("")
+    const [image, setImage] = useState<File>()
 
     const loadStates = async () => {
         
@@ -43,6 +46,10 @@ const EventRegisterPage: React.FC<{}> = () => {
     useEffect(() => {
         loadStates()
     }, []);
+
+    useEffect(() => {
+        fillDateTime()
+    }, [date, time]);
 
     const stateChange = async (event: any) => {
         setState(event)
@@ -63,6 +70,19 @@ const EventRegisterPage: React.FC<{}> = () => {
             city.name = item.name
             return city
         } )
+    }
+
+    const fillDateTime = () => {
+        if(date && time){
+            setDateTime(new Date(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate(),
+                time.getHours(),
+                time.getMinutes(),
+                time.getSeconds()
+            ))
+        }
     }
 
     return (
@@ -93,13 +113,12 @@ const EventRegisterPage: React.FC<{}> = () => {
                             textLabel="Data do evento"
                             placeHolder="Clique aqui para selecionar a data"
                             value={DateUtil.formatToDDMMYYYYAndDay(date)}
-                            onInputChange={(e) => setDate(date)} 
                         />
 
                         <HourMinuteSelectorComponent 
                                 label="Selecione a hora"
                                 onTimeChangeString={(hour, minute) => {}} 
-                                onTimeChange={(e) => console.log(e)}
+                                onTimeChange={(e) => setTime(e)}
                         />
 
                         <SelectInputComponent
@@ -139,7 +158,7 @@ const EventRegisterPage: React.FC<{}> = () => {
 
                         <UploadImageComponent
                             text="Imagem do evento"
-                            onInputChange={handleInputChange}
+                            onInputChange={setImage}
                         ></UploadImageComponent>
                     </div>
 
