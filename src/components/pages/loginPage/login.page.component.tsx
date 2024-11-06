@@ -14,6 +14,7 @@ import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage
 import Account from "../../../../Models/User/account.entity"
 import RouterUtil from "../../../../Utils/Components/RouterUtil"
 import { useHistory } from "react-router"
+import User from "../../../../Models/User/user.entity"
 
 const LoginPage: React.FC<{}> = () => {
 
@@ -62,18 +63,20 @@ const LoginPage: React.FC<{}> = () => {
                 setMessagesErrorModal(response)
                 setShowModal(true)
             }else{
-                executeAfterLogin()
+                executeAfterLogin(response)
             }
         }
     }
 
-    const executeAfterLogin = () => {
+    const executeAfterLogin = (user: User | null) => {
         localStorageLoginUtils.setRememberData(rememberData)
 
         if(rememberData){
             localStorageLoginUtils.setAccount(new Account(email,password))
         }
 
+        localStorageLoginUtils.setIdUser(user?.id ? user.id : null)
+        
         alert("login feito com sucesso!")
     }
     

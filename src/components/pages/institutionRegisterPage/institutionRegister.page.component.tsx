@@ -15,6 +15,7 @@ import AlertComponent from "../../basicComponents/alert-component/alert.componen
 import Institution from "../../../../Models/Instituition/institution.entity";
 import Address from "../../../../Models/Address/address.entity";
 import DigitalFile from "../../../../Models/DigitalFile/digitalFile.entity";
+import LocalStorageInstitutionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils"
 
 
 const InstitutionRegister: React.FC<{}> = () => {
@@ -110,6 +111,13 @@ const InstitutionRegister: React.FC<{}> = () => {
                 setMessagesErrorModal(response)
                 setShowModal(true)
             }else{
+                const localStorageInstitutionUtils = new LocalStorageInstitutionUtils()
+
+                if(response?.id){
+                    localStorageInstitutionUtils.setId(response.id)
+                    console.log(localStorageInstitutionUtils.getId())
+                }
+                
                 //executeAfterLogin()
             }
         }
