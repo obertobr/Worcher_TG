@@ -1,4 +1,7 @@
+import Address from "../Address/address.entity";
 import BaseEntity from "../base.entity";
+import DigitalFile from "../DigitalFile/digitalFile.entity";
+import Institution from "../Instituition/institution.entity";
 import Member from "../User/member.entity";
 
 export default class Event extends BaseEntity{
@@ -8,6 +11,9 @@ export default class Event extends BaseEntity{
   creationDateTime: Date | undefined;
   dateTimeOfExecution: Date | undefined;
 
+  address: Address | undefined;
   member: Member | undefined;
+  institution: Institution | undefined;
   registeredMemberList: Member[] | undefined;
+  image: DigitalFile | undefined;
 }

@@ -21,4 +21,12 @@ export default class Institution extends BaseEntity {
   image: DigitalFile | undefined;
   membershipRequest: MembershipRequest | undefined;
 
+  constructor(id?: number, name?: string, description?: string){
+    super()
+
+    this.id = id;
+    this.name = name;
+    this.description = description;
+  }
+
 }

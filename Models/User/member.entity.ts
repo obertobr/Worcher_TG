@@ -9,4 +9,10 @@ export default class Member extends BaseEntity {
 
   createdEventList: Event[] | undefined;
   particepatedEventList: Event[] | undefined;
+
+  constructor(id?: number){
+    super()
+
+    this.id = id;
+  }
 }
