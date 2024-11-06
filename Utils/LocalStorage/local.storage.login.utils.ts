@@ -4,8 +4,8 @@ import LocalStorageUtils from "./local.storage.utils"
 export default class LocalStorageLoginUtils {
 
     private localStorageUtilsRemberData = new LocalStorageUtils<boolean>("REMEMBER_DATA")
-    private localStorageUtilsData = new LocalStorageUtils<Account | null>("REMEMBER_EMAIL_PASSWORD")
-    private localStorageUtilsIdUser = new LocalStorageUtils<number | null>("USER_ID")
+    private localStorageUtilsData = new LocalStorageUtils<Account | undefined>("REMEMBER_EMAIL_PASSWORD")
+    private localStorageUtilsIdUser = new LocalStorageUtils<number | undefined>("USER_ID")
 
     getRememberData = (): boolean => {
         return this.localStorageUtilsRemberData.getItem() || false
@@ -15,7 +15,7 @@ export default class LocalStorageLoginUtils {
         this.localStorageUtilsRemberData.setItem(remember)
     }
 
-    getAccount = (): Account | null => {
+    getAccount = (): Account | undefined => {
         return this.localStorageUtilsData.getItem() 
     }
 
@@ -23,11 +23,11 @@ export default class LocalStorageLoginUtils {
         this.localStorageUtilsData.setItem(account)
     }
 
-    getIdUser = (): number | null => {
+    getIdUser = (): number | undefined => {
         return this.localStorageUtilsIdUser.getItem() 
     }
 
-    setIdUser = (idUser: number | null) => {
+    setIdUser = (idUser: number | undefined) => {
         this.localStorageUtilsIdUser.setItem(idUser)
     }
 

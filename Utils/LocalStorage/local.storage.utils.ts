@@ -8,20 +8,20 @@ export default class LocalStorageUtils<T> {
         this.key = ConverterUtils.convertStringToBase64(key)
     }
 
-    getItem(): T | null{
+    getItem(): T | undefined{
         const itemNotSerialized = localStorage.getItem(this.key)
 
-        if(itemNotSerialized != null){
+        if(itemNotSerialized != undefined){
             try {
                 const itemDecoded = ConverterUtils.convertBase64ToString(itemNotSerialized)
                 return JSON.parse(itemDecoded) as T
             } catch(error){
                 console.log("Erro ao converter item: ",error)
-                return null
+                return undefined
             }
         }
 
-        return null
+        return undefined
     }
 
     setItem(item: T): void {
