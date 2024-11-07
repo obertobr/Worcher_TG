@@ -3,6 +3,6 @@ import AbstractCrudService from "../abstractCrud.service";
 
 export default class EventCategoryService extends AbstractCrudService<EventCategory> {
   constructor() {
-    super("eventCategory",EventCategory)
+    super("event-category",EventCategory)
   }
 }

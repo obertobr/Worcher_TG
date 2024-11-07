@@ -97,7 +97,7 @@ const InstitutionRegister: React.FC<{}> = () => {
 
             const service = new InstitutionService()
             const response = await service.save(institution, image)
-            console.log(response)
+            
             if(Array.isArray(response)){
                 setMessagesErrorModal(response)
                 setShowModal(true)

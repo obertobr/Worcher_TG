@@ -4,6 +4,11 @@ import { SketchPicker } from 'react-color';
 import { IonLabel } from '@ionic/react';
 import './colorpickComponent.css';
 
+
+interface ColorPickerPropsInterface {
+  onChange: (color: string) => void
+}
+
 const getTextColor = (backgroundColor: any) => {
   const r = parseInt(backgroundColor.slice(1, 3), 16);
   const g = parseInt(backgroundColor.slice(3, 5), 16);
@@ -12,16 +17,24 @@ const getTextColor = (backgroundColor: any) => {
   return brightness > 186 ? '#000000' : '#FFFFFF';
 };
 
-const ColorPicker = () => {
+
+const ColorPicker: React.FC<ColorPickerPropsInterface> = ({
+  onChange,
+}) => {
   const [color, setColor] = useState('#ffffff');
   const [showPicker, setShowPicker] = useState(false);
   const pickerRef = useRef(null);
 
+  
+
   const handleChangeColor = (newColor: any) => {
     setColor(newColor.hex);
+    onChange(newColor.hex);
   };
 
   useEffect(() => {
+    onChange(color);
+
     const handleClickOutside = (event: any) => {
       if (pickerRef.current && !pickerRef.current.contains(event.target)) {
         setShowPicker(false);
@@ -32,7 +45,10 @@ const ColorPicker = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+
   }, []);
+
+
 
   return (
     <div className='colorContent'>
