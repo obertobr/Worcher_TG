@@ -15,6 +15,7 @@ import AlertComponent from "../../basicComponents/alert-component/alert.componen
 import Institution from "../../../../Models/Instituition/institution.entity";
 import Address from "../../../../Models/Address/address.entity";
 import LocalStorageInstitutionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils"
+import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils";
 
 
 const InstitutionRegister: React.FC<{}> = () => {
@@ -86,18 +87,19 @@ const InstitutionRegister: React.FC<{}> = () => {
         const institution = new Institution();
         institution.name = nameOfInstitition;
         institution.description = description;
-        institution.address = new Address(neighborhood, street, number, "", city)
+        institution.address = new Address(neighborhood, street, number, "", city);
 
         return institution
     }
 
     const register = async () => {
         if (applyRegisterValidation()) {
+            const localStorageLoginUtils = new LocalStorageLoginUtils()
+            const userId = await localStorageLoginUtils.getIdUser()
             const institution = createNewInstitution()
 
             const service = new InstitutionService()
-            const response = await service.save(institution, image)
-            console.log(response)
+            const response = await service.save({institution: institution, user: {id: userId}}, image)
             if(Array.isArray(response)){
                 setMessagesErrorModal(response)
                 setShowModal(true)
