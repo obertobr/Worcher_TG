@@ -18,6 +18,7 @@ const MemberViewPage: React.FC<{}> = () => {
             <MemberCard memberName='Mateus J Barbosa' memberPosition='Enginer' />
             <MemberCard memberName='Vinicius Alex.' memberPosition='Agiota' />
           </div>
+          
         </div>
       </main>
     </>

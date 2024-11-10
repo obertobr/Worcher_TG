@@ -1,11 +1,21 @@
 .contentMain {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background-color: var(--backgroundColor);
+    
+    
+    
 }
 
 ion-router-outlet {
-    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow-y: auto;
+    padding-bottom: 60px;
+
 }
+
+
 
 /*  TODO => CRIAR UMA VARIAVEL NO CSS PARA CONTROLAR O ESTADO DE OVERFLOW DA PAGINA - ScrollUtils   */

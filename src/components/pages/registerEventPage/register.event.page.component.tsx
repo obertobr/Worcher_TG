@@ -22,6 +22,7 @@ import Institution from "../../../../Models/Instituition/institution.entity";
 import Member from "../../../../Models/User/member.entity";
 import localStorageInstitutionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils";
 import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils";
+import FooterComponent from "../../basicComponents/layoutComponents/footer-component/footer.component";
 
 
 const EventRegisterPage: React.FC<{}> = () => {
@@ -246,6 +247,8 @@ const EventRegisterPage: React.FC<{}> = () => {
                 valueChangePopup={(e) => setDate(e)}
                 validateValue={() => { console.log("validate") }}
             ></PopupComponent>
+
+            <FooterComponent></FooterComponent>
         </>
     )
 }

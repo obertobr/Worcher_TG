@@ -47,6 +47,9 @@ import LoadAplicationManager from './classes/LoadAplication/load.aplication.mana
 import handleKeyDown from './components/themeManager/handle.key.down.theme.change'
 import RememberPasswordPageComponent from './components/pages/rememberPassword/remember.password.page.component'
 import EventRegisterPage from './components/pages/registerEventPage/register.event.page.component';
+import HomePage from './components/pages/homePage/home.page.component';
+import MyInstitutionPage from './components/pages/myInstitutionPage/myInstitution.page.component';
+import FooterComponent from './components/basicComponents/layoutComponents/footer-component/footer.component';
 
 
 setupIonicReact();
@@ -66,13 +69,13 @@ const App: React.FC = () => {
   <IonApp>
     <IonReactRouter>
     <div className={style.contentMain}>
-      <IonRouterOutlet>
+      <IonRouterOutlet className='IonRouterOutlet'>
        
           <Route exact path="/singup" component={SingUpPage}/>
-         
-          <Route exact path="/home" component={Home} />
 
           <Route exact path="/login" component={LoginPage}/>
+
+          <Route exact path="/home" component={HomePage}/>
 
           <Route exact path="/rememberPassword" component={RememberPasswordPageComponent} />
 
@@ -92,10 +95,16 @@ const App: React.FC = () => {
 
           <Route exact path='/event-register' component={EventRegisterPage} />
 
+          <Route exact path='/my-institution' component={MyInstitutionPage} />
+          
+          
+
           <Route exact path="/">
             <Redirect to="/test" />
           </Route>
       </IonRouterOutlet>
+
+      {/* <FooterComponent></FooterComponent> */}
       </div>
     </IonReactRouter>
   </IonApp>

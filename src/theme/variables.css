@@ -47,4 +47,13 @@ http://ionicframework.com/docs/theming/ */
 
     /* FILE INPUT */
     --borderFile: #00000066 ;
+
+    /* FOOTER */
+
+    --backgroundColorFooter: #385fad;  
+    /* #dee5f3; */
+
+    --colorOffItem: #ffffff88;
+    /*  */
+    
 }
