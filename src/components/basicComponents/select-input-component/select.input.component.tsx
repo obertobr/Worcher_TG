@@ -1,7 +1,7 @@
 import { IonItem, IonLabel, IonList, IonSelect, IonSelectOption } from "@ionic/react";
 import React, { useState, useEffect, MouseEventHandler } from "react";
 import selectInputItens from "../../../../Models/Interfaces/selectInput"
-import style from '../../styleComponents/select.module.css';
+import styleInput from '../../styleComponents/select.module.css';
 
 interface SelectInputComponentProps {
     itens: selectInputItens[];
@@ -9,9 +9,10 @@ interface SelectInputComponentProps {
     isReadOnly?: boolean;
     textLabel?: string;
     placeHolder?: string;
-    value?: string;
+    value?: SelectInputComponentProps;
     disabled?: boolean;
     onInputChange: (value: any) => void;
+    style?: CSSModuleClasses;
     onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
@@ -23,12 +24,14 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
     value,
     disabled = false,
     onInputChange,
+    style = styleInput,
     onClick = () => { },
 }) => {
     const [inputValue, setInputValue] = useState(value);
 
     useEffect(() => {
         setInputValue(value);
+        console.log(value)
     }, [value]);
 
     const handleSelectChange = (event: CustomEvent) => {

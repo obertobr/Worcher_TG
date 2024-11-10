@@ -3,7 +3,7 @@ import BaseEntity from '../Models/base.entity';
 import AbstractCrudService from './abstractCrud.service'
 
 export default class AbstractFormDataCrud<T extends BaseEntity> extends AbstractCrudService<T> {
-    async save(item: any, file?: File): Promise<T | null> {
+    async save(item: any, file?: File): Promise<T | undefined> {
         try {
             const formData = new FormData();
             formData.append("content", JSON.stringify(item));
@@ -19,7 +19,7 @@ export default class AbstractFormDataCrud<T extends BaseEntity> extends Abstract
         }
     }
 
-    async update(item: any, file?: File): Promise<T | null> {
+    async update(item: any, file?: File): Promise<T | undefined> {
         try {
             const formData = new FormData();
             formData.append("content", JSON.stringify(item));
