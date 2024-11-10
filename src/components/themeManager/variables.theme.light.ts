@@ -10,6 +10,9 @@ const variables = {
     outlineInput: '1px solid rgba(110, 126, 197, 0.5)',
 
     borderFile: '#00000066',
+
+    backgroundColorFooter: "#dee5f3",
+    colorOffItem : "#858B8B"
 }
 
 export default variables ;

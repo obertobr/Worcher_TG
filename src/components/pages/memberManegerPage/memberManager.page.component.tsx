@@ -44,6 +44,7 @@ const MemberViewPage: React.FC<{}> = () => {
               <MemberCard memberName={member.user?.name || ""} institution={institution} role={member.role}/>
             )})}
           </div>
+          
         </div>
       </main>
     </>

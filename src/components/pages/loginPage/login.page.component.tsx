@@ -77,7 +77,7 @@ const LoginPage: React.FC<{}> = () => {
 
         localStorageLoginUtils.setIdUser(user?.id ? user.id : null)
         
-        alert("login feito com sucesso!")
+        RouterUtil.goToPage(history,"home")
     }
     
     return (

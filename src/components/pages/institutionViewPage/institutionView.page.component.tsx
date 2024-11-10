@@ -6,6 +6,7 @@ import './institutionViewPageMain.css';
 
 
 import logo from "../../../assets/rafael.png"
+import FooterComponent from '../../basicComponents/layoutComponents/footer-component/footer.component';
 
 interface instituitionViewInterface {
   title: string;
@@ -38,11 +39,9 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
           <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => {} } />
         </main>
 
-        <footer>
-          {/* componente para o footer padrão das páginas */}
-        </footer>
 
       </div>
+        <FooterComponent></FooterComponent>
     </>
   );
 }
