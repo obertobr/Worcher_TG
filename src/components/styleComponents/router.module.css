@@ -13,7 +13,7 @@ ion-router-outlet {
     position: absolute;
     overflow-y: auto;
     padding-bottom: 60px;
-
+    contain: initial;
 }
 
 
