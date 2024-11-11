@@ -64,7 +64,7 @@ const EventRegisterPage: React.FC<{}> = () => {
 
     const stateChange = async (event: any) => {
         setState(event)
-        const state: State | null = await stateService.getById(event.id)
+        const state: State | undefined = await stateService.getById(event.id)
         setCities(createListOfCity(state?.citiesList))
     };
 

@@ -11,8 +11,8 @@ export default class AbstractCrudService<T extends BaseEntity> {
     this.entityClass = entityClass;
   }
 
-  convertToEntity(object: any): T | null {
-    if (!object) return null;
+  convertToEntity(object: any): T | undefined {
+    if (!object) return undefined;
 
     const entity = new this.entityClass();
     return Object.assign(entity, object);
@@ -39,7 +39,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
     }
   }
 
-  async getById(id: number): Promise<T | null> {
+  async getById(id: number): Promise<T | undefined> {
     try {
       const item = (await axios.get(`${this.urlApi}id/${id}`)).data.data;
       return this.convertToEntity(item);
@@ -48,7 +48,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
     }
   }
 
-  async save(item: T): Promise<T | null> {
+  async save(item: T): Promise<T | undefined> {
     try {
       return this.convertToEntity((await axios.post(`${this.urlApi}`, item)).data.data);
     } catch (error: any) {
@@ -71,7 +71,7 @@ export default class AbstractCrudService<T extends BaseEntity> {
     }
   }
 
-  async update(item: T): Promise<T | null> {
+  async update(item: T): Promise<T | undefined> {
     try {
       return  this.convertToEntity((await axios.put(`${this.urlApi}`, item)).data.data);
     } catch (error: any) {
