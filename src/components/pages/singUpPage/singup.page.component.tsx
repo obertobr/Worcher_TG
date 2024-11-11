@@ -41,7 +41,11 @@ const SingUpPage: React.FC<{}> = () => {
     user.name = name;
     user.dateOfBirth = date;
     user.cpf = cpf;
-    user.account = new Account(email ? email : "",senha ? senha : "");
+    const account = new Account()
+    account.email = email
+    account.password = senha
+
+    user.account = account
 
     user.config = new Config()
     user.config.recieveEmails = false

@@ -5,7 +5,7 @@
   gap: 20px;
 
   .auth_code {
-    width: 48px;
+    width: 42px;
     height: 64px;
     border: var(--borderInput);
     border-radius: 12px;

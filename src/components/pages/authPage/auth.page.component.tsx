@@ -1,3 +1,4 @@
+import { useState } from "react";
 import AuthComponent from "../../basicComponents/authInput-component/auth.component";
 import ButtonComponent from "../../basicComponents/button-component/button.components";
 import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component";
@@ -5,18 +6,32 @@ import HeaderComponent from "../../basicComponents/layoutComponents/header-compo
 import './authPageContainer.css';
 import './authPageContent.css';
 import './authPageMain.css';
+import AlertComponent from "../../basicComponents/alert-component/alert.component";
 
-import logo from "../../../assets/rafael.png"
 
 
-interface propos {
-  p: string;
+interface props {
+  p?: string;
+  onClick: Function
 }
 
-const AuthPage: React.FC<propos> = ({p = 'Informe o código de autenticação:'}) => {
+const AuthPage: React.FC<props> = (
+  {p = 'Informe o código de autenticação:', 
+    onClick
+
+  }) => {
+
+    
+
+    const [codeComplete, setCodeComplete] = useState<string>("") 
+
+    const confirmButtonClick = (codeComplete: string) => {
+      onClick(codeComplete)
+    }
 
   return(
     <>
+
     <div className="contentAuth">
 
       <HeaderComponent showCircleImage={false}></HeaderComponent>
@@ -26,15 +41,11 @@ const AuthPage: React.FC<propos> = ({p = 'Informe o código de autenticação:'}
 
           <h3>{p}</h3>
           
-          <AuthComponent />
-          
-          <ButtonComponent width="80dvw" text="Confirmar" onClick={() => {} }/>
+          <AuthComponent onCodeComplete={(e) => setCodeComplete(e)} />
+
+          <ButtonComponent disabled={!codeComplete || codeComplete.length != 6} width="80dvw" text="Confirmar" onClick={() => confirmButtonClick(codeComplete)}/>
         </div>
       </main>
-
-      <footer>
-        {/* componente para o footer padrão das páginas */}
-      </footer>
     </div>
     </>
   )

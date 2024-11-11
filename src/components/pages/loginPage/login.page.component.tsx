@@ -72,10 +72,14 @@ const LoginPage: React.FC<{}> = () => {
         localStorageLoginUtils.setRememberData(rememberData)
 
         if(rememberData){
-            localStorageLoginUtils.setAccount(new Account(email,password))
+            const account = new Account()
+            account.email = email
+            account.password = password
+
+            localStorageLoginUtils.setAccount(account)
         }
 
-        localStorageLoginUtils.setIdUser(user?.id ? user.id : null)
+        localStorageLoginUtils.setIdUser(user?.id ? user.id : undefined)
         
         RouterUtil.goToPage(history,"home")
     }

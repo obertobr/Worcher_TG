@@ -108,7 +108,6 @@ const InstitutionRegister: React.FC<{}> = () => {
 
                 if(response?.id){
                     localStorageInstitutionUtils.setId(response.id)
-                    console.log(localStorageInstitutionUtils.getId())
                 }
 
             }
