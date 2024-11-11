@@ -13,13 +13,15 @@ class NavFooter {
     icon: string
     active: boolean
     visible: boolean
+    route: string
 
-    constructor(sequencial: number, name: string, icon: string, active: boolean, visible: boolean){
+    constructor(sequencial: number, name: string, icon: string, active: boolean, visible: boolean,route: string){
         this.sequencial = sequencial
         this.name = name
         this.icon = icon
         this.active = active
         this.visible = visible
+        this.route = route
     }
 }
 
@@ -32,7 +34,7 @@ const FooterComponent: React.FC<FooterComponentPropsInterface> = ({
   }) => {
 
     const history = useHistory()
-    const localStorage = new LocalStorageUtils<NavFooter[]>("");
+    const localStorage = new LocalStorageUtils<NavFooter[]>("NAV_FOOTER");
 
     useEffect(() => {
         const navItensLocalStorage = localStorage.getItem()
@@ -43,12 +45,13 @@ const FooterComponent: React.FC<FooterComponentPropsInterface> = ({
     }, [])
 
     const [navItens, setNavItens] = useState<NavFooter[]>([
-       new NavFooter(1,"Agenda",calendarOutline,false, true),
-       new NavFooter(2,"Feed",documentTextOutline,true, true),
-       new NavFooter(3,"Meus Eventos",calendarNumberOutline,false, true)
+        new NavFooter(1,"Feed",documentTextOutline,true, true,"home"),
+        new NavFooter(2,"Eventos",calendarNumberOutline,false, true,"home"),
+        new NavFooter(3,"Agenda",calendarOutline,false, true,"home"),       
+        new NavFooter(4,"Instituições",calendarNumberOutline,false, true,"home")
     ])
     
-    const onClickNavItem = (sequencial: number) => {
+    const onClickNavItem = (sequencial: number, route: string) => {
        const index = navItens.findIndex( (i) => i.sequencial == sequencial)
        const navItensCopy = [...navItens]
 
@@ -62,6 +65,8 @@ const FooterComponent: React.FC<FooterComponentPropsInterface> = ({
 
        localStorage.setItem(navItensCopy)
        setNavItens(navItensCopy)
+
+       RouterUtil.goToPage(history,route)
     }
 
     return(
@@ -73,7 +78,7 @@ const FooterComponent: React.FC<FooterComponentPropsInterface> = ({
                     return (
                     <div key={index} 
                          className={"nav-footer" + ( item.active? " styleOn" : " styleOff" )}
-                         onClick={() => onClickNavItem(item.sequencial)}
+                         onClick={() => onClickNavItem(item.sequencial, item.route)}
                     >
                         <IonIcon className="icon-footer" icon={item.icon}></IonIcon>
                         <p>{item.name}</p>
