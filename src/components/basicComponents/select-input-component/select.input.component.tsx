@@ -9,7 +9,7 @@ interface SelectInputComponentProps {
     isReadOnly?: boolean;
     textLabel?: string;
     placeHolder?: string;
-    value?: SelectInputComponentProps;
+    value?: number;
     disabled?: boolean;
     onInputChange: (value: any) => void;
     style?: CSSModuleClasses;
@@ -39,7 +39,7 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
 
         const newValue = event.detail.value || '';
         setInputValue(newValue);
-        onInputChange(newValue);
+        onInputChange(itens.find(item => item.id == newValue));
     };
 
     return (
@@ -54,7 +54,7 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
                         onIonChange={handleSelectChange}
                     >
                         {itens.map((item: selectInputItens) => (
-                            <IonSelectOption key={item.id} value={item}>
+                            <IonSelectOption key={item.id} value={item.id}>
                                 {item.getDisplayName ? item.getDisplayName() : "Nome indisponível"}
                             </IonSelectOption>
                         ))}

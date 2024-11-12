@@ -27,7 +27,6 @@ const MemberCard: React.FC<MemberCardInterface> = ({
     const typedList: Role[] = list.map((item: any) => {
       return convertToRole(item)
     });
-
     return typedList
   }
 
@@ -47,8 +46,8 @@ const MemberCard: React.FC<MemberCardInterface> = ({
           <SelectInputComponent
             style={selectMember}
             itens={convertToRoleList(institution.roleList)}
-            onInputChange={() => {}}
-            value={convertToRole(role) as any}
+            onInputChange={(event) => {console.log(event)}}
+            value={role?.id}
           ></SelectInputComponent>
         </div>
         <button className="editButton">X</button>
