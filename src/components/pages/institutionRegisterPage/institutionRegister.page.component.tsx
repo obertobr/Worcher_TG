@@ -16,6 +16,7 @@ import Institution from "../../../../Models/Instituition/institution.entity";
 import Address from "../../../../Models/Address/address.entity";
 import LocalStorageInstitutionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils"
 import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils";
+import InputCepComponent from "../../basicComponents/input-cep-component/input.cep.component";
 
 
 const InstitutionRegister: React.FC<{}> = () => {
@@ -35,6 +36,7 @@ const InstitutionRegister: React.FC<{}> = () => {
     const [neighborhood, setNeighborhood] = useState<string>("")
     const [street, setStreet] = useState<string>("")
     const [number, setNumber] = useState<string>("")
+    const [cep,setCep] = useState<string>("")
     const [description, setDescription] = useState<string>("")
     const [image, setImage] = useState<File>()
 
@@ -71,7 +73,8 @@ const InstitutionRegister: React.FC<{}> = () => {
             city,
             neighborhood,
             street,
-            number)
+            number,
+        cep)
 
         if (registerValidation.hasErrors()) {
             setMessagesErrorModal(registerValidation.errors)
@@ -87,7 +90,7 @@ const InstitutionRegister: React.FC<{}> = () => {
         const institution = new Institution();
         institution.name = nameOfInstitition;
         institution.description = description;
-        institution.address = new Address(neighborhood, street, number, "", city);
+        institution.address = new Address(neighborhood, street, number, cep, city);
 
         return institution
     }
@@ -169,6 +172,11 @@ const InstitutionRegister: React.FC<{}> = () => {
                             placeHolder='Número'
                             onInputChange={(e) => setNumber(e)}
                         ></TextInputComponent>
+
+                        <InputCepComponent textLabel="CEP"
+                              placeHolder="CEP"
+                              onInputChange={(e) => setCep(e)}
+                        ></InputCepComponent>
 
                         <TextAreaInputComponent
                             textLabel='Descrição'

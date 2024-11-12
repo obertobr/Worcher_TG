@@ -23,6 +23,11 @@ import Member from "../../../../Models/User/member.entity";
 import localStorageInstitutionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils";
 import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils";
 import FooterComponent from "../../basicComponents/layoutComponents/footer-component/footer.component";
+import InputCepComponent from "../../basicComponents/input-cep-component/input.cep.component";
+import EventCategory from "../../../../Models/Event/event.category.entity";
+import EventCategoryService from "../../../../Service/Event/event.category.service";
+import InstitutionService from "../../../../Service/Instituition/institution.service";
+import LocalStorageInstituionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils";
 
 
 const EventRegisterPage: React.FC<{}> = () => {
@@ -32,6 +37,7 @@ const EventRegisterPage: React.FC<{}> = () => {
     const [messagesErrorModal, setMessagesErrorModal] = useState<string[]>([])
 
     const stateService = new StateService()
+    const [categorys, setCategorys] = useState<EventCategory[]>([])
     const [states, setStates] = useState<State[]>([])
     const [cities, setCities] = useState<City[]>([])
     const [date, setDate] = useState<Date>();
@@ -42,20 +48,44 @@ const EventRegisterPage: React.FC<{}> = () => {
     const [name, setName] = useState<string>("")
     const [dateTime, setDateTime] = useState<Date>();
     const [state, setState] = useState<State>()
+    const [category, setCategory] = useState<EventCategory>()
     const [city, setCity] = useState<City>()
     const [neighborhood, setNeighborhood] = useState<string>("")
     const [street, setStreet] = useState<string>("")
     const [number, setNumber] = useState<string>("")
+    const [cep,setCep] = useState<string>("")
     const [description, setDescription] = useState<string>("")
     const [image, setImage] = useState<File>()
 
     const loadStates = async () => {
-
         setStates(await stateService.list())
+    }
+
+    const loadEventCategoryList = async () => {
+        const institutionService = new InstitutionService()
+        const localStorageInstituionUtils = new LocalStorageInstituionUtils()
+        const idInstituition = localStorageInstituionUtils.getId()
+        let institution = new Institution()
+
+        if(idInstituition){
+            institution = await institutionService.getById(idInstituition) || new Institution()
+        }
+
+        institution.eventCategoryList = institution.eventCategoryList.map( e => {
+            const eventCategory = new EventCategory()
+            eventCategory.id = e.id
+            eventCategory.name = e.name
+            eventCategory.institution = e.institution
+
+            return eventCategory
+        } )
+
+        setCategorys(institution.eventCategoryList)
     }
 
     useEffect(() => {
         loadStates()
+        loadEventCategoryList()
     }, []);
 
     useEffect(() => {
@@ -103,8 +133,10 @@ const EventRegisterPage: React.FC<{}> = () => {
             neighborhood,
             street,
             number,
+            cep,
             description,
-            image
+            image,
+            category
         )
 
         if (registerValidation.hasErrors()) {
@@ -125,10 +157,13 @@ const EventRegisterPage: React.FC<{}> = () => {
         event.name = name;
         event.description = description;
         event.dateTimeOfExecution = dateTime
-        event.address = new Address(neighborhood, street, number, "", city)
+        event.address = new Address(neighborhood, street, number, cep, city)
+        event.eventCategory = category
 
         event.institution = new Institution(localStorageInstitution.getId())
-        event.member = new Member(LocalStorageLogin.getIdUser())
+        
+        // CORRIGIR DEVE SER PASSADO O ID DO MEMBRO E NÃO DO USUARIO
+        //event.member = new Member(LocalStorageLogin.getIdUser())
 
         return event
     }
@@ -191,6 +226,13 @@ const EventRegisterPage: React.FC<{}> = () => {
                         />
 
                         <SelectInputComponent
+                            textLabel='Categoria'
+                            placeHolder='Categoria'
+                            itens={categorys}
+                            onInputChange={(e) => setCategory(e)}
+                        ></SelectInputComponent>
+
+                        <SelectInputComponent
                             textLabel='Estado'
                             placeHolder='Estado'
                             itens={states}
@@ -223,7 +265,10 @@ const EventRegisterPage: React.FC<{}> = () => {
                             onInputChange={(e) => setNumber(e)}
                         ></TextInputComponent>
 
-
+                        <InputCepComponent textLabel="CEP"
+                              placeHolder="CEP"
+                              onInputChange={(e) => setCep(e)}
+                        ></InputCepComponent>
 
                         <UploadImageComponent
                             text="Imagem do evento"
@@ -248,7 +293,7 @@ const EventRegisterPage: React.FC<{}> = () => {
                 validateValue={() => { console.log("validate") }}
             ></PopupComponent>
 
-            <FooterComponent></FooterComponent>
+            {/* <FooterComponent></FooterComponent> */}
         </>
     )
 }

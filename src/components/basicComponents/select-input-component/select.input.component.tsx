@@ -31,7 +31,6 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
 
     useEffect(() => {
         setInputValue(value);
-        console.log(value)
     }, [value]);
 
     const handleSelectChange = (event: CustomEvent) => {
