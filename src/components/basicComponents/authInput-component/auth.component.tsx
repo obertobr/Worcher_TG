@@ -1,19 +1,29 @@
 import { IonInput } from "@ionic/react";
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './authComponent.css';
 
-const AuthComponent: React.FC<{}> = () => {
+interface AuthComponentProps {
+  onCodeComplete: (code: string) => void;
+}
+
+const AuthComponent: React.FC<AuthComponentProps> = ({ onCodeComplete }) => {
   const inputRefs = useRef<(HTMLIonInputElement | null)[]>([]);
+  const [code, setCode] = useState<string[]>(Array(6).fill(""));
 
   const handleInputChange = (e: CustomEvent, index: number) => {
     const value = e.detail.value || "";
 
-    if (value.length > 1 && e.target != null) {
-      //Erro apenas visual, VSCODE está sendo um chupeta (coisa de typescript)
-      e.target.value = value.charAt(0); 
+    if (value.match(/^[0-9]$/)) {
+      code[index] = value;
+    } else if (value === "") {
+      code[index] = "";
     }
 
-    if (value && index < inputRefs.current.length - 1) {
+    setCode([...code]);
+
+    onCodeComplete(code.join(""));
+    
+    if (value.match(/^[0-9]$/) && index < inputRefs.current.length - 1) {
       inputRefs.current[index + 1]?.setFocus();
     }
   };
@@ -21,19 +31,19 @@ const AuthComponent: React.FC<{}> = () => {
   return (
     <>
       <div className="authCodeContainer">
-        {[...Array(5)].map((_, index) => (
+        {[...Array(6)].map((_, index) => (
           <IonInput
             key={index}
             className="auth_code"
             maxlength={1}
             ref={(el) => (inputRefs.current[index] = el)}
             onIonInput={(e) => handleInputChange(e, index)}
-            type="number"
+            type="tel"
           />
         ))}
       </div>
     </>
   );
-}
+};
 
 export default AuthComponent;

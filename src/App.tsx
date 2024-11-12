@@ -50,6 +50,8 @@ import EventRegisterPage from './components/pages/registerEventPage/register.eve
 import HomePage from './components/pages/homePage/home.page.component';
 import MyInstitutionPage from './components/pages/myInstitutionPage/myInstitution.page.component';
 import FooterComponent from './components/basicComponents/layoutComponents/footer-component/footer.component';
+import RecoveryAuthPage from './components/pages/recoverAuthPage/auth.page.component';
+import ChangePasswordPage from './components/pages/changePasswordPage/change.password.page.component';
 
 
 setupIonicReact();
@@ -97,7 +99,9 @@ const App: React.FC = () => {
 
           <Route exact path='/my-institution' component={MyInstitutionPage} />
           
-          
+          <Route exact path='/recovery-password-auth-page' component={RecoveryAuthPage} />
+
+          <Route exact path='/change-password' component={ChangePasswordPage}/>
 
           <Route exact path="/">
             <Redirect to="/test" />

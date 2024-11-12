@@ -11,7 +11,7 @@ export default class UserService extends AbstractCrudService<User>{
     async login(email: string, password: string): Promise<User | null> {
         try {
             const response = await axios.post(`${this.urlApi}login`, { email, password });
-            return this.convertToEntity(response.data.data);
+            return this.convertToEntity(response.data.data) || null;
         } catch (error: any) {
             return error.response.data.errors;
         }

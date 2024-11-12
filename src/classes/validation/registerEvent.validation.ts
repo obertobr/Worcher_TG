@@ -1,10 +1,11 @@
 import City from "../../../Models/Address/city.entity";
 import State from "../../../Models/Address/state.entity";
+import EventCategory from "../../../Models/Event/event.category.entity";
 import AbstractValidation from "./abstract.validation";
 
 export default class RegisterEventValidation extends AbstractValidation {
 
-    validate(name: string, date: Date | undefined, time: Date | undefined, state: State | undefined, city: City | undefined, neighborhood: string, street: string, number: string, description: string, image: File | undefined){
+    validate(name: string, date: Date | undefined, time: Date | undefined, state: State | undefined, city: City | undefined, neighborhood: string, street: string, number: string, cep: string, description: string, image: File | undefined, category: EventCategory | undefined){
 
         this.addErrorMessage(this.validateName(name))
         this.addErrorMessage(this.validateDate(date))
@@ -16,6 +17,8 @@ export default class RegisterEventValidation extends AbstractValidation {
         this.addErrorMessage(this.validateNumber(number))
         this.addErrorMessage(this.validateDescription(description))
         this.addErrorMessage(this.validateImage(image))
+        this.addErrorMessage(this.validateCEP(cep))
+        this.addErrorMessage(this.validateCategory(category))
     }
 
     validateName(name: string | undefined): string | null{
@@ -77,6 +80,21 @@ export default class RegisterEventValidation extends AbstractValidation {
         return null;
     }
 
+    validateCEP(cep: string | undefined): string | null {
+        if(!cep) return "O CEP deve ser prenchido!";
+
+        if(cep.length != 9) return "Prencha todo os numeros do CEP!";
+
+        return null
+    }
+
+    validateCategory(category: EventCategory | undefined): string | null {
+        if(!category) return "A categoria do evento deve ser prenchida!";
+
+        return null
+    }
+
+    
     
 
 }

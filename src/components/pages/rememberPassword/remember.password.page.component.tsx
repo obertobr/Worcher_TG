@@ -4,8 +4,14 @@ import "./rememberPasswordPage.css"
 import ButtonComponent from "../../basicComponents/button-component/button.components"
 import UserService from "../../../../Service/User/user.service"
 import AlertComponent from "../../basicComponents/alert-component/alert.component"
+import LocalStorageUtils from "../../../../Utils/LocalStorage/local.storage.utils"
+import RouterUtil from "../../../../Utils/Components/RouterUtil"
+import { useHistory } from "react-router"
+import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component"
 
 const RememberPasswordPageComponent: React.FC<{}> = () => {
+
+    const history = useHistory()
 
     const userService = new UserService()
     const [email, setEmail] = useState<string>()
@@ -29,7 +35,10 @@ const RememberPasswordPageComponent: React.FC<{}> = () => {
         const response = await applyLoginValidation(email ? email : "")
 
         if(response != false){
-            console.log(response)
+            const localStorage = new LocalStorageUtils<number>("ID_ACCOUNT_RECOVERY")
+            localStorage.setItem(response.accountId)
+
+            RouterUtil.goToPage(history,"recovery-password-auth-page")
         }
         
     }
@@ -42,6 +51,8 @@ const RememberPasswordPageComponent: React.FC<{}> = () => {
                     messages={messagesErrorModal} 
                     titleText={"Não foi possível recuperar"}      
                 />
+
+            <HeaderComponent type='simple' showCircleImage={false}></HeaderComponent>
 
             <div className="content">
                 <h2 className="title" >Insira o email cadastrado para recuperação</h2>
