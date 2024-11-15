@@ -10,41 +10,77 @@ import Member from '../../../../Models/User/member.entity';
 
 const MemberViewPage: React.FC<{}> = () => {
 
+  const [search, setSearch] = useState<string>("")
+
   const [institution, setInstitution] = useState<Institution>()
   const [memberList, setMemberList] = useState<Member[]>()
 
+  const institutionLocalStorage = new LocalStorageInstituionUtils()
   const institutionService = new InstitutionService()
-  
+
   const loadInstitution = async () => {
-    const institutionLocalStorage = new LocalStorageInstituionUtils()
     const intitutionID = institutionLocalStorage.getId()
-    if(intitutionID){
+    if (intitutionID) {
       const institution = await institutionService.getById(intitutionID)
       setInstitution(institution)
-      setMemberList(institution?.memberList)
     }
-    console.log(institution)
+  }
+
+  const loadMembers = async () => {
+    const intitutionID = institutionLocalStorage.getId()
+    if (intitutionID) {
+      const members = await institutionService.getMembers(intitutionID, search)
+
+      setMemberList(members)
+    }
+  }
+
+  const refresh = async () => {
+    loadInstitution()
+    loadMembers()
   }
 
   useEffect(() => {
     loadInstitution()
   }, []);
-  
-  return(
+
+  useEffect(() => {
+    loadMembers()
+  }, [search]);
+
+  return (
     <>
       <main>
         <div className="contentMember">
           <div className='memberHeader'>
             <h2>Gerenciar Membros</h2>
-            <TextInputComponent onInputChange={() => {} } placeHolder='Pesquisar Membro' typeInput='text' textLabel='Pesquisar Membro' />
+            <div className='memberSearch'>
+              <TextInputComponent onInputChange={setSearch} placeHolder='Pesquisar Membro' typeInput='text' />
+              <span>{institution?.memberList?.length} Membros</span>
+            </div>
           </div>
 
           <div className="containerMember">
-            {institution && memberList?.map( (member) => {return (
-              <MemberCard memberName={member.user?.name || ""} institution={institution} role={member.role}/>
-            )})}
+            {institution?.membershipRequest && institution.membershipRequest.length>0 &&
+              <>
+                <h4>Solicitações</h4>
+                <hr></hr>
+              </>
+            }
+            {institution && institution.membershipRequest?.map((member) => {
+              return (
+                <MemberCard member={member} roleList={institution.roleList} requestType={true} refresh={refresh} />
+              )
+            })}
+            <h4>Membros</h4>
+            <hr></hr>
+            {institution && memberList?.map((member) => {
+              return (
+                <MemberCard member={member} roleList={institution.roleList} role={member.role} refresh={refresh} />
+              )
+            })}
           </div>
-          
+
         </div>
       </main>
     </>

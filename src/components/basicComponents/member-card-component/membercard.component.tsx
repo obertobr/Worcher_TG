@@ -4,22 +4,30 @@ import selectMember from "./selectMember.module.css"
 
 import './memberCard.css';
 import SelectInputComponent from "../select-input-component/select.input.component";
-import { useEffect, useState } from "react";
 import Role from "../../../../Models/Instituition/role.entity";
+import Member from "../../../../Models/User/member.entity";
+import MembershipRequest from "../../../../Models/Instituition/membershipRequest.entity";
+import MemberService from '../../../../Service/User/member.service';
 import InstitutionService from "../../../../Service/Instituition/institution.service";
-import Institution from "../../../../Models/Instituition/institution.entity";
 
 interface MemberCardInterface {
-  memberName: string;
-  institution: Institution;
+  member: Member | MembershipRequest;
+  roleList?: Role[];
   role?: Role;
+  requestType?: boolean
+  refresh: () => void
 }
 
 const MemberCard: React.FC<MemberCardInterface> = ({
-  memberName,
-  institution,
-  role
+  member,
+  roleList,
+  role,
+  requestType,
+  refresh
 }) => {
+
+  const memberService = new MemberService()
+  const institutionService = new InstitutionService()
 
   const convertToRoleList = (list: any[] | undefined): Role[] => {
     if (!list) return [];
@@ -35,22 +43,57 @@ const MemberCard: React.FC<MemberCardInterface> = ({
     return Object.assign(role, object);
   }
 
+  const alterRole = async (role: Role) => {
+    if(member.id){
+      await memberService.alterRole(member.id,role);
+    }
+  }
+
+  const allowRequest = async () => {
+    if(member.id){
+      await institutionService.acceptEntry(member.id);
+      refresh();
+    }
+  }
+
+  const denyRequest = async () => {
+    if(member.id){
+      await institutionService.deleteMembershipRequest(member.id);
+      refresh();
+    }
+  }
+
+  const removeMember = async () => {
+    if(member.id){
+      await memberService.delete(member.id);
+      refresh();
+    }
+  }
+
   return (
     <>
       <div className="memberCard">
         <img className="memberPic" src={memberImg} alt="Foto do Membro da Instituição" />
 
         <div className="memberCardInfo">
-          <IonLabel className="memberName">{memberName}</IonLabel>
-          {/* <IonLabel className="memberPosition">{memberPosition}</IonLabel> */}
-          <SelectInputComponent
-            style={selectMember}
-            itens={convertToRoleList(institution.roleList)}
-            onInputChange={(event) => {console.log(event)}}
-            value={role?.id}
-          ></SelectInputComponent>
+          <IonLabel className="memberName">{member.user?.name || ""}</IonLabel>
+          {!requestType &&
+            <SelectInputComponent
+              style={selectMember}
+              itens={convertToRoleList(roleList)}
+              onInputChange={alterRole}
+              value={role?.id}
+            ></SelectInputComponent>
+          }
         </div>
-        <button className="editButton">X</button>
+        {requestType ?
+          <>
+            <button className="allowButton" onClick={allowRequest}>✔</button>
+            <button className="denyButton" onClick={denyRequest}>X</button>
+          </>
+          :
+          <button className="denyButton" onClick={removeMember}>X</button>
+        }
       </div>
     </>
   )
