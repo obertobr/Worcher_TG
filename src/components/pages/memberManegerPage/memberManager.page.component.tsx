@@ -15,21 +15,19 @@ const MemberViewPage: React.FC<{}> = () => {
   const [institution, setInstitution] = useState<Institution>()
   const [memberList, setMemberList] = useState<Member[]>()
 
+  const institutionLocalStorage = new LocalStorageInstituionUtils()
   const institutionService = new InstitutionService()
 
   const loadInstitution = async () => {
-    const institutionLocalStorage = new LocalStorageInstituionUtils()
     const intitutionID = institutionLocalStorage.getId()
     if (intitutionID) {
       const institution = await institutionService.getById(intitutionID)
       setInstitution(institution)
       setMemberList(institution?.memberList)
     }
-    console.log(institution)
   }
 
   const loadMembers = async () => {
-    const institutionLocalStorage = new LocalStorageInstituionUtils()
     const intitutionID = institutionLocalStorage.getId()
     if (intitutionID) {
       const members = await institutionService.getMembers(intitutionID, search)
@@ -63,14 +61,14 @@ const MemberViewPage: React.FC<{}> = () => {
             <hr></hr>
             {institution && institution.membershipRequest?.map((member) => {
               return (
-                <MemberCard memberName={member.user?.name || ""} roleList={institution.roleList} requestType={true} />
+                <MemberCard member={member} roleList={institution.roleList} requestType={true} />
               )
             })}
             <h4>Membros</h4>
             <hr></hr>
             {institution && memberList?.map((member) => {
               return (
-                <MemberCard memberName={member.user?.name || ""} roleList={institution.roleList} role={member.role} />
+                <MemberCard member={member} roleList={institution.roleList} role={member.role} />
               )
             })}
           </div>
