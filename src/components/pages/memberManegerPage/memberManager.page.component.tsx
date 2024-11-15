@@ -10,8 +10,11 @@ import Member from '../../../../Models/User/member.entity';
 
 const MemberViewPage: React.FC<{}> = () => {
 
+  const [search, setSearch] = useState<string>()
+
   const [institution, setInstitution] = useState<Institution>()
   const [memberList, setMemberList] = useState<Member[]>()
+  const [memberCount, setMemberCount] = useState<number>()
 
   const institutionService = new InstitutionService()
   
@@ -22,13 +25,28 @@ const MemberViewPage: React.FC<{}> = () => {
       const institution = await institutionService.getById(intitutionID)
       setInstitution(institution)
       setMemberList(institution?.memberList)
+      setMemberCount(institution?.memberList?.length)
     }
     console.log(institution)
+  }
+
+  const loadMembers = async () => {
+    const institutionLocalStorage = new LocalStorageInstituionUtils()
+    const intitutionID = institutionLocalStorage.getId()
+    if(intitutionID){
+      const members = await institutionService.getMembers(intitutionID, search)
+
+      setMemberList(members)
+    }
   }
 
   useEffect(() => {
     loadInstitution()
   }, []);
+
+  useEffect(() => {
+    loadMembers()
+  }, [search]);
   
   return(
     <>
@@ -36,7 +54,10 @@ const MemberViewPage: React.FC<{}> = () => {
         <div className="contentMember">
           <div className='memberHeader'>
             <h2>Gerenciar Membros</h2>
-            <TextInputComponent onInputChange={() => {} } placeHolder='Pesquisar Membro' typeInput='text' textLabel='Pesquisar Membro' />
+            <div className='memberSearch'>
+              <TextInputComponent onInputChange={setSearch} placeHolder='Pesquisar Membro' typeInput='text' />
+              <span>{memberCount} Membros</span>
+            </div>
           </div>
 
           <div className="containerMember">

@@ -10,6 +10,16 @@
     }
   }
 
+  .memberSearch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    span {
+      white-space: nowrap;
+    }
+  }
+
   .containerMember{
     display: flex;
     flex-direction: column;
