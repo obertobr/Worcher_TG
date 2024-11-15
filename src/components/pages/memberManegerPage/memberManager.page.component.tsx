@@ -14,18 +14,16 @@ const MemberViewPage: React.FC<{}> = () => {
 
   const [institution, setInstitution] = useState<Institution>()
   const [memberList, setMemberList] = useState<Member[]>()
-  const [memberCount, setMemberCount] = useState<number>()
 
   const institutionService = new InstitutionService()
-  
+
   const loadInstitution = async () => {
     const institutionLocalStorage = new LocalStorageInstituionUtils()
     const intitutionID = institutionLocalStorage.getId()
-    if(intitutionID){
+    if (intitutionID) {
       const institution = await institutionService.getById(intitutionID)
       setInstitution(institution)
       setMemberList(institution?.memberList)
-      setMemberCount(institution?.memberList?.length)
     }
     console.log(institution)
   }
@@ -33,7 +31,7 @@ const MemberViewPage: React.FC<{}> = () => {
   const loadMembers = async () => {
     const institutionLocalStorage = new LocalStorageInstituionUtils()
     const intitutionID = institutionLocalStorage.getId()
-    if(intitutionID){
+    if (intitutionID) {
       const members = await institutionService.getMembers(intitutionID, search)
 
       setMemberList(members)
@@ -47,8 +45,8 @@ const MemberViewPage: React.FC<{}> = () => {
   useEffect(() => {
     loadMembers()
   }, [search]);
-  
-  return(
+
+  return (
     <>
       <main>
         <div className="contentMember">
@@ -56,16 +54,27 @@ const MemberViewPage: React.FC<{}> = () => {
             <h2>Gerenciar Membros</h2>
             <div className='memberSearch'>
               <TextInputComponent onInputChange={setSearch} placeHolder='Pesquisar Membro' typeInput='text' />
-              <span>{memberCount} Membros</span>
+              <span>{institution?.memberList?.length} Membros</span>
             </div>
           </div>
 
           <div className="containerMember">
-            {institution && memberList?.map( (member) => {return (
-              <MemberCard memberName={member.user?.name || ""} institution={institution} role={member.role}/>
-            )})}
+            <h4>Solicitações</h4>
+            <hr></hr>
+            {institution && institution.membershipRequest?.map((member) => {
+              return (
+                <MemberCard memberName={member.user?.name || ""} roleList={institution.roleList} requestType={true} />
+              )
+            })}
+            <h4>Membros</h4>
+            <hr></hr>
+            {institution && memberList?.map((member) => {
+              return (
+                <MemberCard memberName={member.user?.name || ""} roleList={institution.roleList} role={member.role} />
+              )
+            })}
           </div>
-          
+
         </div>
       </main>
     </>

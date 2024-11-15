@@ -19,7 +19,7 @@ export default class Institution extends BaseEntity {
   eventCategoryList: EventCategory[] = [];
   address: Address | undefined;
   image: DigitalFile | undefined;
-  membershipRequest: MembershipRequest | undefined;
+  membershipRequest: MembershipRequest[] | undefined;
 
   constructor(id?: number, name?: string, description?: string){
     super()

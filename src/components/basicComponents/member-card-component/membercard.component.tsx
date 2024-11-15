@@ -4,21 +4,20 @@ import selectMember from "./selectMember.module.css"
 
 import './memberCard.css';
 import SelectInputComponent from "../select-input-component/select.input.component";
-import { useEffect, useState } from "react";
 import Role from "../../../../Models/Instituition/role.entity";
-import InstitutionService from "../../../../Service/Instituition/institution.service";
-import Institution from "../../../../Models/Instituition/institution.entity";
 
 interface MemberCardInterface {
   memberName: string;
-  institution: Institution;
+  roleList?: Role[];
   role?: Role;
+  requestType?: boolean
 }
 
 const MemberCard: React.FC<MemberCardInterface> = ({
   memberName,
-  institution,
-  role
+  roleList,
+  role,
+  requestType
 }) => {
 
   const convertToRoleList = (list: any[] | undefined): Role[] => {
@@ -42,15 +41,23 @@ const MemberCard: React.FC<MemberCardInterface> = ({
 
         <div className="memberCardInfo">
           <IonLabel className="memberName">{memberName}</IonLabel>
-          {/* <IonLabel className="memberPosition">{memberPosition}</IonLabel> */}
-          <SelectInputComponent
-            style={selectMember}
-            itens={convertToRoleList(institution.roleList)}
-            onInputChange={(event) => {console.log(event)}}
-            value={role?.id}
-          ></SelectInputComponent>
+          {!requestType &&
+            <SelectInputComponent
+              style={selectMember}
+              itens={convertToRoleList(roleList)}
+              onInputChange={(event) => { console.log(event) }}
+              value={role?.id}
+            ></SelectInputComponent>
+          }
         </div>
-        <button className="editButton">X</button>
+        {requestType ?
+          <>
+            <button className="confirmButton">✔</button>
+            <button className="denyButton">X</button>
+          </>
+          :
+          <button className="denyButton">X</button>
+        }
       </div>
     </>
   )
