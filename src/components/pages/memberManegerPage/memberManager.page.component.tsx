@@ -10,7 +10,7 @@ import Member from '../../../../Models/User/member.entity';
 
 const MemberViewPage: React.FC<{}> = () => {
 
-  const [search, setSearch] = useState<string>()
+  const [search, setSearch] = useState<string>("")
 
   const [institution, setInstitution] = useState<Institution>()
   const [memberList, setMemberList] = useState<Member[]>()
@@ -23,7 +23,6 @@ const MemberViewPage: React.FC<{}> = () => {
     if (intitutionID) {
       const institution = await institutionService.getById(intitutionID)
       setInstitution(institution)
-      setMemberList(institution?.memberList)
     }
   }
 
@@ -34,6 +33,11 @@ const MemberViewPage: React.FC<{}> = () => {
 
       setMemberList(members)
     }
+  }
+
+  const refresh = async () => {
+    loadInstitution()
+    loadMembers()
   }
 
   useEffect(() => {
@@ -57,18 +61,22 @@ const MemberViewPage: React.FC<{}> = () => {
           </div>
 
           <div className="containerMember">
-            <h4>Solicitações</h4>
-            <hr></hr>
+            {institution?.membershipRequest && institution.membershipRequest.length>0 &&
+              <>
+                <h4>Solicitações</h4>
+                <hr></hr>
+              </>
+            }
             {institution && institution.membershipRequest?.map((member) => {
               return (
-                <MemberCard member={member} roleList={institution.roleList} requestType={true} />
+                <MemberCard member={member} roleList={institution.roleList} requestType={true} refresh={refresh} />
               )
             })}
             <h4>Membros</h4>
             <hr></hr>
             {institution && memberList?.map((member) => {
               return (
-                <MemberCard member={member} roleList={institution.roleList} role={member.role} />
+                <MemberCard member={member} roleList={institution.roleList} role={member.role} refresh={refresh} />
               )
             })}
           </div>

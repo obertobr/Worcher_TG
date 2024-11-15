@@ -33,7 +33,7 @@
     box-shadow: var(--lightShadow);
   }
 
-  .confirmButton{
+  .allowButton{
     width: 40px;
     aspect-ratio: 1/1;
 

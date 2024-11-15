@@ -6,24 +6,28 @@ import './memberCard.css';
 import SelectInputComponent from "../select-input-component/select.input.component";
 import Role from "../../../../Models/Instituition/role.entity";
 import Member from "../../../../Models/User/member.entity";
-import MembershipRequest from "../../../../Models/Instituition/membershipRequest.entity"
-import MemberService from '../../../../Service/User/member.service';;
+import MembershipRequest from "../../../../Models/Instituition/membershipRequest.entity";
+import MemberService from '../../../../Service/User/member.service';
+import InstitutionService from "../../../../Service/Instituition/institution.service";
 
 interface MemberCardInterface {
   member: Member | MembershipRequest;
   roleList?: Role[];
   role?: Role;
   requestType?: boolean
+  refresh: () => void
 }
 
 const MemberCard: React.FC<MemberCardInterface> = ({
   member,
   roleList,
   role,
-  requestType
+  requestType,
+  refresh
 }) => {
 
   const memberService = new MemberService()
+  const institutionService = new InstitutionService()
 
   const convertToRoleList = (list: any[] | undefined): Role[] => {
     if (!list) return [];
@@ -39,9 +43,30 @@ const MemberCard: React.FC<MemberCardInterface> = ({
     return Object.assign(role, object);
   }
 
-  const alterRole = (role: Role) => {
+  const alterRole = async (role: Role) => {
     if(member.id){
-      memberService.alterRole(member.id,role);
+      await memberService.alterRole(member.id,role);
+    }
+  }
+
+  const allowRequest = async () => {
+    if(member.id){
+      await institutionService.acceptEntry(member.id);
+      refresh();
+    }
+  }
+
+  const denyRequest = async () => {
+    if(member.id){
+      await institutionService.deleteMembershipRequest(member.id);
+      refresh();
+    }
+  }
+
+  const removeMember = async () => {
+    if(member.id){
+      await memberService.delete(member.id);
+      refresh();
     }
   }
 
@@ -63,11 +88,11 @@ const MemberCard: React.FC<MemberCardInterface> = ({
         </div>
         {requestType ?
           <>
-            <button className="confirmButton">✔</button>
-            <button className="denyButton">X</button>
+            <button className="allowButton" onClick={allowRequest}>✔</button>
+            <button className="denyButton" onClick={denyRequest}>X</button>
           </>
           :
-          <button className="denyButton">X</button>
+          <button className="denyButton" onClick={removeMember}>X</button>
         }
       </div>
     </>
