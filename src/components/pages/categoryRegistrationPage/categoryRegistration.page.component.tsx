@@ -85,7 +85,7 @@ const CategoryRegistrationPage: React.FC<categoryRegistrationInterface> = ({
           <div className="categoryRegInputContainer">
             <TextInputComponent textLabel="Nome da Categoria" onInputChange={(e) => setName(e) } placeHolder="Digite aqui..." />
             
-            <ColorPicker onChange={(e) => setColor(e)} />
+            {/* <ColorPicker onChange={(e) => setColor(e)} /> */}
 
             <ButtonComponent width="300px" text="Criar" onClick={createNewEventCategory}/>
           </div>
