@@ -4,7 +4,7 @@ import "./footerComponent.css"
 import { useHistory } from "react-router";
 import RouterUtil from "../../../../../Utils/Components/RouterUtil";
 import { IonIcon } from "@ionic/react";
-import  { calendarOutline, documentTextOutline, calendarNumberOutline}  from "ionicons/icons";
+import  { calendarOutline, documentTextOutline, calendarNumberOutline, businessOutline}  from "ionicons/icons";
 import LocalStorageUtils from "../../../../../Utils/LocalStorage/local.storage.utils";
 
 class NavFooter {
@@ -25,31 +25,48 @@ class NavFooter {
     }
 }
 
-interface FooterComponentPropsInterface{
+const navItensInstitution = [
+    new NavFooter(1,"Feed",documentTextOutline,true, true,"home"),
+    new NavFooter(2,"Agenda",calendarOutline,false, true,"home"),       
+    new NavFooter(3,"Instituições",businessOutline,false, true,"home")
+]
 
+const navItensBackInstitution = [
+    new NavFooter(1,"Instituições",businessOutline,true, true,"my-institution"),
+    new NavFooter(2,"Eventos",calendarNumberOutline,false, true,"home"),
+]
+
+
+
+interface FooterComponentPropsInterface{
+    isWithinTheInstitution?: boolean
 }
 
 const FooterComponent: React.FC<FooterComponentPropsInterface> = ({
-
+    isWithinTheInstitution = false
   }) => {
 
     const history = useHistory()
+    
     const localStorage = new LocalStorageUtils<NavFooter[]>("NAV_FOOTER");
 
     useEffect(() => {
         const navItensLocalStorage = localStorage.getItem()
         
-        if(navItensLocalStorage && navItensLocalStorage.length > 0){
+        if(!navItensLocalStorage || navItensLocalStorage.length < 0){
+            setNavItens(isWithinTheInstitution ? navItensInstitution : navItensBackInstitution)
+        }else{
             setNavItens(navItensLocalStorage)
+
+            navItensLocalStorage.forEach( i => {
+                if(i.active){
+                    RouterUtil.goToPage(history,i.route)
+                }
+            })
         }
     }, [])
 
-    const [navItens, setNavItens] = useState<NavFooter[]>([
-        new NavFooter(1,"Feed",documentTextOutline,true, true,"home"),
-        new NavFooter(2,"Eventos",calendarNumberOutline,false, true,"home"),
-        new NavFooter(3,"Agenda",calendarOutline,false, true,"home"),       
-        new NavFooter(4,"Instituições",calendarNumberOutline,false, true,"home")
-    ])
+    const [navItens, setNavItens] = useState<NavFooter[]>([])
     
     const onClickNavItem = (sequencial: number, route: string) => {
        const index = navItens.findIndex( (i) => i.sequencial == sequencial)

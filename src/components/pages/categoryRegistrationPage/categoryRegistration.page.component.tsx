@@ -38,7 +38,7 @@ const CategoryRegistrationPage: React.FC<categoryRegistrationInterface> = ({
 
     const eventCategory = new EventCategory()
     eventCategory.name = name
-    eventCategory.color = color
+    // eventCategory.color = color
     eventCategory.institution = new Institution()
     eventCategory.institution.id = localStorageInstituionUtils.getId()
 

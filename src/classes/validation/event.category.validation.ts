@@ -6,7 +6,7 @@ export default class EventCategoryValidation extends AbstractValidation {
     validate(eventCategory: EventCategory){
 
         this.addErrorMessage(this.validateName(eventCategory.name))
-        this.addErrorMessage(this.validateColor(eventCategory.color))
+        // this.addErrorMessage(this.validateColor(eventCategory.color))
     }
 
     validateName(name: string | undefined): string | null{

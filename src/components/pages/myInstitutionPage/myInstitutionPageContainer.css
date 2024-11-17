@@ -1,10 +1,27 @@
 .contentInst {
 
-  h2{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .textWarn{
     text-align: center;
   }
 
+  h2{
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .line{
+    background-color: var(--primaryColorFont);
+    width: 90%;
+    height: 1px;
+    opacity: 0.4;
+  }
+
   .containerInst{
+    width: 100%;
     display: flex;
     flex-direction: column;
 
@@ -12,9 +29,10 @@
     justify-content: center;
     gap: 30px;
 
-    height: 100vh;
-    overflow-y: auto;
+    height: 100%;
+    
 
     padding: 0px 20px;
+    padding-bottom: 20px;
   }
 }

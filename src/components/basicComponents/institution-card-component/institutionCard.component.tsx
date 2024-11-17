@@ -7,12 +7,10 @@ import './institutionCard.css';
 
 interface InstitutionCardInterface {
   title: string;
-  memberCount?: number;
 }
 
 const InstitutionCard: React.FC<InstitutionCardInterface> = ({
   title,
-  memberCount
 }) => {
   return(
     <>
@@ -21,9 +19,8 @@ const InstitutionCard: React.FC<InstitutionCardInterface> = ({
 
         <div className="institutionCardInfo">
           <IonLabel className='title'>{title}</IonLabel>
-          <IonLabel className='memberCount'>{memberCount} Membros</IonLabel>
         </div>
-          <ButtonComponent text='Sair' width='30%' onClick={() => {} } />
+          <ButtonComponent isCancel={true} text='Sair' width='100px' onClick={() => {} } />
       </div>
     </>
   );

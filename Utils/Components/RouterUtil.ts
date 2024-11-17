@@ -1,7 +1,13 @@
 export default class RouterUtil {
 
     static goToPage = (history: any, path: string) => {
-      history.push(`/${path}`);
+
+      const pathAtual = history.location.pathname
+
+      if(pathAtual.slice(1) != path){
+        console.log(pathAtual)
+        history.push(`/${path}`);
+      }
     }
   
     static returnOfLastPage = (history: any) => {

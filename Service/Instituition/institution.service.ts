@@ -2,6 +2,7 @@ import axios from "axios";
 import Institution from "../../Models/Instituition/institution.entity";
 import AbstractFormDataCrud from "../abstractFormDataCrud.service";
 import Member from "../../Models/User/member.entity";
+import requestEntryInterface from "./membershipRequest.crud.service.interface"
 
 export default class InstitutionService extends AbstractFormDataCrud<Institution> {
 
@@ -35,4 +36,36 @@ export default class InstitutionService extends AbstractFormDataCrud<Institution
     }
   }
 
+  async getInstitutionsByUserId(idUser: number | undefined): Promise<Institution[]> {
+    try {
+      const response = await axios.get(`${this.urlApi}listByUser/${idUser}`);
+      const data = response.data.data;
+      
+      return data.map((item: any) => this.convertToEntity(item));
+
+    } catch (error: any) {
+      return error.response.data.errors;
+    }
+  }
+
+  async getInstitutionByCode(code: number): Promise<number> {
+    try {
+      const response = await axios.get(`${this.urlApi}getInstitutionByCode/${code}`);
+      const data = response.data.data;
+      return data;
+    } catch (error: any) {
+      throw error.response?.data?.errors;
+    }
+  }
+  
+  async requestEntry(data: requestEntryInterface): Promise<any> {
+    try {
+      const response = await axios.post(`${this.urlApi}requestEntry`, data);
+      const request = response.data.data;
+      return request; 
+    } catch (error: any) {
+      return error.response?.data?.errors
+    }
+  }
+  
 }
