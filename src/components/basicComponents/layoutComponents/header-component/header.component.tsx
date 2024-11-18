@@ -6,6 +6,8 @@ import { useHistory } from "react-router";
 import RouterUtil from "../../../../../Utils/Components/RouterUtil";
 import { NavFooter } from "../footer-component/footer.component";
 import LocalStorageUtils from "../../../../../Utils/LocalStorage/local.storage.utils";
+import LocalStorageMemberUtils from "../../../../../Utils/LocalStorage/local.storage.member.utils";
+import LocalStorageInstituionUtils from "../../../../../Utils/LocalStorage/local.storage.institution.utils";
 
 type TextFieldTypes = 'simple' | 'complex';
 
@@ -38,6 +40,12 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
     const homeClicked = () => {
         const localStorage = new LocalStorageUtils<NavFooter[]>("NAV_FOOTER");
         localStorage.setItem([])
+
+        const localStorageMemberUtils = new LocalStorageMemberUtils()
+        const localStorageInstitution = new LocalStorageInstituionUtils()
+
+        localStorageInstitution.setId(null)
+        localStorageMemberUtils.setItem(null)
         
         RouterUtil.goToPage(history,"my-institution")
     }

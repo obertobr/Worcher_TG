@@ -17,6 +17,8 @@ import AlertComponent from '../../basicComponents/alert-component/alert.componen
 import RouterUtil from '../../../../Utils/Components/RouterUtil';
 import LocalStorageMemberUtils from '../../../../Utils/LocalStorage/local.storage.member.utils';
 import LocalStorageInstituionUtils from '../../../../Utils/LocalStorage/local.storage.institution.utils';
+import MemberService from '../../../../Service/User/member.service';
+import Member from '../../../../Models/User/member.entity';
 
 interface instituitionViewInterface {
 }
@@ -40,11 +42,48 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
   
   const localStorageMember = new LocalStorageMemberUtils()
   const [isMemberLocalStorage, setIsMemberLocalStorage] = useState<boolean>(!!localStorageMember.getItem());
+  const [member, setMember] = useState<Member>()
+
+  const [showButtonExcluirInstituicao, setShowButtonExcluirInstituicao] = useState<boolean>(false)
+  const [showButtonGerenciarMembros, setShowButtonGerenciarMembros] = useState<boolean>(false)
+  const [showButtonGerenciarCargos, setShowButtonGerenciarCargos] = useState<boolean>(false)
+  const [showButtonGerenciarCategorias, setShowButtonGerenciarCategoria] = useState<boolean>(false)
+  const [showButtonCriarEvento, setShowButtonCriarEvento] = useState<boolean>(false)
 
   useEffect(() => {
     loadDataInstitution()
+    if(isMemberLocalStorage){
+      loadMemberPermissions()
+    }
   }, [])
 
+  useEffect( () => {
+    loadPermissionButton()
+  }, [member])
+
+  const loadPermissionButton = () => {
+    setShowButtonExcluirInstituicao(memberHaveIdPermission(1))
+    setShowButtonGerenciarMembros(memberHaveIdPermission(2))
+    setShowButtonGerenciarCargos(memberHaveIdPermission(3))
+    setShowButtonCriarEvento(memberHaveIdPermission(4))
+    setShowButtonGerenciarCategoria(memberHaveIdPermission(5))
+  }
+
+  const memberHaveIdPermission = (idPermission: number) => {
+     const index = member?.role?.permission?.findIndex(e => e.id == idPermission)
+     return index != -1 && index != undefined
+  }
+
+  const loadMemberPermissions = async () => {
+    const memberService = new MemberService()
+    const idMember = localStorageMember.getItem()
+
+    if(idMember){
+      await memberService.getById(idMember).then( (e) => {
+        setMember(e)
+      })
+    }
+  }
 
   const loadDataInstitution = async () => {
     if(idParsed){
@@ -100,7 +139,59 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
               }</p>
           </div>
 
-          <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => requestEntry() } />
+          {
+              isMemberLocalStorage && showButtonCriarEvento ? 
+              (
+                <ButtonComponent width='80%' text='Criar Evento' onClick={() => RouterUtil.goToPage(history,"event-register") } />
+              ) : (<></>)
+            }
+
+            {
+              isMemberLocalStorage && showButtonGerenciarMembros ? 
+              (
+                <ButtonComponent width='80%' text='Gerenciar Membros' onClick={() => RouterUtil.goToPage(history,"member-view") } />
+              ) : (<></>)
+            }
+
+            {
+              isMemberLocalStorage && showButtonGerenciarCategorias ? 
+              (
+                <ButtonComponent width='80%' text='Gerenciar Categorias de Eventos' onClick={() => RouterUtil.goToPage(history,"") } />
+              ) : (<></>)
+            }
+
+            {
+              isMemberLocalStorage && showButtonGerenciarCategorias ? 
+              (
+                <ButtonComponent width='80%' text='Gerenciar Cargos' onClick={() => RouterUtil.goToPage(history,"") } />
+              ) : (<></>)
+            }
+
+
+            {
+              !isMemberLocalStorage ? (
+
+                <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => requestEntry() } />
+              )
+
+              :
+
+              (
+                <ButtonComponent isCancel={true} width='80%' text='Sair da instituição' onClick={() => console.log("Sair") } />
+              )
+            }
+
+              {
+              isMemberLocalStorage && showButtonExcluirInstituicao ? 
+              (
+                <ButtonComponent isCancel={true} width='80%' text='Excluir instituição' onClick={() => console.log("Sair") } />
+              ) : (<></>)
+            }
+
+            
+
+
+
         </main>
 
 

@@ -1,16 +1,16 @@
 import LocalStorageUtils from "./local.storage.utils";
 
-export default class LocalStorageInstituionUtils extends LocalStorageUtils<number | undefined> {
+export default class LocalStorageInstituionUtils extends LocalStorageUtils<number | null> {
 
     constructor(){
         super("INSTITUION_ID")
     }
     
-    public getId(): number | undefined{
+    public getId(): number | null | undefined{
        return this.getItem();
     }
 
-    public setId(id: number | undefined){
+    public setId(id: number | null){
         this.setItem(id)
     }
 }

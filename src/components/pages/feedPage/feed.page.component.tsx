@@ -22,7 +22,6 @@ const FeedPage: React.FC<{}> = () => {
     <HeaderComponent showHome={true} showArrowBack={false} type='simple' showCircleImage={true}></HeaderComponent>
 
       <main>
-        Palhaço
       </main>
     
     <FooterComponent isWithinTheInstitution={true}></FooterComponent>

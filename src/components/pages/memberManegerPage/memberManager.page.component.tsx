@@ -67,16 +67,16 @@ const MemberViewPage: React.FC<{}> = () => {
                 <hr></hr>
               </>
             }
-            {institution && institution.membershipRequest?.map((member) => {
+            {institution && institution.membershipRequest?.map((member,index) => {
               return (
-                <MemberCard member={member} roleList={institution.roleList} requestType={true} refresh={refresh} />
+                <MemberCard key={index} member={member} roleList={institution.roleList} requestType={true} refresh={refresh} />
               )
             })}
             <h4>Membros</h4>
             <hr></hr>
-            {institution && memberList?.map((member) => {
+            {institution && memberList?.map((member,index) => {
               return (
-                <MemberCard member={member} roleList={institution.roleList} role={member.role} refresh={refresh} />
+                <MemberCard key={index} member={member} roleList={institution.roleList} role={member.role} refresh={refresh} />
               )
             })}
           </div>
