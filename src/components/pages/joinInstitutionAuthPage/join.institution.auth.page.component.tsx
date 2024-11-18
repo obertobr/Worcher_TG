@@ -1,13 +1,10 @@
 import { useState } from "react";
 import AlertComponent from "../../basicComponents/alert-component/alert.component";
 import AuthPage from "../authPage/auth.page.component";
-import LocalStorageUtils from "../../../../Utils/LocalStorage/local.storage.utils";
-import UserService from "../../../../Service/User/user.service";
 import RouterUtil from "../../../../Utils/Components/RouterUtil";
 import { useHistory } from "react-router";
 import InstitutionService from "../../../../Service/Instituition/institution.service";
-import requestEntryInterface from "../../../../Service/Instituition/membershipRequest.crud.service.interface";
-import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils";
+import LocalStorageInstituionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils";
 
 const JoinInstitutionAuthPage: React.FC = () => {
 
@@ -29,7 +26,10 @@ const JoinInstitutionAuthPage: React.FC = () => {
 
         return false
      }else{
-      RouterUtil.goToPage(history,`inst-page/${response}`)
+      const localStorage = new LocalStorageInstituionUtils()
+      localStorage.setId(response)
+      
+      RouterUtil.goToPage(history,`inst-page`)
      }
 
   }

@@ -26,9 +26,6 @@ export class NavFooter {
     }
 }
 
-const localStorageInstitution = new LocalStorageInstituionUtils()
-
-
 interface FooterComponentPropsInterface{
     isWithinTheInstitution?: boolean
 }
@@ -49,7 +46,7 @@ const FooterComponent: React.FC<FooterComponentPropsInterface> = ({
     const navItensInstitution = [
         new NavFooter(1,"Feed",documentTextOutline,true, true,"feed"),
         new NavFooter(2,"Agenda",calendarOutline,false, true,"schedule"),       
-        new NavFooter(3,"Instituição",businessOutline,false, true, `inst-page/${localStorageInstitution.getId()}`)
+        new NavFooter(3,"Instituição",businessOutline,false, true, `inst-page`)
     ]
     
     const navItensBackInstitution = [
@@ -58,30 +55,33 @@ const FooterComponent: React.FC<FooterComponentPropsInterface> = ({
     ]
 
     useEffect(() => {
-        const isWithinTheInstitutionLocalStorage = localStorageTypeFooter.getItem()
-
-        if(isWithinTheInstitutionLocalStorage != isWithinTheInstitution){
-            localStorage.setItem([])
+        const isWithinTheInstitutionLocalStorage = localStorageTypeFooter.getItem();
+    
+        if (isWithinTheInstitutionLocalStorage !== isWithinTheInstitution) {
+            localStorage.setItem([]);
         }
-
-        localStorageTypeFooter.setItem(isWithinTheInstitution)
-
-        const navItensLocalStorage = localStorage.getItem()
-        
-        if(!navItensLocalStorage || navItensLocalStorage.length == 0){
-            const navItensInstitutionCopy = [... navItensInstitution]
-            const navItensBackInstitutionCopy = [... navItensBackInstitution]
-
-            setNavItens(isWithinTheInstitution ? navItensInstitutionCopy : navItensBackInstitutionCopy)
-        }else{
-            setNavItens(navItensLocalStorage)
-            navItensLocalStorage.forEach( i => {
-                if(i.active){
-                    RouterUtil.goToPage(history,i.route)
+    
+        localStorageTypeFooter.setItem(isWithinTheInstitution);
+    
+        const navItensLocalStorage = localStorage.getItem();
+    
+        if (!navItensLocalStorage || navItensLocalStorage.length === 0) {
+            const navItensInstitutionCopy = [...navItensInstitution];
+            const navItensBackInstitutionCopy = [...navItensBackInstitution];
+    
+            setNavItens(isWithinTheInstitution ? navItensInstitutionCopy : navItensBackInstitutionCopy);
+        } else {
+            setNavItens(navItensLocalStorage);
+            navItensLocalStorage.forEach((i) => {
+                if (i.active) {
+                    RouterUtil.goToPage(history, i.route);
                 }
-            })
+            });
         }
-    }, [])
+    
+        // Cleanup para evitar duplicações
+        return () => setNavItens([]);
+    }, [isWithinTheInstitution]);
 
     
     

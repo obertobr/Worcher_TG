@@ -90,7 +90,16 @@ const App: React.FC = () => {
 
           <Route exact path='/test' component={TestPage} />
 
-          <Route exact path='/inst-page/:id' component={InstituitionViewPage} />
+          <Route
+            exact
+            path="/inst-page/"
+            render={(props) => (
+                <>
+                <InstituitionViewPage {...props} />
+                </>
+            )}
+          />
+
 
           <Route exact path='/category-registration' component={CategoryRegistrationPage} />
 

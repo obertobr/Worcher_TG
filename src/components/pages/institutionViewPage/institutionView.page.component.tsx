@@ -16,6 +16,7 @@ import requestEntryInterface from '../../../../Service/Instituition/membershipRe
 import AlertComponent from '../../basicComponents/alert-component/alert.component';
 import RouterUtil from '../../../../Utils/Components/RouterUtil';
 import LocalStorageMemberUtils from '../../../../Utils/LocalStorage/local.storage.member.utils';
+import LocalStorageInstituionUtils from '../../../../Utils/LocalStorage/local.storage.institution.utils';
 
 interface instituitionViewInterface {
 }
@@ -25,8 +26,13 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
   
   const history = useHistory()
   const service = new InstitutionService()
-  const { id } = useParams<{id: string}>();
-  const idParsed = parseInt(id)
+
+  const localStorageInstitution = new LocalStorageInstituionUtils()
+  const id = localStorageInstitution.getId()
+
+
+
+  const idParsed = id
   const [instituition, setInstitution] = useState<Institution>()
 
   const [showModal, setShowModal] = useState(false);
@@ -38,6 +44,7 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
   useEffect(() => {
     loadDataInstitution()
   }, [])
+
 
   const loadDataInstitution = async () => {
     if(idParsed){
