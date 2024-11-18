@@ -1,4 +1,4 @@
 export default class requestEntryInterface {
-    codeInstitution: number | undefined;
+    idInstitution: number | undefined;
     userId: number | undefined;
 }

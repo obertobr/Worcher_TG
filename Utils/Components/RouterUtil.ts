@@ -5,7 +5,6 @@ export default class RouterUtil {
       const pathAtual = history.location.pathname
 
       if(pathAtual.slice(1) != path){
-        console.log(pathAtual)
         history.push(`/${path}`);
       }
     }

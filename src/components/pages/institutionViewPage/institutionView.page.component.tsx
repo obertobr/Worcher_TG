@@ -7,41 +7,98 @@ import './institutionViewPageMain.css';
 
 import logo from "../../../assets/rafael.png"
 import FooterComponent from '../../basicComponents/layoutComponents/footer-component/footer.component';
+import { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router';
+import Institution from '../../../../Models/Instituition/institution.entity';
+import LocalStorageLoginUtils from '../../../../Utils/LocalStorage/local.storage.login.utils';
+import InstitutionService from '../../../../Service/Instituition/institution.service';
+import requestEntryInterface from '../../../../Service/Instituition/membershipRequest.crud.service.interface';
+import AlertComponent from '../../basicComponents/alert-component/alert.component';
+import RouterUtil from '../../../../Utils/Components/RouterUtil';
+import LocalStorageMemberUtils from '../../../../Utils/LocalStorage/local.storage.member.utils';
 
 interface instituitionViewInterface {
-  title: string;
-  desc: string;
-  intAddress?: string;
 }
 
 const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
-  title = "Vida e Adoração",
-  desc = "Uma igreja evangélica acolhedora e vibrante.Venha fazer parte de uma comunidade apaixonada em busca de significado e serviço. Junte-se a nós para uma jornada espiritual inspiradora e cheia de propósito.",  
-  intAddress = "R. Cel. Teófilo Leme, 1552 - Centro, Bragança Paulista - SP, 12900-005"
 }) => {
+  
+  const history = useHistory()
+  const service = new InstitutionService()
+  const { id } = useParams<{id: string}>();
+  const idParsed = parseInt(id)
+  const [instituition, setInstitution] = useState<Institution>()
+
+  const [showModal, setShowModal] = useState(false);
+  const [messagesErrorModal, setMessagesErrorModal] = useState<string[]>([])
+  
+  const localStorageMember = new LocalStorageMemberUtils()
+  const [isMemberLocalStorage, setIsMemberLocalStorage] = useState<boolean>(!!localStorageMember.getItem());
+
+  useEffect(() => {
+    loadDataInstitution()
+  }, [])
+
+  const loadDataInstitution = async () => {
+    if(idParsed){
+      const response = await service.getById(idParsed)
+      setInstitution(response)
+    }
+  }
+
+  const requestEntry = async () => {
+    if(id){
+      const localStorageLogin = new LocalStorageLoginUtils()
+      
+      const dataRequest = new requestEntryInterface()
+      dataRequest.idInstitution = idParsed
+      dataRequest.userId = localStorageLogin.getIdUser()
+      
+      const response = await service.requestEntry(dataRequest)
+
+      if(Array.isArray(response)){
+        setMessagesErrorModal(response)
+        setShowModal(true)
+     }else{
+        RouterUtil.goToPage(history,`my-institution`)
+     }
+    }
+  }
 
   return(
     <>
-    <HeaderComponent type='complex' circleImage={logo}></HeaderComponent>
+
+      <AlertComponent
+                    isOpen={showModal}
+                    onDidDismiss={() => setShowModal(false)}
+                    messages={messagesErrorModal} 
+                    titleText={"Não foi possível fazer a solicitação de entrada"}      
+                />
+
+
+    <HeaderComponent showHome={isMemberLocalStorage} showArrowBack={!isMemberLocalStorage} type='complex' circleImage={logo}></HeaderComponent>
       <div className="contentIntView">
       
         <main>
           <div className="intViewContainer">
-            <h2 className='title center'>{title}</h2>
-            <p className='center'>{desc}</p>
+            <h2 className='title center'>{instituition?.name}</h2>
+            <p className='center'>{instituition?.description}</p>
           </div>
 
           <div className="intViewAddressContainer">
             <h2 className='titleSecond'>ENDEREÇO</h2>
-            <p>{intAddress}</p>
+            <p>{"Cidade: " + instituition?.address?.city?.name + ", Bairro: " + instituition?.address?.neighborhood +
+                ", Rua: " + instituition?.address?.street + ", N°: " + instituition?.address?.number + ", CEP: " +
+                instituition?.address?.cep
+              }</p>
           </div>
 
-          <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => {} } />
+          <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => requestEntry() } />
         </main>
 
 
       </div>
-        <FooterComponent></FooterComponent>
+        <FooterComponent isWithinTheInstitution={isMemberLocalStorage}></FooterComponent>
     </>
   );
 }

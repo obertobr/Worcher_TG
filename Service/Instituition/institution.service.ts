@@ -54,7 +54,7 @@ export default class InstitutionService extends AbstractFormDataCrud<Institution
       const data = response.data.data;
       return data;
     } catch (error: any) {
-      throw error.response?.data?.errors;
+      return error.response?.data?.errors;
     }
   }
   

@@ -53,6 +53,8 @@ import FooterComponent from './components/basicComponents/layoutComponents/foote
 import RecoveryAuthPage from './components/pages/recoverAuthPage/auth.page.component';
 import ChangePasswordPage from './components/pages/changePasswordPage/change.password.page.component';
 import JoinInstitutionAuthPage from './components/pages/joinInstitutionAuthPage/join.institution.auth.page.component';
+import FeedPage from './components/pages/feedPage/feed.page.component';
+import SchedulePage from './components/pages/schedulePage/schedule.page.component';
 
 
 setupIonicReact();
@@ -88,7 +90,7 @@ const App: React.FC = () => {
 
           <Route exact path='/test' component={TestPage} />
 
-          <Route exact path='/inst-page' component={InstituitionViewPage} />
+          <Route exact path='/inst-page/:id' component={InstituitionViewPage} />
 
           <Route exact path='/category-registration' component={CategoryRegistrationPage} />
 
@@ -106,12 +108,15 @@ const App: React.FC = () => {
 
           <Route exact path='/join-institution-auth-page' component={JoinInstitutionAuthPage}></Route>
 
+          <Route exact path='/feed' component={FeedPage}></Route>
+
+          <Route exact path='/schedule' component={SchedulePage}></Route>
+
           <Route exact path="/">
             <Redirect to="/test" />
           </Route>
       </IonRouterOutlet>
 
-      {/* <FooterComponent></FooterComponent> */}
       </div>
     </IonReactRouter>
   </IonApp>

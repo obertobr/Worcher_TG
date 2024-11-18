@@ -1,5 +1,8 @@
 .institutionCard {
+  min-width: 330px;
+  max-width: 630px;
   width: 90%;
+  height: 110px;
   
   display: flex;
   flex-direction: row;
@@ -15,7 +18,8 @@
   box-shadow: var(--mediumShadow);
   
   .institutionLogo {
-    width: 64px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
   }
 }
@@ -36,4 +40,12 @@
     font-size: 80%;
     font-weight: lighter;
   }
+}
+
+.contentCardInstitution{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }

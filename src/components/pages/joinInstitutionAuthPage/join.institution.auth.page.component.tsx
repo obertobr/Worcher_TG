@@ -18,15 +18,10 @@ const JoinInstitutionAuthPage: React.FC = () => {
 
   const confirmClick = async (e: string) => {
     const codeCompleteParsedNumeric = parseInt(e)
-    const localStorageLogin = new LocalStorageLoginUtils()
-
+    
     const service = new InstitutionService()
   
-      const dataRequest = new requestEntryInterface()
-      dataRequest.codeInstitution = codeCompleteParsedNumeric
-      dataRequest.userId = localStorageLogin.getIdUser()
-
-      const response = await service.requestEntry(dataRequest)
+      const response = await service.getInstitutionByCode(codeCompleteParsedNumeric)
 
       if(Array.isArray(response)){
         setMessagesErrorModal(response)
@@ -34,7 +29,7 @@ const JoinInstitutionAuthPage: React.FC = () => {
 
         return false
      }else{
-      RouterUtil.goToPage(history,"my-institution")
+      RouterUtil.goToPage(history,`inst-page/${response}`)
      }
 
   }
@@ -45,7 +40,7 @@ const JoinInstitutionAuthPage: React.FC = () => {
                     isOpen={showModal}
                     onDidDismiss={() => setShowModal(false)}
                     messages={messagesErrorModal} 
-                    titleText={"Não foi possível fazer a solicitação de entrada"}      
+                    titleText={"Não foi possível identificar a instituição"}      
                 />
 
       <AuthPage onClick={(e: string) => confirmClick(e)}></AuthPage>
