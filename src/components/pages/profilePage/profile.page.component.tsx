@@ -29,7 +29,7 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
           <label>{email}</label>
 
           <h1>Senha</h1>
-          <label>{password}</label>  
+          <label>{password}</label>
         </div>
 
         <ButtonComponent width="240px" text="Excluir Conta" onClick={() => {} } isCancel />
