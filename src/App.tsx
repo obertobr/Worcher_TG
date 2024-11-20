@@ -5,7 +5,6 @@ import AuthPage from './components/pages/authPage/auth.page.component';
 import LoginPage from './components/pages/loginPage/login.page.component';
 import SingUpPage from './components/pages/singUpPage/singup.page.component';
 import style from './components/styleComponents/router.module.css';
-import Home from './pages/Home';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -36,25 +35,25 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import { useEffect } from 'react';
+import LoadAplicationManager from './classes/LoadAplication/load.aplication.manager';
 import CategoryRegistrationPage from './components/pages/categoryRegistrationPage/categoryRegistration.page.component';
+import ChangePasswordPage from './components/pages/changePasswordPage/change.password.page.component';
+import FeedPage from './components/pages/feedPage/feed.page.component';
+import HomePage from './components/pages/homePage/home.page.component';
 import InstitutionRegister from './components/pages/institutionRegisterPage/institutionRegister.page.component';
 import InstituitionViewPage from './components/pages/institutionViewPage/institutionView.page.component';
-import MemberViewPage from './components/pages/memberManegerPage/memberManager.page.component';
-import PositionRegistrationPage from './components/pages/positionRegistrationPage/positionRegistration.page.component';
-import TestPage from './components/pages/testPage/test.page.component';
-import './theme/variables.css';
-import LoadAplicationManager from './classes/LoadAplication/load.aplication.manager';
-import handleKeyDown from './components/themeManager/handle.key.down.theme.change'
-import RememberPasswordPageComponent from './components/pages/rememberPassword/remember.password.page.component'
-import EventRegisterPage from './components/pages/registerEventPage/register.event.page.component';
-import HomePage from './components/pages/homePage/home.page.component';
-import MyInstitutionPage from './components/pages/myInstitutionPage/myInstitution.page.component';
-import FooterComponent from './components/basicComponents/layoutComponents/footer-component/footer.component';
-import RecoveryAuthPage from './components/pages/recoverAuthPage/auth.page.component';
-import ChangePasswordPage from './components/pages/changePasswordPage/change.password.page.component';
 import JoinInstitutionAuthPage from './components/pages/joinInstitutionAuthPage/join.institution.auth.page.component';
-import FeedPage from './components/pages/feedPage/feed.page.component';
+import MemberViewPage from './components/pages/memberManegerPage/memberManager.page.component';
+import MyInstitutionPage from './components/pages/myInstitutionPage/myInstitution.page.component';
+import PositionRegistrationPage from './components/pages/positionRegistrationPage/positionRegistration.page.component';
+import ProfilePage from './components/pages/profilePage/profile.page.component';
+import RecoveryAuthPage from './components/pages/recoverAuthPage/auth.page.component';
+import EventRegisterPage from './components/pages/registerEventPage/register.event.page.component';
+import RememberPasswordPageComponent from './components/pages/rememberPassword/remember.password.page.component';
 import SchedulePage from './components/pages/schedulePage/schedule.page.component';
+import TestPage from './components/pages/testPage/test.page.component';
+import handleKeyDown from './components/themeManager/handle.key.down.theme.change';
+import './theme/variables.css';
 
 
 setupIonicReact();
@@ -89,6 +88,8 @@ const App: React.FC = () => {
           <Route exact path="/institution-register" component={InstitutionRegister} />
 
           <Route exact path='/test' component={TestPage} />
+
+          <Route exact path='/profile' component={ProfilePage} />
 
           <Route
             exact
