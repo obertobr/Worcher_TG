@@ -11,7 +11,6 @@ export default class EventManager {
    async listEventByCategory(idCategory: number | null = null ): Promise<Event[]>{
         const id = this.localStorageInstituionUtils.getId()
 
-        // console.log(idCategory)
         if(id){ 
            return await this.service.getEventsByInstitutionId(id,idCategory)
         }

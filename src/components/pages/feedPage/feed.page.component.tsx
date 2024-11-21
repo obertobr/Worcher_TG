@@ -25,6 +25,7 @@ const FeedPage: React.FC<{}> = () => {
   }, [idCategoryFilter])
 
   const loadEventList = async () => {
+    console.log(await eventManager.listEventByCategory(idCategoryFilter ? idCategoryFilter : null))
     setEventList(await eventManager.listEventByCategory(idCategoryFilter ? idCategoryFilter : null))
   }
 
@@ -44,10 +45,14 @@ const FeedPage: React.FC<{}> = () => {
             eventList.map( (event,index) => {
               return (
                   <EventCard key={index}
+                             id={event.id}
                              name={event.name} 
                              creationDateTime={event.creationDateTime} 
                              dateTimeOfExecution={event.dateTimeOfExecution} 
                              category={event.eventCategory}
+                             memberId={event.member?.id}
+                             memberList={event.registeredMemberList}
+                            changeParticipate={() => loadEventList()}
                   ></EventCard>
                   
               )
