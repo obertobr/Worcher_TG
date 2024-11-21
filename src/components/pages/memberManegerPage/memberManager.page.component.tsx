@@ -31,7 +31,6 @@ const MemberViewPage: React.FC<{}> = () => {
     const intitutionID = institutionLocalStorage.getId()
     if (intitutionID) {
       const members = await institutionService.getMembers(intitutionID, search)
-      console.log(members)
       if(members && members.filter(member => member.role?.permission?.some(permission => permission.name === "Acesso a tela de Gerenciar membros")).length < 2){
         setExcludeAdmOption(false)
       } else {
