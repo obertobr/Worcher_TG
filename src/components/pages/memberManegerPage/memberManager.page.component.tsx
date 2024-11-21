@@ -14,6 +14,7 @@ const MemberViewPage: React.FC<{}> = () => {
 
   const [institution, setInstitution] = useState<Institution>()
   const [memberList, setMemberList] = useState<Member[]>()
+  const [excludeAdmOption, setExcludeAdmOption] = useState<boolean>(true)
 
   const institutionLocalStorage = new LocalStorageInstituionUtils()
   const institutionService = new InstitutionService()
@@ -30,6 +31,11 @@ const MemberViewPage: React.FC<{}> = () => {
     const intitutionID = institutionLocalStorage.getId()
     if (intitutionID) {
       const members = await institutionService.getMembers(intitutionID, search)
+      if(members && members.filter(member => member.role?.permission?.some(permission => permission.name === "Acesso a tela de Gerenciar membros")).length < 2){
+        setExcludeAdmOption(false)
+      } else {
+        setExcludeAdmOption(true)
+      }
 
       setMemberList(members)
     }
@@ -76,7 +82,7 @@ const MemberViewPage: React.FC<{}> = () => {
             <hr></hr>
             {institution && memberList?.map((member,index) => {
               return (
-                <MemberCard key={index} member={member} roleList={institution.roleList} role={member.role} refresh={refresh} />
+                <MemberCard key={index} member={member} roleList={institution.roleList} role={member.role} refresh={refresh} excludeAdmOption={excludeAdmOption} />
               )
             })}
           </div>
