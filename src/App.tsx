@@ -38,6 +38,7 @@ import { useEffect } from 'react';
 import LoadAplicationManager from './classes/LoadAplication/load.aplication.manager';
 import CategoryRegistrationPage from './components/pages/categoryRegistrationPage/categoryRegistration.page.component';
 import ChangePasswordPage from './components/pages/changePasswordPage/change.password.page.component';
+import ConfigurationPage from './components/pages/configPage/configuration.page.component';
 import FeedPage from './components/pages/feedPage/feed.page.component';
 import HomePage from './components/pages/homePage/home.page.component';
 import InstitutionRegister from './components/pages/institutionRegisterPage/institutionRegister.page.component';
@@ -90,6 +91,8 @@ const App: React.FC = () => {
           <Route exact path='/test' component={TestPage} />
 
           <Route exact path='/profile' component={ProfilePage} />
+
+          <Route exact path='/config' component={ConfigurationPage} />
 
           <Route
             exact

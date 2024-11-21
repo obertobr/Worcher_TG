@@ -1,0 +1,38 @@
+/* Estilos base para os temas */
+body.light-theme {
+  background-color: var(--backgroundColor);
+  color: var(--primaryColorFont);
+}
+
+body.dark-theme {
+  background-color: var(--backgroundColor);
+  color: var(--primaryColorFont);
+}
+
+/* Estilos do botão */
+.theme-switch {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+
+  color: var(--primaryColorFont);
+}
+
+.theme-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  outline: none;
+  transition: transform 0.2s;
+}
+
+.theme-button:hover {
+  transform: scale(1.2);
+}
+
+.icon {
+  font-size: 1.5em;
+}

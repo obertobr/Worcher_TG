@@ -14,7 +14,8 @@ const buttons = [
     {path: 'position-registration', text: 'CADASTRO DE CARGO'},
     {path: 'member-view', text: 'GERENCIAR MEMBROS'},
     {path: 'event-register', text: 'CRIAR EVENTOS'},
-    {path: 'profile', text: 'TELA DE PERFIL'}
+    {path: 'profile', text: 'TELA DE PERFIL'},
+    {path: 'config', text: 'TELA DE CONFIGURAÇÃO'}
 ]
 
 const TestPage: React.FC<{}> = () => {
