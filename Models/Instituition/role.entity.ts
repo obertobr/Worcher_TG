@@ -7,6 +7,7 @@ export default class Role extends BaseEntity implements selectInputItens {
   id: number | undefined;
   name: string | undefined;
   memberList: Member[] | undefined;
+  permission: Permission[] | undefined
 
   permission: Permission[] | undefined;
 

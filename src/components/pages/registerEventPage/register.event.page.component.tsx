@@ -28,6 +28,7 @@ import EventCategory from "../../../../Models/Event/event.category.entity";
 import EventCategoryService from "../../../../Service/Event/event.category.service";
 import InstitutionService from "../../../../Service/Instituition/institution.service";
 import LocalStorageInstituionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils";
+import LocalStorageMemberUtils from "../../../../Utils/LocalStorage/local.storage.member.utils";
 
 
 const EventRegisterPage: React.FC<{}> = () => {
@@ -151,7 +152,7 @@ const EventRegisterPage: React.FC<{}> = () => {
     
     const createNewEvent = (): Event => {
         const localStorageInstitution = new localStorageInstitutionUtils()
-        const LocalStorageLogin = new LocalStorageLoginUtils()
+        const localStorageMember = new LocalStorageMemberUtils()
 
         const event = new Event();
         event.name = name;
@@ -160,10 +161,17 @@ const EventRegisterPage: React.FC<{}> = () => {
         event.address = new Address(neighborhood, street, number, cep, city)
         event.eventCategory = category
 
-        event.institution = new Institution(localStorageInstitution.getId())
+        const idInstituition = localStorageInstitution.getId()
+
+        if(idInstituition){
+            event.institution = new Institution(idInstituition)
+        }
         
-        // CORRIGIR DEVE SER PASSADO O ID DO MEMBRO E NÃO DO USUARIO
-        //event.member = new Member(LocalStorageLogin.getIdUser())
+        const idMember = localStorageMember.getItem()
+
+        if(idMember){
+            event.member = new Member(idMember)
+        }
 
         return event
     }

@@ -8,7 +8,7 @@ export default class LocalStorageUtils<T> {
         this.key = ConverterUtils.convertStringToBase64(key)
     }
 
-    getItem(): T | undefined{
+    getItem(): T | null | undefined{
         const itemNotSerialized = localStorage.getItem(this.key)
 
         if(itemNotSerialized != undefined){
@@ -24,7 +24,7 @@ export default class LocalStorageUtils<T> {
         return undefined
     }
 
-    setItem(item: T): void {
+    setItem(item: T | null): void {
         try {
             const itemSerialized = ConverterUtils.parseToString(item)
             const itemBase64 = ConverterUtils.convertStringToBase64(itemSerialized)

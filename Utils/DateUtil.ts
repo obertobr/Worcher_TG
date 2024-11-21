@@ -8,10 +8,15 @@ export default class DateUtil {
       return "";
     }
 
-    static formatToDDMMYYYY(date: Date): string {
+    static formatToDDMMYYYY(date: Date | string): string {
+      if (!(date instanceof Date)) {
+        date = new Date(date);
+      }
+    
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = date.getFullYear();
+    
       return `${day}/${month}/${year}`;
     }
   
@@ -46,5 +51,35 @@ export default class DateUtil {
     static formatFullDateTime(date: Date): string {
       return `${this.getDayOfWeek(date)}, ${this.formatToDDMMYYYY(date)} ${this.formatToTime(date)}`;
     }
+
+    static getRelativeTime(date: Date | string): string {
+      if (!(date instanceof Date)) {
+        date = new Date(date);
+      }
+    
+      const now = new Date();
+      const differenceInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    
+      if (differenceInSeconds < 60) {
+        return `Há 1 min`;
+      }
+    
+      const differenceInMinutes = Math.ceil(differenceInSeconds / 60);
+    
+      if (differenceInMinutes < 60) {
+        return `Há ${differenceInMinutes} min`;
+      }
+    
+      const differenceInHours = Math.ceil(differenceInMinutes / 60);
+      console.log(differenceInHours)
+    
+      if (differenceInHours < 24) {
+        return `Há ${differenceInHours} horas`;
+      }
+    
+      const differenceInDays = Math.ceil(differenceInHours / 24);
+      return `Há ${differenceInDays} dias`;
+    }
+    
   }
   

@@ -4,10 +4,11 @@ import "./footerComponent.css"
 import { useHistory } from "react-router";
 import RouterUtil from "../../../../../Utils/Components/RouterUtil";
 import { IonIcon } from "@ionic/react";
-import  { calendarOutline, documentTextOutline, calendarNumberOutline}  from "ionicons/icons";
+import  { calendarOutline, documentTextOutline, calendarNumberOutline, businessOutline}  from "ionicons/icons";
 import LocalStorageUtils from "../../../../../Utils/LocalStorage/local.storage.utils";
+import LocalStorageInstituionUtils from "../../../../../Utils/LocalStorage/local.storage.institution.utils";
 
-class NavFooter {
+export class NavFooter {
     sequencial: number
     name: string
     icon: string
@@ -26,30 +27,63 @@ class NavFooter {
 }
 
 interface FooterComponentPropsInterface{
-
+    isWithinTheInstitution?: boolean
 }
 
 const FooterComponent: React.FC<FooterComponentPropsInterface> = ({
-
+    isWithinTheInstitution = false
   }) => {
 
     const history = useHistory()
+    
     const localStorage = new LocalStorageUtils<NavFooter[]>("NAV_FOOTER");
+    const localStorageTypeFooter = new LocalStorageUtils<boolean>("NAV_FOOTER_TYPE");
+
+
+
+    const [navItens, setNavItens] = useState<NavFooter[]>([])
+
+    const navItensInstitution = [
+        new NavFooter(1,"Feed",documentTextOutline,true, true,"feed"),
+        new NavFooter(2,"Agenda",calendarOutline,false, true,"schedule"),       
+        new NavFooter(3,"Instituição",businessOutline,false, true, `inst-page`)
+    ]
+    
+    const navItensBackInstitution = [
+        new NavFooter(1,"Instituições",businessOutline,true, true,"my-institution"),
+        new NavFooter(2,"Eventos",calendarNumberOutline,false, true,"home"),
+    ]
 
     useEffect(() => {
-        const navItensLocalStorage = localStorage.getItem()
-        
-        if(navItensLocalStorage && navItensLocalStorage.length > 0){
-            setNavItens(navItensLocalStorage)
+        const isWithinTheInstitutionLocalStorage = localStorageTypeFooter.getItem();
+    
+        if (isWithinTheInstitutionLocalStorage !== isWithinTheInstitution) {
+            localStorage.setItem([]);
         }
-    }, [])
+    
+        localStorageTypeFooter.setItem(isWithinTheInstitution);
+    
+        const navItensLocalStorage = localStorage.getItem();
+    
+        if (!navItensLocalStorage || navItensLocalStorage.length === 0) {
+            const navItensInstitutionCopy = [...navItensInstitution];
+            const navItensBackInstitutionCopy = [...navItensBackInstitution];
+    
+            setNavItens(isWithinTheInstitution ? navItensInstitutionCopy : navItensBackInstitutionCopy);
+        } else {
+            setNavItens(navItensLocalStorage);
+            navItensLocalStorage.forEach((i) => {
+                if (i.active) {
+                    RouterUtil.goToPage(history, i.route);
+                }
+            });
+        }
+    
+        // Cleanup para evitar duplicações
+        return () => setNavItens([]);
+    }, [isWithinTheInstitution]);
 
-    const [navItens, setNavItens] = useState<NavFooter[]>([
-        new NavFooter(1,"Feed",documentTextOutline,true, true,"home"),
-        new NavFooter(2,"Eventos",calendarNumberOutline,false, true,"home"),
-        new NavFooter(3,"Agenda",calendarOutline,false, true,"home"),       
-        new NavFooter(4,"Instituições",calendarNumberOutline,false, true,"home")
-    ])
+    
     
     const onClickNavItem = (sequencial: number, route: string) => {
        const index = navItens.findIndex( (i) => i.sequencial == sequencial)

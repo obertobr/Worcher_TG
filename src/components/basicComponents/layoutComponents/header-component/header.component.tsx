@@ -1,9 +1,13 @@
 import { ReactNode } from "react";
 import "./headerComponent.css"
 import { IonIcon } from "@ionic/react";
-import { arrowBack } from "ionicons/icons";
+import { arrowBack, homeSharp } from "ionicons/icons";
 import { useHistory } from "react-router";
 import RouterUtil from "../../../../../Utils/Components/RouterUtil";
+import { NavFooter } from "../footer-component/footer.component";
+import LocalStorageUtils from "../../../../../Utils/LocalStorage/local.storage.utils";
+import LocalStorageMemberUtils from "../../../../../Utils/LocalStorage/local.storage.member.utils";
+import LocalStorageInstituionUtils from "../../../../../Utils/LocalStorage/local.storage.institution.utils";
 
 type TextFieldTypes = 'simple' | 'complex';
 
@@ -13,6 +17,8 @@ interface HeaderComponentPropsInterface{
     circleImage?: string;
     height?: number;
     showCircleImage?: boolean;
+    showArrowBack?: boolean;
+    showHome?: boolean;
 }
 
 const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
@@ -21,12 +27,27 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
     circleImage,
     showCircleImage = true,
     height = type == 'simple' ? 70 : 140,
+    showArrowBack = true,
+    showHome = false,
   }) => {
 
     const history = useHistory()
 
     const arrowBackClicked = () => {
         RouterUtil.returnOfLastPage(history)
+    }
+
+    const homeClicked = () => {
+        const localStorage = new LocalStorageUtils<NavFooter[]>("NAV_FOOTER");
+        localStorage.setItem([])
+
+        const localStorageMemberUtils = new LocalStorageMemberUtils()
+        const localStorageInstitution = new LocalStorageInstituionUtils()
+
+        localStorageInstitution.setId(null)
+        localStorageMemberUtils.setItem(null)
+        
+        RouterUtil.goToPage(history,"my-institution")
     }
 
     return(
@@ -39,9 +60,13 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
                     </div>) : (<></>)
                 }
 
-                
+                {
+                    showArrowBack ? (<IonIcon icon={arrowBack} className="back-arrow-icon" onClick={arrowBackClicked} />) : (<></>)
+                }
 
-                <IonIcon icon={arrowBack} className="back-arrow-icon" onClick={arrowBackClicked} />
+                {
+                    showHome ? (<IonIcon icon={homeSharp} className="home-icon" onClick={homeClicked} />) : (<></>)
+                }
 
                 {
                     showCircleImage ? 

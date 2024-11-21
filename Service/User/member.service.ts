@@ -16,4 +16,12 @@ export default class MemberService extends AbstractCrudService<Member> {
       return error.response.data.errors;
     }
   }
+
+  async getMemberIdByInstitutionAndUser(idInstitution: number, idUser: number): Promise<number | undefined> {
+    try {
+      return (await axios.get(`${this.urlApi}get-member-by-idInstitution-and-idUser/${idInstitution}/${idUser}`)).data.data;
+    } catch (error: any) {
+      return error.response.data.errors;
+    }
+  }
 }
