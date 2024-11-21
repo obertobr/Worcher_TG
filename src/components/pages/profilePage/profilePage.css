@@ -1,0 +1,9 @@
+.profileDataContent{
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+      color: var(--primaryColorFont);
+      text-align: left;
+}
