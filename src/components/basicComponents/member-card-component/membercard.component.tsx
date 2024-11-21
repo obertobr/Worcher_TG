@@ -15,6 +15,7 @@ interface MemberCardInterface {
   roleList?: Role[];
   role?: Role;
   requestType?: boolean
+  excludeAdmOption?: boolean
   refresh: () => void
 }
 
@@ -23,6 +24,7 @@ const MemberCard: React.FC<MemberCardInterface> = ({
   roleList,
   role,
   requestType,
+  excludeAdmOption,
   refresh
 }) => {
 
@@ -46,6 +48,7 @@ const MemberCard: React.FC<MemberCardInterface> = ({
   const alterRole = async (role: Role) => {
     if(member.id){
       await memberService.alterRole(member.id,role);
+      refresh();
     }
   }
 
@@ -92,6 +95,7 @@ const MemberCard: React.FC<MemberCardInterface> = ({
             <button className="denyButton" onClick={denyRequest}>X</button>
           </>
           :
+          (role?.name != "Administrador" || excludeAdmOption) &&
           <button className="denyButton" onClick={removeMember}>X</button>
         }
       </div>
