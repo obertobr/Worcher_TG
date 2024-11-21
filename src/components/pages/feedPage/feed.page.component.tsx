@@ -11,6 +11,7 @@ import FilterCategory from "../../basicComponents/filter-event-category/filter.e
 import "./feedPage.css"
 import EventCard from "../../basicComponents/event-card-component/event.card.component";
 import EventCategory from "../../../../Models/Event/event.category.entity";
+import LocalStorageEventViewUtils from "../../../../Utils/LocalStorage/local.storage.event.view.utils"
 
 const FeedPage: React.FC<{}> = () => {
 
@@ -25,12 +26,20 @@ const FeedPage: React.FC<{}> = () => {
   }, [idCategoryFilter])
 
   const loadEventList = async () => {
-    console.log(await eventManager.listEventByCategory(idCategoryFilter ? idCategoryFilter : null))
     setEventList(await eventManager.listEventByCategory(idCategoryFilter ? idCategoryFilter : null))
   }
 
   const changeCategory = (eventCategoryId: number | undefined) => {
     setIdCategoryFilter(eventCategoryId)
+  }
+
+  const viewEventPage = (idEvent: number | undefined) => {
+    const localStorageEventViewUtils = new LocalStorageEventViewUtils()
+
+    if(idEvent){
+      localStorageEventViewUtils.setId(idEvent)
+      // Ir para página de vizualizar eventos e puxar os dados a partir do idEvent no localStorage
+    }
   }
 
   return(
@@ -53,6 +62,7 @@ const FeedPage: React.FC<{}> = () => {
                              memberId={event.member?.id}
                              memberList={event.registeredMemberList}
                             changeParticipate={() => loadEventList()}
+                            viewEventClicked={(e: number | undefined) => viewEventPage(e)}
                   ></EventCard>
                   
               )

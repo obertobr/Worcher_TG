@@ -15,9 +15,9 @@ interface EventCardProps {
     category: EventCategory | undefined,
     memberId: number | undefined,
     memberList: Member[] | undefined,
-    changeParticipate?: () => {}
+    changeParticipate?: () => {},
+    viewEventClicked: (idEvent: number | undefined) => void
 }
-  
 const EventCard: React.FC<EventCardProps> = ({
     id,
     name,
@@ -27,6 +27,7 @@ const EventCard: React.FC<EventCardProps> = ({
     memberId,
     memberList = [],
     changeParticipate,
+    viewEventClicked
 }) => {
 
     const eventService = new EventService()
@@ -64,10 +65,11 @@ const EventCard: React.FC<EventCardProps> = ({
                     <p>{differenceTime}</p>
                 </div>
 
-                <img onClick={() => console.log("oi")} className="eventImage" src={image} alt="image event"/>
+                <img onClick={() => viewEventClicked(id)} className="eventImage" src={image} alt="image event"/>
 
                 <h3 className="nameEvent">{name}</h3>
-                <p className="dateExec">{dateTimeOfExecutionFormated + " - " + category?.name}</p>
+                <p className="dateExec">{"Data de Realização: " +  dateTimeOfExecutionFormated}</p>
+                <p className="dateExec">{"Categoria: " + category?.name}</p>
 
                 {
                     memberId == localStorageMember.getItem() ? (

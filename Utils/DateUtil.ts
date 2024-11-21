@@ -71,7 +71,6 @@ export default class DateUtil {
       }
     
       const differenceInHours = Math.ceil(differenceInMinutes / 60);
-      console.log(differenceInHours)
     
       if (differenceInHours < 24) {
         return `Há ${differenceInHours} horas`;
