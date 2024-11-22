@@ -1,5 +1,4 @@
 import "./eventCard.css"
-import image from "../../../assets/ministerioJovem.jpg"
 import ButtonComponent from "../button-component/button.components"
 import DateUtil from "../../../../Utils/DateUtil"
 import EventCategory from "../../../../Models/Event/event.category.entity"
@@ -77,10 +76,18 @@ const EventCard: React.FC<EventCardProps> = ({
                 {
                     memberId == localStorageMember.getItem() ? (
                         <>
-                        <ButtonComponent text={"Editar Evento"}
-                                 width={"200px"} 
-                                 onClick={() => {console.log("Editar")}}
-                            ></ButtonComponent>
+                            <div className="buttonsCreator">
+                                    <ButtonComponent text={"Editar"}
+                                            width={"250px"} 
+                                            onClick={() => {console.log("Editar")}}
+                                        ></ButtonComponent>
+
+                                    <ButtonComponent text={"Excluir"}
+                                            isCancel={true}
+                                            width={"250px"} 
+                                            onClick={() => {console.log("Editar")}}
+                                        ></ButtonComponent>
+                            </div>
                         </>
                     ) : 
                     memberList.findIndex( e => e.id == localStorageMember.getItem()) != -1 ? (

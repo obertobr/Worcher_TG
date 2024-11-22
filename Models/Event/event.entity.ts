@@ -15,7 +15,7 @@ export default class Event extends BaseEntity {
   address: Address | undefined;
   member: Member | undefined;
   institution: Institution | undefined;
-  registeredMemberList: Member[] | undefined;
+  registeredMemberList: Member[] = [];
   image: DigitalFile | undefined;
   eventCategory: EventCategory | undefined;
 }

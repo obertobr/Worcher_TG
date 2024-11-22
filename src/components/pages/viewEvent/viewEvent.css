@@ -1,0 +1,76 @@
+.mainViewEvent{
+    width: 100%;
+    min-height: 100%;
+    color: var(--primaryColorFont);
+
+    padding: 25px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+
+    .nameUser{
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .eventName{
+        font-weight: 700;
+        margin-top: 30px;
+    }
+
+    .description{
+        font-size: 22px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .infoContent{
+        display: flex;
+        gap: 5px;
+        font-size: 22px;
+        width: 100%;
+    }
+
+    .infoContentLocal{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        font-size: 22px;
+        width: 100%;
+
+        text-align: justify;
+        align-items: start;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .infoContent > p:first-child{
+        font-weight: 600;
+    }
+
+    .infoContentLocal > p:first-child{
+        font-weight: 600;
+    }
+
+    .buttonsCreator{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        margin-top: 20px;
+    }
+}
+
+.togle{
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.togleText{
+    font-size: 22px;
+}

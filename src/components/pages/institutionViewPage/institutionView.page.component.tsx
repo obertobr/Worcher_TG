@@ -139,6 +139,11 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
               }</p>
           </div>
 
+          <div className='codeInst'>
+            <p>Código da instituição:</p>
+            <p>{instituition?.code}</p>
+          </div>
+
           {
               isMemberLocalStorage && showButtonCriarEvento ? 
               (
