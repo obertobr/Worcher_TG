@@ -11,6 +11,7 @@ interface SelectInputComponentProps {
     placeHolder?: string;
     value?: number;
     disabled?: boolean;
+    multiple?: boolean;
     onInputChange: (value: any) => void;
     style?: CSSModuleClasses;
     onClick?: MouseEventHandler<HTMLDivElement>;
@@ -23,11 +24,12 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
     placeHolder,
     value,
     disabled = false,
+    multiple = false,
     onInputChange,
     style = styleInput,
     onClick = () => { },
 }) => {
-    const [inputValue, setInputValue] = useState(value);
+    const [inputValue, setInputValue] = useState<number | number[] | undefined>(value);
 
     useEffect(() => {
         setInputValue(value);
@@ -36,9 +38,15 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
     const handleSelectChange = (event: CustomEvent) => {
         if (isReadOnly) return;
 
-        const newValue = event.detail.value || '';
-        setInputValue(newValue);
-        onInputChange(itens.find(item => item.id == newValue));
+        if(!multiple){
+            const newValue = event.detail.value || '';
+            setInputValue(newValue);
+            onInputChange(itens.find(item => item.id == newValue));
+        } else {
+            const newValues: number[] = event.detail.value || '';
+            setInputValue(newValues);
+            onInputChange(newValues.map(newValue => {return itens.find(item => item.id == newValue)}));
+        }
     };
 
     return (
@@ -48,6 +56,7 @@ const SelectInputComponent: React.FC<SelectInputComponentProps> = ({
                 <IonItem className={style.selectItemInput}>
                     <IonSelect
                         disabled={disabled}
+                        multiple={multiple}
                         placeholder={placeHolder}
                         value={inputValue}
                         onIonChange={handleSelectChange}
