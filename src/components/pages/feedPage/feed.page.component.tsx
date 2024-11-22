@@ -38,7 +38,7 @@ const FeedPage: React.FC<{}> = () => {
 
     if(idEvent){
       localStorageEventViewUtils.setId(idEvent)
-      // Ir para página de vizualizar eventos e puxar os dados a partir do idEvent no localStorage
+      RouterUtil.goToPage(history,"vieweventpage")
     }
   }
 
@@ -61,6 +61,7 @@ const FeedPage: React.FC<{}> = () => {
                              category={event.eventCategory}
                              memberId={event.member?.id}
                              memberList={event.registeredMemberList}
+                             urlImage={event.image?.url}
                             changeParticipate={() => loadEventList()}
                             viewEventClicked={(e: number | undefined) => viewEventPage(e)}
                   ></EventCard>

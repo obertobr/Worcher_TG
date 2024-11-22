@@ -55,6 +55,7 @@ import SchedulePage from './components/pages/schedulePage/schedule.page.componen
 import TestPage from './components/pages/testPage/test.page.component';
 import handleKeyDown from './components/themeManager/handle.key.down.theme.change';
 import './theme/variables.css';
+import ViewEventPage from './components/pages/viewEvent/view.event.page.component';
 
 
 setupIonicReact();
@@ -124,6 +125,8 @@ const App: React.FC = () => {
           <Route exact path='/feed' component={FeedPage}></Route>
 
           <Route exact path='/schedule' component={SchedulePage}></Route>
+
+          <Route exact path='/vieweventpage' component={ViewEventPage}></Route>
 
           <Route exact path="/">
             <Redirect to="/test" />

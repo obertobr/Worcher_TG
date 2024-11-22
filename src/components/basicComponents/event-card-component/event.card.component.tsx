@@ -6,6 +6,7 @@ import EventCategory from "../../../../Models/Event/event.category.entity"
 import EventService from "../../../../Service/Event/event.service"
 import LocalStorageMemberUtils from "../../../../Utils/LocalStorage/local.storage.member.utils"
 import Member from "../../../../Models/User/member.entity"
+import ImageUtils from "../../../../Utils/image/image.utils"
 
 interface EventCardProps {
     id: number | undefined,
@@ -15,6 +16,7 @@ interface EventCardProps {
     category: EventCategory | undefined,
     memberId: number | undefined,
     memberList: Member[] | undefined,
+    urlImage: string | undefined,
     changeParticipate?: () => {},
     viewEventClicked: (idEvent: number | undefined) => void
 }
@@ -26,6 +28,7 @@ const EventCard: React.FC<EventCardProps> = ({
     category,
     memberId,
     memberList = [],
+    urlImage,
     changeParticipate,
     viewEventClicked
 }) => {
@@ -65,7 +68,7 @@ const EventCard: React.FC<EventCardProps> = ({
                     <p>{differenceTime}</p>
                 </div>
 
-                <img onClick={() => viewEventClicked(id)} className="eventImage" src={image} alt="image event"/>
+                <img onClick={() => viewEventClicked(id)} className="eventImage" src={ImageUtils.getImageByUrl(urlImage)} alt="image event"/>
 
                 <h3 className="nameEvent">{name}</h3>
                 <p className="dateExec">{"Data de Realização: " +  dateTimeOfExecutionFormated}</p>
