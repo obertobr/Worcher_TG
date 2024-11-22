@@ -35,6 +35,23 @@ export default class UserService extends AbstractCrudService<User>{
         }
       }
 
-
+      async setPhoto(data: { userID: number }, file?: File): Promise<User | undefined> {
+        try {
+            const formData = new FormData();
+            formData.append("content", JSON.stringify(data));
+            if (file) {
+                formData.append("image", file);
+            }
+    
+            const response = await axios.post(`${this.urlApi}setPhoto`, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+    
+            return this.convertToEntity(response.data.data);
+        } catch (error: any) {
+            console.error("Error in setPhoto:", error.response?.data?.errors || error.message);
+            return error.response?.data?.errors;
+        }
+    }  
 
 }

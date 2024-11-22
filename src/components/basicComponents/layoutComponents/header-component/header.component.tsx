@@ -1,13 +1,20 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import "./headerComponent.css"
 import { IonIcon } from "@ionic/react";
-import { arrowBack, homeSharp } from "ionicons/icons";
+import { arrowBack, homeSharp, person, camera } from "ionicons/icons";
 import { useHistory } from "react-router";
 import RouterUtil from "../../../../../Utils/Components/RouterUtil";
 import { NavFooter } from "../footer-component/footer.component";
 import LocalStorageUtils from "../../../../../Utils/LocalStorage/local.storage.utils";
 import LocalStorageMemberUtils from "../../../../../Utils/LocalStorage/local.storage.member.utils";
 import LocalStorageInstituionUtils from "../../../../../Utils/LocalStorage/local.storage.institution.utils";
+import SidePanelComponent from "../side-panel-component/side.panel.component";
+import LocalStorageLoginUtils from "../../../../../Utils/LocalStorage/local.storage.login.utils";
+import ImageUtils from "../../../../../Utils/image/image.utils";
+import { Camera, CameraResultType } from "@capacitor/camera";
+import UserService from "../../../../../Service/User/user.service";
+import User from "../../../../../Models/User/user.entity";
+
 
 type TextFieldTypes = 'simple' | 'complex';
 
@@ -19,6 +26,7 @@ interface HeaderComponentPropsInterface{
     showCircleImage?: boolean;
     showArrowBack?: boolean;
     showHome?: boolean;
+    showButtonChangeImage?: boolean;
 }
 
 const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
@@ -29,9 +37,13 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
     height = type == 'simple' ? 70 : 140,
     showArrowBack = true,
     showHome = false,
+    showButtonChangeImage = false,
   }) => {
 
     const history = useHistory()
+    const [isSidePanelVisible, setSidePanelVisible] = useState<boolean>(false);
+    const localStorageLogin = new LocalStorageLoginUtils()
+    const userService = new UserService()
 
     const arrowBackClicked = () => {
         RouterUtil.returnOfLastPage(history)
@@ -49,6 +61,50 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
         
         RouterUtil.goToPage(history,"my-institution")
     }
+
+    const [image, setImage] = useState<string | undefined>(undefined);
+
+
+    useEffect(() => {
+        setImage(localStorageLogin.getAccount()?.user?.image?.url)
+    }, [])
+
+    const takePicture = async () => {
+        const image = await Camera.getPhoto({
+          quality: 90,
+          resultType: CameraResultType.Uri,
+          promptLabelHeader: "Imagem do Usuário",
+          promptLabelPhoto: "Usar camera",
+          promptLabelPicture: "Usar imagem da galeria"
+        });
+      
+        var imageUrl = image.webPath;
+      
+        if(imageUrl){
+
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            
+            const fileName = "image"
+            const file = new File([blob], fileName, { type: blob.type });
+
+            const userIdLocalStorage = localStorageLogin.getAccount()?.user?.id
+
+            if(userIdLocalStorage){
+                console.log(file)
+               const response = await userService.setPhoto({userID: userIdLocalStorage}, file)
+               console.log(response)
+
+               const account = localStorageLogin.getAccount()
+
+               if(response && account){
+                   account.user = response
+                   localStorageLogin.setAccount(account)
+                   setImage(response.image?.url)
+               }
+            }
+        }
+      };
 
     return(
         <>
@@ -68,13 +124,58 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
                     showHome ? (<IonIcon icon={homeSharp} className="home-icon" onClick={homeClicked} />) : (<></>)
                 }
 
+
                 {
-                    showCircleImage ? 
-                    (<img className={"circleImage" + (type == 'simple' ? " circleSimple" : " circleComplex")} src={circleImage}/>) : (<></>)
+                    showCircleImage && image ? 
+                        (
+                            <div className={"conteCircleImage " + (type == 'simple' ? " circleSimple" : " circleComplex") }>
+                                <img className={"circleImageWith " + (type == 'simple' ? " circleSimple" : " circleComplex")} 
+                                    src={ImageUtils.getImageByUrl(image)}
+                                    onClick={() => type == 'simple' ? setSidePanelVisible(true) : ""}
+                               ></img>
+
+                                {
+                                    showButtonChangeImage ? (<>
+                                        <IonIcon onClick={() => {takePicture()}} className="cameraIcon" icon={camera} ></IonIcon>
+                                    </>) : (<></>)
+                                }
+
+                            </div>
+                           
+                        ) : 
+
+                        (
+                            <></>
+                        ) 
                 }
 
+                {
+                    showCircleImage && !image ? 
+                    (
+                        <div className={"circleImage userUndefined" + (type == 'simple' ? " circleSimple" : " circleComplex")}
+                             onClick={() => type == 'simple' ? setSidePanelVisible(true) : ""}
+                        >
+                            <IonIcon className="userUndefinedIcon" icon={person} ></IonIcon>
+
+                                {
+                                    showButtonChangeImage ? (<>
+                                        <IonIcon onClick={() => {takePicture()}} className="cameraIcon" icon={camera} ></IonIcon>
+                                    </>) : (<></>)
+                                }
+                        </div>
+                    ) :
+
+                    (
+                        <></>
+                    )
+                }
                 
             </header>
+
+            <SidePanelComponent
+                isVisible={isSidePanelVisible}
+                onClose={() => setSidePanelVisible(false)}
+            />
         </>
     )
 }

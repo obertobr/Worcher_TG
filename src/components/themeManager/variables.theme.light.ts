@@ -12,7 +12,8 @@ const variables = {
     borderFile: '#00000066',
 
     backgroundColorFooter: "#dee5f3",
-    colorOffItem : "#858B8B"
+    colorOffItem : "#858B8B",
+    sidePanelBackground: "#E5EEFF",
 }
 
 export default variables ;

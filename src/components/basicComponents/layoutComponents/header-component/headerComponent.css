@@ -51,9 +51,16 @@
         
     }
 
+    .circleImageWith{
+        border-radius: 100%;
+    }
+
     .circleSimple{
         top: calc(50% - 25px);
         right: 20px;
+
+        width: 50px;
+        height: 50px;
     }
 
     .circleComplex {
@@ -62,6 +69,40 @@
 
         width: 70px;
         height: 70px;
+    }
+
+    .userUndefined{
+        background-color: #ffffff;
+    }
+
+    .userUndefinedIcon{
+        width: 42px;
+        height: 42px;
+        color: #cfd3d3;
+
+        position: absolute;
+        top: calc(50% - 21px);
+        left: calc(50% - 21px);
+    }
+
+    .conteCircleImage{
+        border-radius: 100%;
+        position: absolute;
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        box-shadow: var(--lightShadow);
+        z-index: 50;
+    }
+
+    .cameraIcon{
+        width: 18px;
+        height: 18px;
+        padding: 6px;
+        border-radius: 100%;
+        background-color: #243e69;
+
+        position: absolute;
+        top: calc(100% - 18px);
+        left: calc(100% - 20px);
     }
 
 }

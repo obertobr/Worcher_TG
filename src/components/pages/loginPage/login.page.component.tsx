@@ -76,6 +76,13 @@ const LoginPage: React.FC<{}> = () => {
             account.email = email
             account.password = password
 
+            account.user = new User()
+            account.user.id = user?.id
+            account.user.name = user?.name
+            account.user.cpf = user?.cpf
+            account.user.dateOfBirth = user?.dateOfBirth
+            account.user.image = user?.image
+
             localStorageLoginUtils.setAccount(account)
         }
 

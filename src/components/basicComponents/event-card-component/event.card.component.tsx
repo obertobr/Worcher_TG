@@ -70,7 +70,12 @@ const EventCard: React.FC<EventCardProps> = ({
                 <img onClick={() => viewEventClicked(id)} className="eventImage" src={ImageUtils.getImageByUrl(urlImage)} alt="image event"/>
 
                 <h3 className="nameEvent">{name}</h3>
-                <p className="dateExec">{"Data de Realização: " +  dateTimeOfExecutionFormated}</p>
+
+                <div className="dataExecContent">
+                    <p className="dateExec">Data de Realização: </p>
+                    <p>{dateTimeOfExecutionFormated}</p>
+                </div>
+                
                 <p className="dateExec">{"Categoria: " + category?.name}</p>
 
                 {

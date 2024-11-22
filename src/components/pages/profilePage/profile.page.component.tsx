@@ -18,7 +18,7 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
 }) => {
   return(
     <>
-    <HeaderComponent type="complex" circleImage={profilePicture}/>
+    <HeaderComponent showButtonChangeImage={true} type="complex" circleImage={profilePicture}/>
     <main>
       <div className="profileDataContent">
         <div >

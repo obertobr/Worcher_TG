@@ -43,6 +43,22 @@
     font-weight: 500;
 }
 
+.dataExecContent{
+    width: 93%;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    justify-content: start;
+}
+
+.dataExecContent > p:first-child{
+    width: 154px;
+}
+
+.dataExecContent > p:last-child{
+    font-weight: 600;
+}
+
 .memberCreator{
     display: flex;
 
