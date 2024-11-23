@@ -1,12 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FooterComponent from "../../basicComponents/layoutComponents/footer-component/footer.component";
 import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component";
-import RouterUtil from "../../../../Utils/Components/RouterUtil";
-import { useHistory } from "react-router";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import "./scheduleContent.css";
+import LocalStorageInstituionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils";
+import EventService from "../../../../Service/Event/event.service";
+import Event from "../../../../Models/Event/event.entity";
+import { Env } from "ionicons/dist/types/stencil-public-runtime";
+import { ticket } from "ionicons/icons";
+import LocalStorageEventViewUtils from "../../../../Utils/LocalStorage/local.storage.event.view.utils";
+import RouterUtil from "../../../../Utils/Components/RouterUtil";
+import { useHistory } from "react-router";
+
+const localStorageInstituionUtils: LocalStorageInstituionUtils = new LocalStorageInstituionUtils()
+const eventService: EventService = new EventService()
 
 const events = [
   { title: 'Culto de Jovens', date: '2024-11-09', color: '#4fc3f7' }, // Azul claro
@@ -18,12 +27,53 @@ const events = [
   { title: 'teste 6', date: '2024-11-25', color: '#f44336' }
 ];
 
+interface eventInterface {
+  title: string | undefined
+  date: Date | undefined
+  color: string | undefined
+  extendedProps?: Event | undefined
+}
+
 const SchedulePage: React.FC<{}> = () => {
 
-  const handleMonthChange = (info: any) => {
-    const startDate = info.start; // Data inicial do mês
-    const endDate = info.end; // Data final do mês
-    console.log('Mês alterado! De:', startDate, 'Até:', endDate);
+  const history = useHistory()
+
+  const [eventList, setEventList] = useState<eventInterface[]>([])
+
+  useEffect( () => {
+    loadEvents()
+  }, [])
+
+  const fetchEvents = async ():Promise<eventInterface[]>  => {
+    const id = localStorageInstituionUtils.getId()
+
+    if(id){ 
+       const events: Event[] = await eventService.getEventsByInstitutionId(id, null)
+
+       const eventList = events.map(event => {return {title: event.name, date: event.dateTimeOfExecution, color: '#4fc3f7', extendedProps: event}})
+
+       return eventList || []
+    }
+    return []
+  }
+
+  const loadEvents = async () => {
+    setEventList(await fetchEvents())
+  }
+
+  const viewEventPage = (idEvent: number | undefined) => {
+    const localStorageEventViewUtils = new LocalStorageEventViewUtils()
+
+    if(idEvent){
+      localStorageEventViewUtils.setId(idEvent)
+      RouterUtil.goToPage(history,"vieweventpage")
+    }
+  }
+
+  const handleEventClick = (clickInfo: any) => {
+    const { title, start, extendedProps } = clickInfo.event;
+
+    viewEventPage(extendedProps.id)
   };
 
   return (
@@ -39,11 +89,11 @@ const SchedulePage: React.FC<{}> = () => {
             center: 'title',
             right: 'dayGridMonth,listMonth',
           }}
-          events={events}
+          events={eventList}
           eventDisplay="block"
           dayMaxEvents={3} 
           moreLinkText={(num) => `+${num} mais`}
-          datesSet={handleMonthChange}
+          eventClick={handleEventClick}
         />
       </main>
 
