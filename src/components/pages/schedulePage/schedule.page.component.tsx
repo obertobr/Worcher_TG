@@ -8,24 +8,12 @@ import "./scheduleContent.css";
 import LocalStorageInstituionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils";
 import EventService from "../../../../Service/Event/event.service";
 import Event from "../../../../Models/Event/event.entity";
-import { Env } from "ionicons/dist/types/stencil-public-runtime";
-import { ticket } from "ionicons/icons";
 import LocalStorageEventViewUtils from "../../../../Utils/LocalStorage/local.storage.event.view.utils";
 import RouterUtil from "../../../../Utils/Components/RouterUtil";
 import { useHistory } from "react-router";
 
 const localStorageInstituionUtils: LocalStorageInstituionUtils = new LocalStorageInstituionUtils()
 const eventService: EventService = new EventService()
-
-const events = [
-  { title: 'Culto de Jovens', date: '2024-11-09', color: '#4fc3f7' }, // Azul claro
-  { title: 'Encontro de mulheres', date: '2024-11-25', color: '#f44336' }, // Vermelho
-  { title: 'teste 2', date: '2024-11-25', color: '#f44336' },
-  { title: 'teste 3', date: '2024-11-25', color: '#f44336' },
-  { title: 'teste 4', date: '2024-11-25', color: '#f44336' },
-  { title: 'teste 5', date: '2024-11-25', color: '#f44336' },
-  { title: 'teste 6', date: '2024-11-25', color: '#f44336' }
-];
 
 interface eventInterface {
   title: string | undefined
@@ -90,6 +78,14 @@ const SchedulePage: React.FC<{}> = () => {
             right: 'dayGridMonth,listMonth',
           }}
           events={eventList}
+          displayEventTime={false}
+          buttonText={{
+            today: 'Hoje',
+            month: 'Mês',
+            week: 'Semana',
+            day: 'Dia',
+            list: 'Lista',
+          }}
           eventDisplay="block"
           dayMaxEvents={3} 
           moreLinkText={(num) => `+${num} mais`}
