@@ -7,9 +7,15 @@
 
   align-items: center;
 
+
   .configCheckBox {
     width: 77%;
-    height: max-content;
+    max-width: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 20%;
   }
 }
 
