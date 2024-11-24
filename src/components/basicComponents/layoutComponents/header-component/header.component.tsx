@@ -27,6 +27,7 @@ interface HeaderComponentPropsInterface{
     showArrowBack?: boolean;
     showHome?: boolean;
     showButtonChangeImage?: boolean;
+    showCircleImageIfExistsCircleImage?: boolean;
 }
 
 const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
@@ -38,6 +39,7 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
     showArrowBack = true,
     showHome = false,
     showButtonChangeImage = false,
+    showCircleImageIfExistsCircleImage = false,
   }) => {
 
     const history = useHistory()
@@ -126,11 +128,11 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
 
 
                 {
-                    showCircleImage && image ? 
+                  (showCircleImageIfExistsCircleImage && circleImage) || showCircleImage && image ? 
                         (
                             <div className={"conteCircleImage " + (type == 'simple' ? " circleSimple" : " circleComplex") }>
                                 <img className={"circleImageWith " + (type == 'simple' ? " circleSimple" : " circleComplex")} 
-                                    src={ImageUtils.getImageByUrl(image)}
+                                    src={ circleImage ? ImageUtils.getImageByUrl(circleImage) : ImageUtils.getImageByUrl(image)}
                                     onClick={() => type == 'simple' ? setSidePanelVisible(true) : ""}
                                ></img>
 
@@ -139,7 +141,6 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
                                         <IonIcon onClick={() => {takePicture()}} className="cameraIcon" icon={camera} ></IonIcon>
                                     </>) : (<></>)
                                 }
-
                             </div>
                            
                         ) : 
@@ -150,7 +151,7 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
                 }
 
                 {
-                    showCircleImage && !image ? 
+                   (showCircleImageIfExistsCircleImage && !circleImage) || showCircleImage && !image ? 
                     (
                         <div className={"circleImage userUndefined" + (type == 'simple' ? " circleSimple" : " circleComplex")}
                              onClick={() => type == 'simple' ? setSidePanelVisible(true) : ""}

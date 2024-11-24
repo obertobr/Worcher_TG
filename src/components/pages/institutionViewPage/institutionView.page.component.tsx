@@ -19,6 +19,7 @@ import LocalStorageMemberUtils from '../../../../Utils/LocalStorage/local.storag
 import LocalStorageInstituionUtils from '../../../../Utils/LocalStorage/local.storage.institution.utils';
 import MemberService from '../../../../Service/User/member.service';
 import Member from '../../../../Models/User/member.entity';
+import FullScreenLoader from '../../basicComponents/layoutComponents/full-screen-loader/full.screen.loader.component';
 
 interface instituitionViewInterface {
 }
@@ -122,82 +123,96 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
                 />
 
 
-    <HeaderComponent showHome={isMemberLocalStorage} showArrowBack={!isMemberLocalStorage} type='complex' circleImage={logo}></HeaderComponent>
+    <HeaderComponent showHome={isMemberLocalStorage} showArrowBack={!isMemberLocalStorage} type='complex' circleImage={instituition?.image?.url} showCircleImage={!!instituition}></HeaderComponent>
       <div className="contentIntView">
       
-        <main>
-          <div className="intViewContainer">
-            <h2 className='title center'>{instituition?.name}</h2>
-            <p className='center'>{instituition?.description}</p>
-          </div>
+      {
+        instituition ? (
+          <>
+          <main className='mainInstitutionViewPage'>
+            <div className="intViewContainer">
+              <h2 className='title center'>{instituition?.name}</h2>
+              <p className='center'>{instituition?.description}</p>
+            </div>
 
-          <div className="intViewAddressContainer">
-            <h2 className='titleSecond'>ENDEREÇO</h2>
-            <p>{"Cidade: " + instituition?.address?.city?.name + ", Bairro: " + instituition?.address?.neighborhood +
-                ", Rua: " + instituition?.address?.street + ", N°: " + instituition?.address?.number + ", CEP: " +
-                instituition?.address?.cep
-              }</p>
-          </div>
+            <div className="intViewAddressContainer">
+              <h2 className='titleSecond'>ENDEREÇO</h2>
+              <p>{"Cidade: " + instituition?.address?.city?.name + ", Bairro: " + instituition?.address?.neighborhood +
+                  ", Rua: " + instituition?.address?.street + ", N°: " + instituition?.address?.number + ", CEP: " +
+                  instituition?.address?.cep
+                }</p>
+            </div>
 
-          <div className='codeInst'>
-            <p>Código da instituição:</p>
-            <p>{instituition?.code}</p>
-          </div>
-
-          {
-              isMemberLocalStorage && showButtonCriarEvento ? 
-              (
-                <ButtonComponent width='80%' text='Criar Evento' onClick={() => RouterUtil.goToPage(history,"event-register") } />
-              ) : (<></>)
-            }
+            <div className='codeInst'>
+              <p>Código da instituição:</p>
+              <p>{instituition?.code}</p>
+            </div>
 
             {
-              isMemberLocalStorage && showButtonGerenciarMembros ? 
-              (
-                <ButtonComponent width='80%' text='Gerenciar Membros' onClick={() => RouterUtil.goToPage(history,"member-view") } />
-              ) : (<></>)
-            }
-
-            {
-              isMemberLocalStorage && showButtonGerenciarCategorias ? 
-              (
-                <ButtonComponent width='80%' text='Gerenciar Categorias de Eventos' onClick={() => RouterUtil.goToPage(history,"") } />
-              ) : (<></>)
-            }
-
-            {
-              isMemberLocalStorage && showButtonGerenciarCategorias ? 
-              (
-                <ButtonComponent width='80%' text='Gerenciar Cargos' onClick={() => RouterUtil.goToPage(history,"") } />
-              ) : (<></>)
-            }
-
-
-            {
-              !isMemberLocalStorage ? (
-
-                <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => requestEntry() } />
-              )
-
-              :
-
-              (
-                <ButtonComponent isCancel={true} width='80%' text='Sair da instituição' onClick={() => console.log("Sair") } />
-              )
-            }
+                isMemberLocalStorage && showButtonCriarEvento ? 
+                (
+                  <ButtonComponent width='80%' text='Criar Evento' onClick={() => RouterUtil.goToPage(history,"event-register") } />
+                ) : (<></>)
+              }
 
               {
-              isMemberLocalStorage && showButtonExcluirInstituicao ? 
-              (
-                <ButtonComponent isCancel={true} width='80%' text='Excluir instituição' onClick={() => console.log("Sair") } />
-              ) : (<></>)
-            }
+                isMemberLocalStorage && showButtonGerenciarMembros ? 
+                (
+                  <ButtonComponent width='80%' text='Gerenciar Membros' onClick={() => RouterUtil.goToPage(history,"member-view") } />
+                ) : (<></>)
+              }
 
-            
+              {
+                isMemberLocalStorage && showButtonGerenciarCategorias ? 
+                (
+                  <ButtonComponent width='80%' text='Gerenciar Categorias de Eventos' onClick={() => RouterUtil.goToPage(history,"") } />
+                ) : (<></>)
+              }
+
+              {
+                isMemberLocalStorage && showButtonGerenciarCargos ? 
+                (
+                  <ButtonComponent width='80%' text='Gerenciar Cargos' onClick={() => RouterUtil.goToPage(history,"") } />
+                ) : (<></>)
+              }
+
+
+              {
+                !isMemberLocalStorage ? (
+
+                  <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => requestEntry() } />
+                )
+
+                :
+
+                (
+                  <ButtonComponent isCancel={true} width='80%' text='Sair da instituição' onClick={() => console.log("Sair") } />
+                )
+              }
+
+                {
+                isMemberLocalStorage && showButtonExcluirInstituicao ? 
+                (
+                  <ButtonComponent isCancel={true} width='80%' text='Excluir instituição' onClick={() => console.log("Sair") } />
+                ) : (<></>)
+              }
+
+              
 
 
 
-        </main>
+          </main>
+          </>
+        )
+
+        : 
+
+        (
+          <FullScreenLoader value={instituition} />
+        )
+
+      }
+
 
 
       </div>

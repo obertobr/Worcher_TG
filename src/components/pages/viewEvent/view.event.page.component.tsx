@@ -9,6 +9,8 @@ import "./viewEvent.css"
 import DateUtil from "../../../../Utils/DateUtil";
 import ButtonComponent from "../../basicComponents/button-component/button.components";
 import LocalStorageMemberUtils from "../../../../Utils/LocalStorage/local.storage.member.utils";
+import UserService from "../../../../Service/User/user.service";
+import User from "../../../../Models/User/user.entity";
 
 const ViewEventPage: React.FC<{}> = () => {
 
@@ -18,6 +20,7 @@ const ViewEventPage: React.FC<{}> = () => {
   const service = new EventService()
 
   const [event,setEvent] = useState<Event | undefined>()
+  const [user,setUser] = useState<User | undefined>()
   const [isParticipantsVisible, setIsParticipantsVisible] = useState(false); 
 
   useEffect( () => {
@@ -32,6 +35,15 @@ const ViewEventPage: React.FC<{}> = () => {
   const loadEvent = async (idEvent: number) => {
     const event = await service.getById(idEvent)
     setEvent(event)
+
+    const userService = new UserService()
+    const idUser = event?.member?.user?.id
+
+
+    if(idUser){
+      const user = await userService.getById(idUser)
+      setUser(user)
+    }
   }
 
   const joinMemberInEvent = async () => {
@@ -55,7 +67,7 @@ const removeMemberFromEvent = async () => {
 
   return(
     <>
-    <HeaderComponent showArrowBack={true} type='complex' showCircleImage={true} backgroungImage={ImageUtils.getImageByUrl(event?.image?.url)}></HeaderComponent>
+    <HeaderComponent showCircleImageIfExistsCircleImage={true} circleImage={user?.image?.url} showArrowBack={true} type='complex' showCircleImage={true} backgroungImage={ImageUtils.getImageByUrl(event?.image?.url)}></HeaderComponent>
 
       <main className="mainViewEvent">
             <h3 className="nameUser">{event?.member?.user?.name}</h3>

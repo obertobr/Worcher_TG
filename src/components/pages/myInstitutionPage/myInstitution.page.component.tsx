@@ -43,7 +43,7 @@ const MyInstitutionPage: React.FC<{}> = () => {
             {
               institutions && institutions.length > 0 ? institutions.map( (e,i) => {
                 return (
-                  <InstitutionCard key={i} idInstitution={e.id} title={e.name || ""} />
+                  <InstitutionCard key={i} idInstitution={e.id} title={e.name || ""} imageUrl={e.image?.url} />
                 )
               }) : 
               
