@@ -1,0 +1,44 @@
+main {
+    height: calc(100% - 70px);
+}
+
+/* Ajuste geral */
+.fc {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    height: 100%;
+}
+
+/* Estilo para o calendário (Imagem 1) */
+.fc-daygrid-event {
+    font-weight: bold;
+    padding: 2px;
+    text-align: center;
+}
+
+/* Estilo da célula de eventos */
+.fc-daygrid-day-number {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Estilo para o modo lista (Imagem 2) */
+.fc-list-event-dot {
+    border-radius: 50%;
+    border: none;
+}
+
+.fc-daygrid-day {
+    height: 100px;
+    /* Define uma altura fixa para os quadrados */
+}
+
+.fc-daygrid-more-link {
+    display: block;
+    /* Garante que o botão "mais" seja exibido */
+    text-align: center;
+    margin-top: 5px;
+    color: #007bff;
+    cursor: pointer;
+}
