@@ -3,6 +3,9 @@ import "./sidePanel.css";
 import LocalStorageLoginUtils from "../../../../../Utils/LocalStorage/local.storage.login.utils";
 import RouterUtil from "../../../../../Utils/Components/RouterUtil";
 import { useHistory } from "react-router";
+import { IonIcon } from "@ionic/react";
+import { person } from "ionicons/icons";
+import ImageUtils from "../../../../../Utils/image/image.utils";
 
 interface SidePanelProps {
   isVisible: boolean;
@@ -35,8 +38,21 @@ const SidePanelComponent: React.FC<SidePanelProps> = ({ isVisible, onClose }) =>
 
             <div className="side-panel-header">
               <div className="avatar">
-                {/* Colocar imagem aqui do perfil do parceiro */}
-                </div>
+              {
+                    localStorageLogin.getAccount()?.user?.image ? 
+                        (
+                                <img className={"circleImageWith "} 
+                                    src={ImageUtils.getImageByUrl(localStorageLogin.getAccount()?.user?.image?.url)}
+                               ></img>
+                        ) : 
+
+                        (
+                          <div className={"circleImage"}>
+                              <IonIcon className="userUndefinedIcon" icon={person} ></IonIcon>
+                         </div>
+                        ) 
+                }  
+              </div>
 
               <div className="accountSideBarContent">
                 <h3 className="nameSideBar">{localStorageLogin.getAccount()?.user?.name}</h3>

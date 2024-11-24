@@ -1,4 +1,6 @@
 .mainViewEvent{
+    animation: fadeIn .4s linear;
+
     width: 100%;
     min-height: 100%;
     color: var(--primaryColorFont);

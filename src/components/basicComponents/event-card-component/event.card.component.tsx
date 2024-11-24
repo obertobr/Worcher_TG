@@ -6,6 +6,7 @@ import EventService from "../../../../Service/Event/event.service"
 import LocalStorageMemberUtils from "../../../../Utils/LocalStorage/local.storage.member.utils"
 import Member from "../../../../Models/User/member.entity"
 import ImageUtils from "../../../../Utils/image/image.utils"
+import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils"
 
 interface EventCardProps {
     id: number | undefined,
@@ -14,6 +15,7 @@ interface EventCardProps {
     dateTimeOfExecution: Date | undefined,
     category: EventCategory | undefined,
     memberId: number | undefined,
+    userId: number | undefined,
     memberList: Member[] | undefined,
     urlImage: string | undefined,
     changeParticipate?: () => {},
@@ -26,6 +28,7 @@ const EventCard: React.FC<EventCardProps> = ({
     dateTimeOfExecution,
     category,
     memberId,
+    userId,
     memberList = [],
     urlImage,
     changeParticipate,
@@ -34,6 +37,7 @@ const EventCard: React.FC<EventCardProps> = ({
 
     const eventService = new EventService()
     const localStorageMember = new LocalStorageMemberUtils()
+    const localStorageLoginUtils = new LocalStorageLoginUtils()
 
     const creationDateTimeFormated = DateUtil.formatToDDMMYYYY(creationDateTime ? creationDateTime : new Date())
     const dateTimeOfExecutionFormated = DateUtil.formatToDDMMYYYY(dateTimeOfExecution ? dateTimeOfExecution : new Date())
@@ -52,12 +56,20 @@ const EventCard: React.FC<EventCardProps> = ({
     const removeMemberFromEvent = async () => {
         const idMember = localStorageMember.getItem()
 
-        if(idMember && id)
-            await eventService.removeMemberFromEvent(id,idMember)
+        if(idMember){
+            if(id)
+                await eventService.removeMemberFromEvent(id,idMember)
+        }else if(id){
+            const idUserLocalStorage = localStorageLoginUtils.getIdUser()
+            if(idUserLocalStorage){
+                await eventService.removeMemberFromEventByUserId(id,idUserLocalStorage)
+            }
+        }
 
         if(changeParticipate)
             changeParticipate()
     }
+    
 
     return (
         <>
@@ -79,7 +91,7 @@ const EventCard: React.FC<EventCardProps> = ({
                 <p className="dateExec">{"Categoria: " + category?.name}</p>
 
                 {
-                    memberId == localStorageMember.getItem() ? (
+                    userId == localStorageLoginUtils.getIdUser() ? (
                         <>
                             <div className="buttonsCreator">
                                     <ButtonComponent text={"Editar"}
@@ -90,12 +102,12 @@ const EventCard: React.FC<EventCardProps> = ({
                                     <ButtonComponent text={"Excluir"}
                                             isCancel={true}
                                             width={"250px"} 
-                                            onClick={() => {console.log("Editar")}}
+                                            onClick={() => {console.log("Excluir")}}
                                         ></ButtonComponent>
                             </div>
                         </>
                     ) : 
-                    memberList.findIndex( e => e.id == localStorageMember.getItem()) != -1 ? (
+                    memberList.findIndex( e => e?.user?.id == localStorageLoginUtils.getIdUser()) != -1 ? (
                         <>
                             <ButtonComponent text={"Cancelar Participação"}
                                  isCancel={true}

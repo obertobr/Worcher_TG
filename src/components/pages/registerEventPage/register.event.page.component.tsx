@@ -21,11 +21,8 @@ import EventService from "../../../../Service/Event/event.service"
 import Institution from "../../../../Models/Instituition/institution.entity";
 import Member from "../../../../Models/User/member.entity";
 import localStorageInstitutionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils";
-import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils";
-import FooterComponent from "../../basicComponents/layoutComponents/footer-component/footer.component";
 import InputCepComponent from "../../basicComponents/input-cep-component/input.cep.component";
 import EventCategory from "../../../../Models/Event/event.category.entity";
-import EventCategoryService from "../../../../Service/Event/event.category.service";
 import InstitutionService from "../../../../Service/Instituition/institution.service";
 import LocalStorageInstituionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils";
 import LocalStorageMemberUtils from "../../../../Utils/LocalStorage/local.storage.member.utils";

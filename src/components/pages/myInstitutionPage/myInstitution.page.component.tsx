@@ -33,7 +33,7 @@ const MyInstitutionPage: React.FC<{}> = () => {
     <>
     <HeaderComponent type='simple' showCircleImage={true}></HeaderComponent>
 
-      <main>
+      <main className="mainMyInstitution">
         <div className="contentInst">
 
           <h2>Minhas Instituições</h2>
@@ -43,7 +43,7 @@ const MyInstitutionPage: React.FC<{}> = () => {
             {
               institutions && institutions.length > 0 ? institutions.map( (e,i) => {
                 return (
-                  <InstitutionCard key={i} idInstitution={e.id} title={e.name || ""} />
+                  <InstitutionCard key={i} idInstitution={e.id} title={e.name || ""} imageUrl={e.image?.url} />
                 )
               }) : 
               

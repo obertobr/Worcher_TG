@@ -36,7 +36,7 @@ export default class InstitutionService extends AbstractFormDataCrud<Institution
     }
   }
 
-  async getInstitutionsByUserId(idUser: number | undefined): Promise<Institution[]> {
+  async getInstitutionsByUserId(idUser: number | undefined | null): Promise<Institution[]> {
     try {
       const response = await axios.get(`${this.urlApi}listByUser/${idUser}`);
       const data = response.data.data;

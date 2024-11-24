@@ -51,7 +51,7 @@ const FooterComponent: React.FC<FooterComponentPropsInterface> = ({
     
     const navItensBackInstitution = [
         new NavFooter(1,"Instituições",businessOutline,true, true,"my-institution"),
-        new NavFooter(2,"Eventos",calendarNumberOutline,false, true,"home"),
+        new NavFooter(2,"Eventos",calendarNumberOutline,false, true,"myeventspage"),
     ]
 
     useEffect(() => {

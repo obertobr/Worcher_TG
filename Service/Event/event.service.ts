@@ -33,4 +33,23 @@ export default class EventService extends AbstractFormDataCrud<Event> {
       return error.response?.data?.errors || error.message;
     }
   }
+
+  async removeMemberFromEventByUserId(eventId: number, userId: number): Promise<void> {
+    try {
+      const response = await axios.get(`${this.urlApi}removeMemberFromEvent/${eventId}/${userId}`);
+      return response.data.data;
+    } catch (error: any) {
+      return error.response?.data?.errors || error.message;
+    }
+  }
+
+  async getEventsByUserId(userId: number): Promise<Event[] | any> {
+    try {
+      const response = await axios.get(`${this.urlApi}eventsByIdUser/${userId}`);
+      return response.data.data;
+    } catch (error: any) {
+      return error.response?.data?.errors || error.message;
+    }
+  }
+  
 }

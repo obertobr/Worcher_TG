@@ -10,15 +10,18 @@ import LocalStorageLoginUtils from '../../../../Utils/LocalStorage/local.storage
 import LocalStorageMemberUtils from '../../../../Utils/LocalStorage/local.storage.member.utils';
 import RouterUtil from '../../../../Utils/Components/RouterUtil';
 import LocalStorageInstituionUtils from '../../../../Utils/LocalStorage/local.storage.institution.utils';
+import ImageUtils from '../../../../Utils/image/image.utils';
 
 interface InstitutionCardInterface {
   title: string;
   idInstitution: number | undefined;
+  imageUrl: string | undefined
 }
 
 const InstitutionCard: React.FC<InstitutionCardInterface> = ({
   title,
   idInstitution,
+  imageUrl,
 }) => {
 
   const history = useHistory()
@@ -44,7 +47,7 @@ const InstitutionCard: React.FC<InstitutionCardInterface> = ({
     <>
       <div className="institutionCard">
         <div className='contentCardInstitution' onClick={() => goToFeedInstitution()}>
-          <img className='institutionLogo' src={minhaImagem} alt="imagem" />
+          <img className='institutionLogo' src={ImageUtils.getImageByUrl(imageUrl)} alt="imagem" />
 
           <div className="institutionCardInfo">
             <IonLabel className='title'>{title}</IonLabel>

@@ -1,7 +1,11 @@
+import { useEffect, useState } from "react"
 import ButtonComponent from "../../basicComponents/button-component/button.components"
 import FooterComponent from "../../basicComponents/layoutComponents/footer-component/footer.component"
 import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component"
 import "./profilePage.css"
+import User from "../../../../Models/User/user.entity"
+import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils"
+import UserService from "../../../../Service/User/user.service"
 
 interface ProfilePageInterface {
   name: string,
@@ -11,29 +15,45 @@ interface ProfilePageInterface {
 }
 
 const ProfilePage: React.FC<ProfilePageInterface> = ({
-  name = "Helen Giovana de Faria Marques",
-  email = "esseemailmesmo@email.com",
   password = "********",
-  profilePicture = "Imagem de perfil"
 }) => {
+
+  const [user,setUser] = useState<User | undefined>()
+
+  useEffect(() => {
+    loadUser()
+  },[])
+
+  const loadUser = async () =>{
+    const localStorageLogin = new LocalStorageLoginUtils()
+    const userService = new UserService()
+
+    const idUser = localStorageLogin.getIdUser()
+
+    if(idUser){
+      setUser(await userService.getById(idUser))
+    }
+  }
+
   return(
     <>
-    <HeaderComponent showButtonChangeImage={true} type="complex" circleImage={profilePicture}/>
-    <main>
+    <HeaderComponent showButtonChangeImage={true} type="complex"/>
+    <main className="mainProfilePage">
       <div className="profileDataContent">
         <div >
           <h1>Nome</h1>
-          <label>{name}</label>
+          <label>{user?.name}</label>
 
           <h1>E-mail</h1>
-          <label>{email}</label>
+          <label>{user?.account?.email}</label>
 
           <h1>Senha</h1>
           <label>{password}</label>
         </div>
 
-        <ButtonComponent width="240px" text="Excluir Conta" onClick={() => {} } isCancel />
       </div>
+
+        <ButtonComponent width="240px" text="Excluir Conta" onClick={() => {} } isCancel />
     </main>
     <FooterComponent />
     </>
