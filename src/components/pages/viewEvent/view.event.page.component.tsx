@@ -14,6 +14,7 @@ import User from "../../../../Models/User/user.entity";
 import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils";
 import RouterUtil from "../../../../Utils/Components/RouterUtil";
 import FullScreenLoader from "../../basicComponents/layoutComponents/full-screen-loader/full.screen.loader.component";
+import LocalStorageEventEditUtils from "../../../../Utils/LocalStorage/local.storage.event.edit.utils";
 
 const ViewEventPage: React.FC<{}> = () => {
 
@@ -22,6 +23,7 @@ const ViewEventPage: React.FC<{}> = () => {
   const localStorageMember = new LocalStorageMemberUtils()
   const service = new EventService()
   const localStorageLoginUtils = new LocalStorageLoginUtils()
+  const localStorageEventEditUtils = new LocalStorageEventEditUtils()
 
   const [event,setEvent] = useState<Event | undefined>()
   const [user,setUser] = useState<User | undefined>()
@@ -74,6 +76,20 @@ const removeMemberFromEvent = async () => {
         }
 
         RouterUtil.goToPage(history,"myeventspage")
+    }
+}
+
+const editarEvento = () => {
+    if(event?.id){
+        localStorageEventEditUtils.setId(event.id)
+        RouterUtil.goToPage(history,"event-register")
+    }
+}
+
+const excluirEvento = async () => {
+    if(event?.id){
+        await service.delete(event.id)
+        RouterUtil.returnOfLastPage(history)
     }
 }
 
@@ -159,13 +175,13 @@ const removeMemberFromEvent = async () => {
                                     <div className="buttonsCreator">
                                         <ButtonComponent text={"Editar"}
                                                 width={"250px"} 
-                                                onClick={() => {console.log("Editar")}}
+                                                onClick={editarEvento}
                                             ></ButtonComponent>
 
                                         <ButtonComponent text={"Excluir"}
                                                 isCancel={true}
                                                 width={"250px"} 
-                                                onClick={() => {console.log("Editar")}}
+                                                onClick={excluirEvento}
                                             ></ButtonComponent>
                                     </div>
                                 </>

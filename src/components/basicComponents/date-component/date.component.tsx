@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IonDatetime, IonLabel } from "@ionic/react";
 import './dateComponent.css'
 import DateUtil from "../../../../Utils/DateUtil";
@@ -9,13 +9,24 @@ type DateTimePickerType = "date" | "time";
 interface DateComponentProps {
   type: DateTimePickerType;
   textLabel?: string;
+  value?: Date;
   valueChange: (value: Date) => void;
 }
 
 const DateComponent: React.FC<DateComponentProps> = ({
   type,
+  value,
   valueChange,
 }) => {
+
+  useEffect(() => {
+    if(value){
+      const date = new Date(value)
+      setSelectedDate(date)
+    }
+      
+  },[value])
+
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const handleDateTimeChange = (event: CustomEvent) => {

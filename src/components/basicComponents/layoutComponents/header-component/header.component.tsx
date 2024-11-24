@@ -29,6 +29,7 @@ interface HeaderComponentPropsInterface{
     showButtonChangeImage?: boolean;
     showCircleImageIfExistsCircleImage?: boolean;
     showCircleImageJustImageExists?: boolean;
+    executeBeforeArrowclicked?: Function
 }
 
 const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
@@ -42,6 +43,7 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
     showButtonChangeImage = false,
     showCircleImageIfExistsCircleImage = false,
     showCircleImageJustImageExists = true,
+    executeBeforeArrowclicked = () => {}
   }) => {
 
     const history = useHistory()
@@ -50,6 +52,7 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
     const userService = new UserService()
 
     const arrowBackClicked = () => {
+        executeBeforeArrowclicked()
         RouterUtil.returnOfLastPage(history)
     }
 

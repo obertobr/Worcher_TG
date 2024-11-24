@@ -63,7 +63,7 @@ const FeedPage: React.FC<{}> = () => {
                              userId={event.member?.user?.id}
                              memberList={event.registeredMemberList}
                              urlImage={event.image?.url}
-                            changeParticipate={() => loadEventList()}
+                             loadEventList={() => { loadEventList()}}
                             viewEventClicked={(e: number | undefined) => viewEventPage(e)}
                   ></EventCard>
                   

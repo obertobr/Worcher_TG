@@ -45,6 +45,10 @@ export default class DateUtil {
     }
   
     static getDayOfWeek(date: Date): string {
+      if (!(date instanceof Date)) {
+        date = new Date(date);
+      }
+
       const daysOfWeek = [
         'Domingo', 'Segunda', 'Terça', 
         'Quarta', 'Quinta', 'Sexta', 'Sábado'
