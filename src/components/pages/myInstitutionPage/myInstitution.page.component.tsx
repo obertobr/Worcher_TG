@@ -33,7 +33,7 @@ const MyInstitutionPage: React.FC<{}> = () => {
     <>
     <HeaderComponent type='simple' showCircleImage={true}></HeaderComponent>
 
-      <main>
+      <main className="mainMyInstitution">
         <div className="contentInst">
 
           <h2>Minhas Instituições</h2>

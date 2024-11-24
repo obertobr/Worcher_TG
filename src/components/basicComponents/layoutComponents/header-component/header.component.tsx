@@ -28,6 +28,7 @@ interface HeaderComponentPropsInterface{
     showHome?: boolean;
     showButtonChangeImage?: boolean;
     showCircleImageIfExistsCircleImage?: boolean;
+    showCircleImageJustImageExists?: boolean;
 }
 
 const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
@@ -40,6 +41,7 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
     showHome = false,
     showButtonChangeImage = false,
     showCircleImageIfExistsCircleImage = false,
+    showCircleImageJustImageExists = true,
   }) => {
 
     const history = useHistory()
@@ -128,7 +130,8 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
 
 
                 {
-                  (showCircleImageIfExistsCircleImage && circleImage) || showCircleImage && image ? 
+                  showCircleImageJustImageExists &&
+                  ((showCircleImageIfExistsCircleImage && circleImage) || showCircleImage && image) ? 
                         (
                             <div className={"conteCircleImage " + (type == 'simple' ? " circleSimple" : " circleComplex") }>
                                 <img className={"circleImageWith " + (type == 'simple' ? " circleSimple" : " circleComplex")} 
@@ -151,7 +154,8 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
                 }
 
                 {
-                   (showCircleImageIfExistsCircleImage && !circleImage) || showCircleImage && !image ? 
+                    showCircleImageJustImageExists &&
+                   ((showCircleImageIfExistsCircleImage && !circleImage) || showCircleImage && !image) ? 
                     (
                         <div className={"circleImage userUndefined" + (type == 'simple' ? " circleSimple" : " circleComplex")}
                              onClick={() => type == 'simple' ? setSidePanelVisible(true) : ""}

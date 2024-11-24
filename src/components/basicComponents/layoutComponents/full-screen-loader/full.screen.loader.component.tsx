@@ -10,9 +10,9 @@ const FullScreenLoader: React.FC<FullScreenLoaderProps> = ({ value = undefined }
 
   useEffect(() => {
     if (value !== undefined) {
-      setIsLoading(false);
+        setIsLoading(false);
     } else {
-      setIsLoading(true);
+        setIsLoading(true);
     }
   }, [value]);
 
