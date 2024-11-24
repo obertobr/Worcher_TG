@@ -26,7 +26,6 @@ const FeedPage: React.FC<{}> = () => {
   }, [idCategoryFilter])
 
   const loadEventList = async () => {
-    console.log(await eventManager.listEventByCategory(idCategoryFilter ? idCategoryFilter : null))
     setEventList(await eventManager.listEventByCategory(idCategoryFilter ? idCategoryFilter : null))
   }
 

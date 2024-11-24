@@ -25,7 +25,6 @@ const MyEventsPage: React.FC<{}> = () => {
     const localStorageLogin = new LocalStorageLoginUtils()
     const idUserLocalStorage = localStorageLogin.getIdUser()
 
-    console.log(idUserLocalStorage)
     if(idUserLocalStorage){
         setEventList(await serviceEvent.getEventsByUserId(idUserLocalStorage))
     }
