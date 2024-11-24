@@ -11,6 +11,8 @@ import ButtonComponent from "../../basicComponents/button-component/button.compo
 import LocalStorageMemberUtils from "../../../../Utils/LocalStorage/local.storage.member.utils";
 import UserService from "../../../../Service/User/user.service";
 import User from "../../../../Models/User/user.entity";
+import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils";
+import RouterUtil from "../../../../Utils/Components/RouterUtil";
 
 const ViewEventPage: React.FC<{}> = () => {
 
@@ -18,6 +20,7 @@ const ViewEventPage: React.FC<{}> = () => {
   const eventService = new EventService()
   const localStorageMember = new LocalStorageMemberUtils()
   const service = new EventService()
+  const localStorageLoginUtils = new LocalStorageLoginUtils()
 
   const [event,setEvent] = useState<Event | undefined>()
   const [user,setUser] = useState<User | undefined>()
@@ -58,9 +61,18 @@ const ViewEventPage: React.FC<{}> = () => {
 const removeMemberFromEvent = async () => {
     const idMember = localStorageMember.getItem()
 
-    if(idMember && event?.id){
-        await eventService.removeMemberFromEvent(event?.id,idMember)
-        loadEvent(event?.id)
+    if(idMember){
+        if(event?.id){
+            await eventService.removeMemberFromEvent(event?.id,idMember)
+            loadEvent(event?.id)
+        }
+    }else if(event?.id){
+        const idUserLocalStorage = localStorageLoginUtils.getIdUser()
+        if(idUserLocalStorage){
+            await eventService.removeMemberFromEventByUserId(event?.id,idUserLocalStorage)
+        }
+
+        RouterUtil.goToPage(history,"myeventspage")
     }
 }
 
@@ -109,7 +121,7 @@ const removeMemberFromEvent = async () => {
             </div>
 
             {
-                event?.member?.id == localStorageMember.getItem() ? 
+                event?.member?.user?.id == localStorageLoginUtils.getIdUser() ? 
                 (
                     <div className="togle">
                         <div className="toggle-header" 
@@ -137,7 +149,7 @@ const removeMemberFromEvent = async () => {
 
 
             {
-                    event?.member?.id == localStorageMember.getItem() ? (
+                    event?.member?.user?.id == localStorageLoginUtils.getIdUser() ? (
                         <>
                             <div className="buttonsCreator">
                                 <ButtonComponent text={"Editar"}
@@ -153,7 +165,7 @@ const removeMemberFromEvent = async () => {
                             </div>
                         </>
                     ) : 
-                    event?.registeredMemberList.findIndex( e => e.id == localStorageMember.getItem()) != -1 ? (
+                    event?.registeredMemberList.findIndex( e => e.user?.id == localStorageLoginUtils.getIdUser()) != -1 ? (
                         <>
                             <ButtonComponent text={"Cancelar Participação"}
                                  isCancel={true}
