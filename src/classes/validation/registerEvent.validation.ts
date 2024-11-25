@@ -14,7 +14,6 @@ export default class RegisterEventValidation extends AbstractValidation {
         this.addErrorMessage(this.validateCity(city))
         this.addErrorMessage(this.validateNeighborhood(neighborhood))
         this.addErrorMessage(this.validateStreet(street))
-        this.addErrorMessage(this.validateNumber(number))
         this.addErrorMessage(this.validateDescription(description))
         this.addErrorMessage(this.validateImage(image))
         this.addErrorMessage(this.validateCEP(cep))
