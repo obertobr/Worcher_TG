@@ -172,7 +172,7 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
               {
                 isMemberLocalStorage && showButtonGerenciarCargos ? 
                 (
-                  <ButtonComponent width='80%' text='Gerenciar Cargos' onClick={() => RouterUtil.goToPage(history,"") } />
+                  <ButtonComponent width='80%' text='Gerenciar Cargos' onClick={() => RouterUtil.goToPage(history,"rolesmangerpage") } />
                 ) : (<></>)
               }
 

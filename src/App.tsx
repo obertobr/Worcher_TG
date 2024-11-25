@@ -57,6 +57,7 @@ import handleKeyDown from './components/themeManager/handle.key.down.theme.chang
 import './theme/variables.css';
 import ViewEventPage from './components/pages/viewEvent/view.event.page.component';
 import MyEventsPage from './components/pages/myEventsPage/my.events.page';
+import RolesManagerPage from './components/pages/rolesManagerPage/rolesManager.page.component';
 
 
 setupIonicReact();
@@ -130,6 +131,9 @@ const App: React.FC = () => {
           <Route exact path='/vieweventpage' component={ViewEventPage}></Route>
 
           <Route exact path='/myeventspage' component={MyEventsPage}></Route>
+
+          <Route exact path='/rolesmangerpage' component={RolesManagerPage}></Route>
+
 
           <Route exact path="/">
             <Redirect to="/test" />
