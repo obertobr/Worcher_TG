@@ -7,9 +7,9 @@ export default class EventService extends AbstractFormDataCrud<Event> {
     super("event",Event)
   }
 
-  async getEventsByInstitutionId(idInstitution: number, idEventCategory: number | null): Promise<Event[] | any> {
+  async getEventsByInstitutionId(idInstitution: number, idEventCategory: number | null, removeEventsWithDateBeforeDateNow: boolean = true): Promise<Event[] | any> {
     try {
-      const response = await axios.get(`${this.urlApi}getEventByInstitutionAndCategory/${idInstitution}/${idEventCategory}`);
+      const response = await axios.get(`${this.urlApi}getEventByInstitutionAndCategory/${idInstitution}/${idEventCategory}/${removeEventsWithDateBeforeDateNow}`);
       return response.data.data;
     } catch (error: any) {
       return error.response?.data?.errors || error.message;

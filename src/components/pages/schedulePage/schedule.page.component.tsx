@@ -11,6 +11,7 @@ import Event from "../../../../Models/Event/event.entity";
 import LocalStorageEventViewUtils from "../../../../Utils/LocalStorage/local.storage.event.view.utils";
 import RouterUtil from "../../../../Utils/Components/RouterUtil";
 import { useHistory } from "react-router";
+import  ptBrLocale  from "@fullcalendar/core/locales/pt-br"
 
 const localStorageInstituionUtils: LocalStorageInstituionUtils = new LocalStorageInstituionUtils()
 const eventService: EventService = new EventService()
@@ -36,7 +37,7 @@ const SchedulePage: React.FC<{}> = () => {
     const id = localStorageInstituionUtils.getId()
 
     if(id){ 
-       const events: Event[] = await eventService.getEventsByInstitutionId(id, null)
+       const events: Event[] = await eventService.getEventsByInstitutionId(id, null,false)
 
        const eventList = events.map(event => {return {title: event.name, date: event.dateTimeOfExecution, color: '#4fc3f7', extendedProps: event}})
 
@@ -77,6 +78,7 @@ const SchedulePage: React.FC<{}> = () => {
             center: 'title',
             right: 'dayGridMonth,listMonth',
           }}
+          locale={ptBrLocale}
           events={eventList}
           displayEventTime={false}
           buttonText={{

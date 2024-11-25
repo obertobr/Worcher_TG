@@ -31,7 +31,7 @@ const MyInstitutionPage: React.FC<{}> = () => {
 
   return(
     <>
-    <HeaderComponent type='simple' showCircleImage={true}></HeaderComponent>
+    <HeaderComponent showArrowBack={false} type='simple' showCircleImage={true}></HeaderComponent>
 
       <main className="mainMyInstitution">
         <div className="contentInst">

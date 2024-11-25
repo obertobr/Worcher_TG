@@ -237,6 +237,8 @@ const EventRegisterPage: React.FC<{}> = () => {
             if(Array.isArray(response)){
                 setMessagesErrorModal(response)
                 setShowModal(true)
+            }else{
+                RouterUtil.goToPage(history,"inst-page")
             }
         }
     }

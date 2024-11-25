@@ -98,9 +98,7 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
             const userIdLocalStorage = localStorageLogin.getAccount()?.user?.id
 
             if(userIdLocalStorage){
-                console.log(file)
                const response = await userService.setPhoto({userID: userIdLocalStorage}, file)
-               console.log(response)
 
                const account = localStorageLogin.getAccount()
 

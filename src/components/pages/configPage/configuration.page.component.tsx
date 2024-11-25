@@ -7,7 +7,7 @@ import './configurationPage.css';
 const ConfigurationPage: React.FC<{}> = () => {
   return(
     <>
-    <HeaderComponent type="simple" showHome={true} showArrowBack={false} />
+    <HeaderComponent type="simple" showCircleImage={false} showArrowBack={true} />
     
     <div className="configContainer">
       <ToggleThemeComponent />
