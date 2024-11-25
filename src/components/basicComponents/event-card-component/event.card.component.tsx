@@ -7,6 +7,9 @@ import LocalStorageMemberUtils from "../../../../Utils/LocalStorage/local.storag
 import Member from "../../../../Models/User/member.entity"
 import ImageUtils from "../../../../Utils/image/image.utils"
 import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils"
+import LocalStorageEventEditUtils from "../../../../Utils/LocalStorage/local.storage.event.edit.utils"
+import RouterUtil from "../../../../Utils/Components/RouterUtil"
+import { useHistory } from "react-router"
 
 interface EventCardProps {
     id: number | undefined,
@@ -18,7 +21,7 @@ interface EventCardProps {
     userId: number | undefined,
     memberList: Member[] | undefined,
     urlImage: string | undefined,
-    changeParticipate?: () => {},
+    loadEventList?: () => void,
     viewEventClicked: (idEvent: number | undefined) => void
 }
 const EventCard: React.FC<EventCardProps> = ({
@@ -31,13 +34,15 @@ const EventCard: React.FC<EventCardProps> = ({
     userId,
     memberList = [],
     urlImage,
-    changeParticipate,
+    loadEventList,
     viewEventClicked
 }) => {
 
+    const history = useHistory()
     const eventService = new EventService()
     const localStorageMember = new LocalStorageMemberUtils()
     const localStorageLoginUtils = new LocalStorageLoginUtils()
+    const localStorageEventEditUtils = new LocalStorageEventEditUtils()
 
     const creationDateTimeFormated = DateUtil.formatToDDMMYYYY(creationDateTime ? creationDateTime : new Date())
     const dateTimeOfExecutionFormated = DateUtil.formatToDDMMYYYY(dateTimeOfExecution ? dateTimeOfExecution : new Date())
@@ -49,8 +54,8 @@ const EventCard: React.FC<EventCardProps> = ({
         if(idMember && id)
             await eventService.addMemberToEvent(id,idMember)
 
-        if(changeParticipate)
-            changeParticipate()
+        if(loadEventList)
+            loadEventList()
     }
 
     const removeMemberFromEvent = async () => {
@@ -66,10 +71,25 @@ const EventCard: React.FC<EventCardProps> = ({
             }
         }
 
-        if(changeParticipate)
-            changeParticipate()
+        if(loadEventList)
+            loadEventList()
     }
-    
+
+    const editarEvento = () => {
+        if(id){
+            localStorageEventEditUtils.setId(id)
+            RouterUtil.goToPage(history,"event-register")
+        }
+    }
+
+    const excluirEvento = async () => {
+        if(id){
+            await eventService.delete(id)
+
+            if(loadEventList)
+                loadEventList()
+        }
+    }
 
     return (
         <>
@@ -96,13 +116,13 @@ const EventCard: React.FC<EventCardProps> = ({
                             <div className="buttonsCreator">
                                     <ButtonComponent text={"Editar"}
                                             width={"250px"} 
-                                            onClick={() => {console.log("Editar")}}
+                                            onClick={editarEvento}
                                         ></ButtonComponent>
 
                                     <ButtonComponent text={"Excluir"}
                                             isCancel={true}
                                             width={"250px"} 
-                                            onClick={() => {console.log("Excluir")}}
+                                            onClick={excluirEvento}
                                         ></ButtonComponent>
                             </div>
                         </>

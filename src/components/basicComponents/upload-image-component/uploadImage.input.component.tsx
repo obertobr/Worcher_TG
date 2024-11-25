@@ -1,5 +1,5 @@
 import { IonButton,IonIcon,IonImg,IonLabel } from "@ionic/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Camera, CameraResultType } from '@capacitor/camera';
 import style from '../../styleComponents/input.module.css';
 import ButtonComponent from "../button-component/button.components";
@@ -10,13 +10,31 @@ import "./uploadImageInputComponent.css"
 
 interface TextInputComponentProps {
     text: string;
+    value?: string;
     onInputChange: (value: File) => void;
 }
 
 const UploadImageComponent: React.FC<TextInputComponentProps> = ({
     text,
+    value,
     onInputChange
 }) => {
+    useEffect(() => {
+        if(value){
+            setImage(value)
+            loadImage(value)
+        }
+    },[value])
+
+    const loadImage = async (value: string) => {
+        const response = await fetch(value);
+        const blob = await response.blob();
+        
+        const fileName = "image"
+        const file = new File([blob], fileName, { type: blob.type });
+        onInputChange(file);
+    }
+
     const [image, setImage] = useState<string | undefined>(undefined);
 
     const takePicture = async () => {

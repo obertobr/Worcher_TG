@@ -41,7 +41,7 @@ const MyEventsPage: React.FC<{}> = () => {
 
   return(
     <>
-    <HeaderComponent showArrowBack={true} type='simple' showCircleImage={true}></HeaderComponent>
+    <HeaderComponent showArrowBack={false} type='simple' showCircleImage={true}></HeaderComponent>
 
       <main className="mainFeed">
 
@@ -59,7 +59,7 @@ const MyEventsPage: React.FC<{}> = () => {
                              memberId={event.member?.id}
                              memberList={event.registeredMemberList}
                              urlImage={event.image?.url}
-                            changeParticipate={() => loadEventList()}
+                            loadEventList={() => {loadEventList()}}
                             viewEventClicked={(e: number | undefined) => viewEventPage(e)}
                   ></EventCard>
                   

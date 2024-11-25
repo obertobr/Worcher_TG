@@ -18,6 +18,18 @@ const HourMinuteSelectorComponent: React.FC<HourMinuteSelectorComponentProps> = 
     onTimeChangeString,
     onTimeChange,
 }) => {
+    useEffect(() => {
+        if(hour){
+            hour = hour.length == 1 ? "0" + hour : hour
+            setSelectedHour(hour)
+        }
+
+        if(minute){
+            minute = minute.length == 1 ? "0" + minute : minute
+            setSelectedMinute(minute)
+        }
+    }, [hour,minute])
+
     const [selectedHour, setSelectedHour] = useState(hour);
     const [selectedMinute, setSelectedMinute] = useState(minute);
     const [startX, setStartX] = useState<number | null>(null);

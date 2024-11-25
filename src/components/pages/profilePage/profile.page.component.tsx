@@ -37,7 +37,7 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
 
   return(
     <>
-    <HeaderComponent showButtonChangeImage={true} type="complex"/>
+    <HeaderComponent showArrowBack={true} showButtonChangeImage={true} type="complex"/>
     <main className="mainProfilePage">
       <div className="profileDataContent">
         <div >
@@ -55,7 +55,6 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
 
         <ButtonComponent width="240px" text="Excluir Conta" onClick={() => {} } isCancel />
     </main>
-    <FooterComponent />
     </>
   )
 }
