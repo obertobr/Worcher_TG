@@ -19,13 +19,12 @@ const ToggleThemeComponent: React.FC<{}> = () => {
 
     localStorageThemeUtils.changeTheme()
     setCurrentTheme(currentTheme == ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK)
-    console.log("batata")
   }
     
   return (
     <>
     <div className="theme-switch">
-      <h2>Mude o Tema do aplicativo: </h2>
+      <h2>Mude o Tema do aplicativo</h2>
       <button onClick={toggleTheme} className="theme-button">
         { currentTheme == ThemeEnum.DARK ? (
           <span role="img" aria-label="lua" className="icon">
@@ -37,7 +36,7 @@ const ToggleThemeComponent: React.FC<{}> = () => {
           </span>
         )}
       </button>
-      <p>O tema atual está {currentTheme == ThemeEnum.DARK ? "escuro" : "claro"}</p>
+      <p className="textTogleTheme">O tema atual está {currentTheme == ThemeEnum.DARK ? "escuro" : "claro"}</p>
     </div>
     </>
   )

@@ -84,6 +84,10 @@ const LoginPage: React.FC<{}> = () => {
             account.user.image = user?.image
 
             localStorageLoginUtils.setAccount(account)
+
+            if(user && user.config){
+                localStorageLoginUtils.setConfig(user.config)
+            }
         }
 
         localStorageLoginUtils.setIdUser(user?.id ? user.id : undefined)
