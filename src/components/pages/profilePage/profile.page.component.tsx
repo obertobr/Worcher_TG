@@ -6,17 +6,17 @@ import "./profilePage.css"
 import User from "../../../../Models/User/user.entity"
 import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils"
 import UserService from "../../../../Service/User/user.service"
+import LocalStorageUserEditUtils from "../../../../Utils/LocalStorage/local.storage.user.edit.utils"
+import RouterUtil from "../../../../Utils/Components/RouterUtil"
+import { useHistory } from "react-router"
 
 interface ProfilePageInterface {
-  name: string,
-  email: string,
-  password: string
-  profilePicture: string
 }
 
 const ProfilePage: React.FC<ProfilePageInterface> = ({
-  password = "********",
 }) => {
+
+  const history = useHistory()
 
   const [user,setUser] = useState<User | undefined>()
 
@@ -35,6 +35,16 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
     }
   }
 
+  const editarDadosCadastraisClicked = () => {
+    const localStorageUserEditUtils = new LocalStorageUserEditUtils()
+
+    if(user && user.id){
+      localStorageUserEditUtils.setId(user?.id)
+    }
+
+    RouterUtil.goToPage(history,"singup")
+  }
+
   return(
     <>
     <HeaderComponent showArrowBack={true} showButtonChangeImage={true} type="complex"/>
@@ -47,13 +57,12 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
           <h1>E-mail</h1>
           <label>{user?.account?.email}</label>
 
-          <h1>Senha</h1>
-          <label>{password}</label>
         </div>
 
       </div>
 
-        <ButtonComponent width="240px" text="Excluir Conta" onClick={() => {} } isCancel />
+        <ButtonComponent width="250px" text="Editar dados cadastrais" onClick={() => editarDadosCadastraisClicked() }/>
+        <ButtonComponent width="250px" text="Excluir Conta" onClick={() => {} } isCancel />
     </main>
     </>
   )

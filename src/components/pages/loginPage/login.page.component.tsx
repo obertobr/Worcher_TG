@@ -90,6 +90,7 @@ const LoginPage: React.FC<{}> = () => {
             }
         }
 
+        console.log(user)
         localStorageLoginUtils.setIdUser(user?.id ? user.id : undefined)
         
         RouterUtil.goToPage(history,"my-institution")
