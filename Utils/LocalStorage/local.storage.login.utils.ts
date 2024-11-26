@@ -1,10 +1,12 @@
 import Account from "../../Models/User/account.entity"
+import Config from "../../Models/User/config.entity"
 import LocalStorageUtils from "./local.storage.utils"
 
 export default class LocalStorageLoginUtils {
 
     private localStorageUtilsRemberData = new LocalStorageUtils<boolean>("REMEMBER_DATA")
     private localStorageUtilsData = new LocalStorageUtils<Account | undefined>("REMEMBER_EMAIL_PASSWORD")
+    private localStorageUtilsConfig = new LocalStorageUtils<Config | undefined>("CONFIG_USER")
     private localStorageUtilsIdUser = new LocalStorageUtils<number | undefined>("USER_ID")
     private localStorageUrl = new LocalStorageUtils<string | undefined>("IMAGE_URL_USER")
 
@@ -38,6 +40,14 @@ export default class LocalStorageLoginUtils {
 
     setUrlImage = (urlImage: string | undefined | null) => {
         return this.localStorageUrl.setItem(urlImage)
+    }
+
+    getConfig = () : Config | undefined | null => {
+        return this.localStorageUtilsConfig.getItem()
+    }
+
+    setConfig = (config: Config | undefined | null) => {
+        return this.localStorageUtilsConfig.setItem(config)
     }
 
 }

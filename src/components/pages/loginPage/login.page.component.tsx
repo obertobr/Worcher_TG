@@ -84,8 +84,13 @@ const LoginPage: React.FC<{}> = () => {
             account.user.image = user?.image
 
             localStorageLoginUtils.setAccount(account)
+
+            if(user && user.config){
+                localStorageLoginUtils.setConfig(user.config)
+            }
         }
 
+        console.log(user)
         localStorageLoginUtils.setIdUser(user?.id ? user.id : undefined)
         
         RouterUtil.goToPage(history,"my-institution")

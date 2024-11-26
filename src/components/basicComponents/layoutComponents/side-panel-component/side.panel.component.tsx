@@ -27,6 +27,11 @@ const SidePanelComponent: React.FC<SidePanelProps> = ({ isVisible, onClose }) =>
     }, 300);
   };
 
+  const logOut = () => {
+    localStorageLogin.setIdUser(undefined)
+    RouterUtil.goToPage(history,"login")
+  }
+
   return (
     <>
       {isVisible && (
@@ -63,6 +68,7 @@ const SidePanelComponent: React.FC<SidePanelProps> = ({ isVisible, onClose }) =>
             <div className="side-panel-options">
               <p onClick={() => RouterUtil.goToPage(history,"profile")}>Perfil</p>
               <p onClick={() => RouterUtil.goToPage(history,"config")}>Configuração</p>
+              <p onClick={() => logOut()}>Logout</p>
             </div>
           </div>
         </div>

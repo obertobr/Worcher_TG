@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextInputComponent from "../text-input-component/text.input.component";
 
 interface InputCpfComponentProps {
     textLabel?: string;
     placeHolder?: string;
     maxlength?: number;
+    value?: string;
     onInputChange: (value: string) => void; 
 }
 
@@ -12,8 +13,16 @@ const InputCpfComponent: React.FC<InputCpfComponentProps> = ({
     textLabel,
     placeHolder,
     maxlength = 14,
+    value,
     onInputChange,
 }) => {
+
+    useEffect(() => {
+        if(value){
+            handleCpfChange(value)
+        }
+    },[value])
+
     const [formattedValue, setFormattedValue] = useState('');
 
     const handleCpfChange = (value: string) => {

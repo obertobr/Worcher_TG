@@ -5,7 +5,7 @@ import TextInputComponent from "../../basicComponents/text-input-component/text.
 
 import "./singupPageFooter.css";
 import "./singupPageMain.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AlertComponent from "../../basicComponents/alert-component/alert.component";
 import PopupComponent from "../../basicComponents/popup-component/popup.component";
 import DateUtil from "../../../../Utils/DateUtil";
@@ -17,16 +17,41 @@ import Config from "../../../../Models/User/config.entity";
 import RouterUtil from "../../../../Utils/Components/RouterUtil";
 import { useHistory } from "react-router";
 import HeaderComponent from "../../basicComponents/layoutComponents/header-component/header.component";
+import LocalStorageUserEditUtils from "../../../../Utils/LocalStorage/local.storage.user.edit.utils";
 
 const SingUpPage: React.FC<{}> = () => {
   const history = useHistory();
-
+  const service = new UserService()
+  const localStorageUserEditUtils = new LocalStorageUserEditUtils()
+  
   const [showModal, setShowModal] = useState(false);
   const [messagesErrorModal, setMessagesErrorModal] = useState<string[]>([])
-
+  
   const [showModalDate, setShowModalDate] = useState(false);
+  const [isEditMode,setIsEditMode]= useState<boolean>(false);
+  const [idEdit,setIdEdit] = useState<number | undefined>()
+  const [idAccoutEdit, setIdAccoutEdit] = useState<number | undefined>()
 
   // VALUES of Singup
+
+  useEffect(() => {
+    loadUserEditIfExistsInLocalStorage()
+  }, [])
+
+  const loadUserEditIfExistsInLocalStorage = async () => {
+    const idUserEdit = localStorageUserEditUtils.getId()
+
+    if(idUserEdit){
+      setIsEditMode(true)
+      const user = await service.getById(idUserEdit)
+      setIdEdit(user?.id)
+      setIdAccoutEdit(user?.account?.id)
+      setName(user?.name)
+      setCpf(user?.cpf)
+      setDate(user?.dateOfBirth)
+      setEmail(user?.account?.email)
+    }
+  }
 
   const [name, setName] = useState<string>();
   const [cpf, setCpf] = useState<string>();
@@ -47,9 +72,11 @@ const SingUpPage: React.FC<{}> = () => {
 
     user.account = account
 
-    user.config = new Config()
-    user.config.recieveEmails = false
-    user.config.recieveNotifications = false
+    if(!isEditMode){
+      user.config = new Config()
+      user.config.recieveEmails = false
+      user.config.recieveNotifications = false
+    }
 
     const userValidation = new UserValidation();
     userValidation.validate(user,senhaConfirm)
@@ -58,20 +85,35 @@ const SingUpPage: React.FC<{}> = () => {
       setMessagesErrorModal(userValidation.errors)
       setShowModal(true)
     }else{
-      saveUser(user)
+      isEditMode ? updateUser(user) : saveUser(user)
     }  
   }
 
   const saveUser = async (user: User) => {
-    const service = new UserService()
     const response = await service.save(user)
     
     if(Array.isArray(response)){
       setMessagesErrorModal(response)
       setShowModal(true)
     }else{
-      alert("Cadastro feito com sucesso!")
       RouterUtil.goToPage(history, "login")
+    }
+  }
+
+  const updateUser = async (user: User) => {
+    if(user.account){
+      user.account.id = idAccoutEdit
+    }
+
+    user.id = idEdit
+    const response = await service.update(user)
+    
+    if(Array.isArray(response)){
+      setMessagesErrorModal(response)
+      setShowModal(true)
+    }else{
+      localStorageUserEditUtils.setId(null)
+      RouterUtil.returnOfLastPage(history)
     }
   }
 
@@ -80,7 +122,7 @@ const SingUpPage: React.FC<{}> = () => {
       
       <PopupComponent isOpen={showModalDate}
         onDidDismiss={() => { setShowModalDate(false); } }
-        content={<DateComponent type="date" valueChange={() => {}}></DateComponent>}
+        content={<DateComponent type="date" value={date} valueChange={() => {}}></DateComponent>}
         titleText={"Selecione uma data"} 
         valueChangePopup={(e) => setDate(e)}
         validateValue={() => {console.log("validate")}}      
@@ -90,22 +132,24 @@ const SingUpPage: React.FC<{}> = () => {
         isOpen={showModal}
         onDidDismiss={() => setShowModal(false)}
         messages={messagesErrorModal} 
-        titleText={"Não foi possível realizar o cadastro"}      
+        titleText={ isEditMode ? "Não foi possível atualizar os dados" : "Não foi possível realizar o cadastro"}      
       />
       <HeaderComponent showCircleImage={false}></HeaderComponent>
 
       <div className="contentSingUp">
         <main>
-          <h1 className="titleText">Cadastro</h1>
+          <h1 className="titleText">{ isEditMode? "Editar dados" : "Cadastro"}</h1>
 
           <div className="inputsSection">
             <TextInputComponent
+              value={name}
               textLabel="Nome Completo"
               placeHolder="Nome Completo"
               onInputChange={(e) => setName(e)} 
             />
 
             <InputCpfComponent textLabel="CPF"
+                              value={cpf}
                               placeHolder="CPF"
                               onInputChange={(e) => setCpf(e)}
                               ></InputCpfComponent>
@@ -119,7 +163,8 @@ const SingUpPage: React.FC<{}> = () => {
               onInputChange={(e) => setDate(date)} 
             />
 
-            <TextInputComponent 
+            <TextInputComponent
+              value={email}
               textLabel="E-mail"
               placeHolder="email@dominio.com.br"
               onInputChange={(e) => setEmail(e)}
@@ -128,7 +173,7 @@ const SingUpPage: React.FC<{}> = () => {
             <TextInputComponent 
               textLabel="Senha"
               typeInput="password"
-              placeHolder="Digite sua senha..."
+              placeHolder={isEditMode ? "Digite sua nova senha..." : "Digite sua senha..."}
               maxlength={26}
               onInputChange={(e) => setSenha(e)}
             />
@@ -136,14 +181,24 @@ const SingUpPage: React.FC<{}> = () => {
             <TextInputComponent 
               textLabel="Confirme sua Senha"
               typeInput="password"
-              placeHolder="Confirme sua senha..."
+              placeHolder={isEditMode ? "Confirme sua nova senha..." : "Confirme sua senha..."}
               maxlength={26}
               onInputChange={(e) => setSenhaConfirm(e)}
             />
           </div>
 
           <div className="buttonActions">
-            <ButtonComponent width="300px" text="Criar" onClick={createNewUser}/>
+            {isEditMode ? 
+              (
+                <ButtonComponent width="300px" text="Salvar" onClick={createNewUser}/>
+              ) 
+              : 
+              (
+                <ButtonComponent width="300px" text="Criar" onClick={createNewUser}/>
+
+              )
+            }
+
           </div>
           
         </main>
