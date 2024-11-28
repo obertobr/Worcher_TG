@@ -6,14 +6,21 @@ import LocalStorageInstituionUtils from '../../../../Utils/LocalStorage/local.st
 import Role from '../../../../Models/Instituition/role.entity';
 import RoleService from '../../../../Service/Instituition/role.service';
 import AlertComponent from '../../basicComponents/alert-component/alert.component';
+import LocalStorageRoleEditUtils from '../../../../Utils/LocalStorage/local.storage.role.edit.utils';
+import RouterUtil from '../../../../Utils/Components/RouterUtil';
+import { useHistory } from 'react-router';
+import HeaderComponent from '../../basicComponents/layoutComponents/header-component/header.component';
+import ButtonComponent from '../../basicComponents/button-component/button.components';
 
 const RolesManagerPage: React.FC<{}> = () => {
+  const history = useHistory()
 
   const [showModal, setShowModal] = useState(false);
   const [messagesErrorModal, setMessagesErrorModal] = useState<string[]>([])
 
   const [roleList, setRoleList] = useState<Role[]>([])
 
+  const localStorageRoleEditUtils = new LocalStorageRoleEditUtils()
   const institutionLocalStorage = new LocalStorageInstituionUtils()
   const institutionService = new InstitutionService()
   const roleService = new RoleService()
@@ -42,6 +49,17 @@ const RolesManagerPage: React.FC<{}> = () => {
     loadRoleList()
   }, []);
 
+  const editRole = (id: number | undefined) => {
+    if (id) {
+      localStorageRoleEditUtils.setId(id)
+      RouterUtil.goToPage(history, "position-registration")
+    }
+  }
+
+  const CreateRole = () => {
+    RouterUtil.goToPage(history, "position-registration")
+  }
+
   return (
     <>
       <AlertComponent
@@ -50,6 +68,8 @@ const RolesManagerPage: React.FC<{}> = () => {
         messages={messagesErrorModal}
         titleText={"Não foi possível excluir cargo"}
       />
+
+      <HeaderComponent type='simple' showCircleImage={false}></HeaderComponent>
 
       <main>
         <div className="contentMember">
@@ -63,12 +83,14 @@ const RolesManagerPage: React.FC<{}> = () => {
                 <p>{role.name}</p>
                 {index != 0 &&
                   <div>
-                    <button className="editButton">✏️</button>
+                    <button className="editButton" onClick={() => { editRole(role.id) }}>✏️</button>
                     <button className="denyButton" onClick={() => { excludeRole(role) }} >X</button>
                   </div>
                 }
               </div>
             })}
+
+            <ButtonComponent text="Criar cargo" width='90%' onClick={CreateRole}></ButtonComponent>
           </div>
 
         </div>

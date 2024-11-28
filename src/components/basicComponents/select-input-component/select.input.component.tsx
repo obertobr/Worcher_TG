@@ -9,7 +9,7 @@ interface SelectInputComponentProps {
     isReadOnly?: boolean;
     textLabel?: string;
     placeHolder?: string;
-    value?: number;
+    value?: number | number[];
     disabled?: boolean;
     multiple?: boolean;
     onInputChange: (value: any) => void;

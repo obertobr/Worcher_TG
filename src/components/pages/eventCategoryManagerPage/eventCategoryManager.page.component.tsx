@@ -6,8 +6,15 @@ import LocalStorageInstituionUtils from '../../../../Utils/LocalStorage/local.st
 import AlertComponent from '../../basicComponents/alert-component/alert.component';
 import EventCategory from '../../../../Models/Event/event.category.entity';
 import EventCategoryService from '../../../../Service/Event/event.category.service';
+import LocalStorageCategoryEditUtils from "../../../../Utils/LocalStorage/local.storage.category.edit.utils"
+import RouterUtil from '../../../../Utils/Components/RouterUtil';
+import { useHistory } from 'react-router';
+import HeaderComponent from '../../basicComponents/layoutComponents/header-component/header.component';
+import ButtonComponent from '../../basicComponents/button-component/button.components';
 
 const EventCaegoryManagerPage: React.FC<{}> = () => {
+
+  const history = useHistory()
 
   const [showModal, setShowModal] = useState(false);
   const [messagesErrorModal, setMessagesErrorModal] = useState<string[]>([])
@@ -17,6 +24,7 @@ const EventCaegoryManagerPage: React.FC<{}> = () => {
   const institutionLocalStorage = new LocalStorageInstituionUtils()
   const institutionService = new InstitutionService()
   const eventCategoryService = new EventCategoryService()
+  const localStorageCategoryEditUtils = new LocalStorageCategoryEditUtils()
 
   const loadEventCategoryList = async () => {
     const intitutionID = institutionLocalStorage.getId()
@@ -42,6 +50,17 @@ const EventCaegoryManagerPage: React.FC<{}> = () => {
     loadEventCategoryList()
   }, []);
 
+  const editCategory = (id: number | undefined) => {
+    if (id) {
+      localStorageCategoryEditUtils.setId(id)
+      RouterUtil.goToPage(history, "category-registration")
+    }
+  }
+
+  const createCategory = () => {
+    RouterUtil.goToPage(history, "category-registration")
+  }
+
   return (
     <>
       <AlertComponent
@@ -50,6 +69,8 @@ const EventCaegoryManagerPage: React.FC<{}> = () => {
         messages={messagesErrorModal}
         titleText={"Não foi possível excluir categoria de evento"}
       />
+
+      <HeaderComponent type='simple' showCircleImage={false}></HeaderComponent>
 
       <main>
         <div className="contentMember">
@@ -62,11 +83,13 @@ const EventCaegoryManagerPage: React.FC<{}> = () => {
               return <div className="eventCategoryCard">
                 <p>{eventCategory.name}</p>
                 <div>
-                  <button className="editButton">✏️</button>
+                  <button className="editButton" onClick={() => { editCategory(eventCategory.id) }}>✏️</button>
                   <button className="denyButton" onClick={() => { excludeEventCategory(eventCategory) }} >X</button>
                 </div>
               </div>
             })}
+
+            <ButtonComponent text="Criar categoria de evento" width='90%' onClick={createCategory}></ButtonComponent>
           </div>
 
         </div>
