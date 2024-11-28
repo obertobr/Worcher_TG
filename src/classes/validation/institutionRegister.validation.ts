@@ -4,7 +4,7 @@ import AbstractValidation from "./abstract.validation";
 
 export default class InstitutionRegisterValidation extends AbstractValidation {
 
-    validate(name: string, state: State | undefined, city: City | undefined, neighborhood: string, street: string, number: string, cep: string){
+    validate(name: string, state: State | undefined, city: City | undefined, neighborhood: string, street: string, number: string, cep: string, image: File | undefined){
 
         this.addErrorMessage(this.validateName(name))
         this.addErrorMessage(this.validateState(state))
@@ -13,6 +13,13 @@ export default class InstitutionRegisterValidation extends AbstractValidation {
         this.addErrorMessage(this.validateStreet(street))
         this.addErrorMessage(this.validateNumber(number))
         this.addErrorMessage(this.validateCEP(cep))
+        this.addErrorMessage(this.validateImage(image))
+    }
+
+    validateImage(image: File | undefined): string | null{
+        if(!image) return "O evento deve ter uma imagem!"
+        
+        return null;
     }
 
     validateName(name: string | undefined): string | null{
