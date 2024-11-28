@@ -74,9 +74,9 @@ const SchedulePage: React.FC<{}> = () => {
           plugins={[dayGridPlugin, listPlugin]}
           initialView="dayGridMonth"
           headerToolbar={{
-            left: 'prev,next today',
+            left: 'prev',
             center: 'title',
-            right: 'dayGridMonth,listMonth',
+            right: 'next,dayGridMonth,listMonth,today',
           }}
           locale={ptBrLocale}
           events={eventList}
