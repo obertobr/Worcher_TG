@@ -73,4 +73,11 @@
     font-size: 80%;
     font-weight: lighter;
   }
+
+}
+
+.iconMember{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
