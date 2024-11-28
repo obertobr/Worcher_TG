@@ -75,14 +75,14 @@ const EventCard: React.FC<EventCardProps> = ({
             loadEventList()
     }
 
-    const editarEvento = () => {
+    const editEvent = () => {
         if(id){
             localStorageEventEditUtils.setId(id)
             RouterUtil.goToPage(history,"event-register")
         }
     }
 
-    const excluirEvento = async () => {
+    const excludeEvent = async () => {
         if(id){
             await eventService.delete(id)
 
@@ -116,13 +116,13 @@ const EventCard: React.FC<EventCardProps> = ({
                             <div className="buttonsCreator">
                                     <ButtonComponent text={"Editar"}
                                             width={"250px"} 
-                                            onClick={editarEvento}
+                                            onClick={editEvent}
                                         ></ButtonComponent>
 
                                     <ButtonComponent text={"Excluir"}
                                             isCancel={true}
                                             width={"250px"} 
-                                            onClick={excluirEvento}
+                                            onClick={excludeEvent}
                                         ></ButtonComponent>
                             </div>
                         </>
