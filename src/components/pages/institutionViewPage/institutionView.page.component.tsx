@@ -165,7 +165,7 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
               {
                 isMemberLocalStorage && showButtonGerenciarCategorias ? 
                 (
-                  <ButtonComponent width='80%' text='Gerenciar Categorias de Eventos' onClick={() => RouterUtil.goToPage(history,"") } />
+                  <ButtonComponent width='80%' text='Gerenciar Categorias de Eventos' onClick={() => RouterUtil.goToPage(history,"eventcategorymanegerpage") } />
                 ) : (<></>)
               }
 

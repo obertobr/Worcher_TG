@@ -58,6 +58,7 @@ import './theme/variables.css';
 import ViewEventPage from './components/pages/viewEvent/view.event.page.component';
 import MyEventsPage from './components/pages/myEventsPage/my.events.page';
 import RolesManagerPage from './components/pages/rolesManagerPage/rolesManager.page.component';
+import EventCategoryManagerPage from './components/pages/eventCategoryManagerPage/eventCategoryManager.page.component';
 
 
 setupIonicReact();
@@ -133,6 +134,8 @@ const App: React.FC = () => {
           <Route exact path='/myeventspage' component={MyEventsPage}></Route>
 
           <Route exact path='/rolesmangerpage' component={RolesManagerPage}></Route>
+
+          <Route exact path='/eventcategorymanegerpage' component={EventCategoryManagerPage}></Route>
 
 
           <Route exact path="/">
