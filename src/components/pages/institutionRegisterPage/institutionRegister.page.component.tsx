@@ -74,7 +74,9 @@ const InstitutionRegister: React.FC<{}> = () => {
             neighborhood,
             street,
             number,
-        cep)
+            cep,
+            image
+        )
 
         if (registerValidation.hasErrors()) {
             setMessagesErrorModal(registerValidation.errors)

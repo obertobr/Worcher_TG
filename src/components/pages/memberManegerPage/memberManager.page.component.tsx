@@ -7,6 +7,7 @@ import './memberManegerPageContent.css';
 import Institution from '../../../../Models/Instituition/institution.entity';
 import LocalStorageInstituionUtils from '../../../../Utils/LocalStorage/local.storage.institution.utils';
 import Member from '../../../../Models/User/member.entity';
+import HeaderComponent from '../../basicComponents/layoutComponents/header-component/header.component';
 
 const MemberViewPage: React.FC<{}> = () => {
 
@@ -56,6 +57,8 @@ const MemberViewPage: React.FC<{}> = () => {
 
   return (
     <>
+       <HeaderComponent type='simple' showCircleImage={false}></HeaderComponent>
+
       <main>
         <div className="contentMember">
           <div className='memberHeader'>

@@ -6,8 +6,8 @@ export default class DigitalFile extends BaseEntity {
   id: number | undefined;
   url: string | undefined;
 
-  institution: Institution;
-  event: Event;
+  institution: Institution | undefined;
+  event: Event | undefined;
 
   constructor(url: string) {
     super()

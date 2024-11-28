@@ -7,7 +7,7 @@ export default class State extends BaseEntity implements selectInputItens {
   name: string | undefined;
   uf: string | undefined;
 
-  citiesList: City[] = [];
+  citiesList: City[] | undefined;
 
   public getDisplayName() {
     return this.name;

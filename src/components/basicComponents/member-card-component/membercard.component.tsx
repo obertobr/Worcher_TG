@@ -1,7 +1,7 @@
-import { IonLabel } from "@ionic/react";
+import { IonIcon, IonLabel } from "@ionic/react";
 import memberImg from '../../../assets/word-logo-8.png';
 import selectMember from "./selectMember.module.css"
-
+import { person } from "ionicons/icons";
 import './memberCard.css';
 import SelectInputComponent from "../select-input-component/select.input.component";
 import Role from "../../../../Models/Instituition/role.entity";
@@ -9,6 +9,8 @@ import Member from "../../../../Models/User/member.entity";
 import MembershipRequest from "../../../../Models/Instituition/membershipRequest.entity";
 import MemberService from '../../../../Service/User/member.service';
 import InstitutionService from "../../../../Service/Instituition/institution.service";
+import { useEffect } from "react";
+import ImageUtils from "../../../../Utils/image/image.utils";
 
 interface MemberCardInterface {
   member: Member | MembershipRequest;
@@ -76,7 +78,20 @@ const MemberCard: React.FC<MemberCardInterface> = ({
   return (
     <>
       <div className="memberCard">
-        <img className="memberPic" src={memberImg} alt="Foto do Membro da Instituição" />
+
+      {
+        member.user?.image?.url ? 
+        (
+          <img className="memberPic" src={ImageUtils.getImageByUrl(member.user?.image?.url)} alt="Foto do Membro da Instituição">
+          </img>
+        ) 
+        : 
+        (
+          <div className={"memberPic iconMember"}>
+            <IonIcon className="userUndefinedIcon" icon={person} ></IonIcon>
+          </div>
+        )
+      }
 
         <div className="memberCardInfo">
           <IonLabel className="memberName">{member.user?.name || ""}</IonLabel>

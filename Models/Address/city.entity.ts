@@ -9,7 +9,7 @@ export default class City extends BaseEntity implements selectInputItens {
   name: string | undefined;
   state: State | undefined;
 
-  addressList: Address[] = [];
+  addressList: Address[] | undefined;
 
   getDisplayName = (): string | undefined => {
     return this.name

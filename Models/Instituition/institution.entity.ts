@@ -16,7 +16,7 @@ export default class Institution extends BaseEntity {
   roleList: Role[] | undefined;
   memberList: Member[] | undefined;
   eventList: Event[] | undefined;
-  eventCategoryList: EventCategory[] = [];
+  eventCategoryList: EventCategory[] | undefined;
   address: Address | undefined;
   image: DigitalFile | undefined;
   membershipRequest: MembershipRequest[] | undefined;
