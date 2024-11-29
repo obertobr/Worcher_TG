@@ -63,6 +63,7 @@ const EventRegisterPage: React.FC<{}> = () => {
     const [urlImagem, setUrlImage] = useState<string>()
 
     const [idEvent,setIdEvent] = useState<number>()
+    const [idInstituition, setIdInstituition] = useState<number>()
     const [idAddress,setIdAddress] = useState<number | undefined>()
 
     const [isEditMode,setIsEditMode] = useState<boolean>(false)
@@ -75,15 +76,22 @@ const EventRegisterPage: React.FC<{}> = () => {
 
     const loadEventCategoryList = async () => {
         const institutionService = new InstitutionService()
-        const localStorageInstituionUtils = new LocalStorageInstituionUtils()
-        const idInstituition = localStorageInstituionUtils.getId()
+        let idInst
         let institution = new Institution()
 
-        if(idInstituition){
-            institution = await institutionService.getById(idInstituition) || new Institution()
+        if(!isEditMode){
+            const localStorageInstituionUtils = new LocalStorageInstituionUtils()
+            idInst = localStorageInstituionUtils.getId()
+        }else{
+            idInst = idInstituition
+        }
+        
+
+        if(idInst){
+            institution = await institutionService.getById(idInst) || new Institution()
         }
 
-        institution.eventCategoryList = institution.eventCategoryList.map( e => {
+        institution.eventCategoryList = institution?.eventCategoryList?.map( e => {
             const eventCategory = new EventCategory()
             eventCategory.id = e.id
             eventCategory.name = e.name
@@ -92,7 +100,8 @@ const EventRegisterPage: React.FC<{}> = () => {
             return eventCategory
         } )
 
-        setCategorys(institution.eventCategoryList)
+        if(institution.eventCategoryList)
+         setCategorys(institution.eventCategoryList)
     }
 
     useEffect(() => {
@@ -104,6 +113,10 @@ const EventRegisterPage: React.FC<{}> = () => {
     useEffect(() => {
         fillDateTime()
     }, [date, time]);
+
+    useEffect(() => {
+        loadEventCategoryList()
+    }, [idInstituition])
 
     const loadEventIfIsEditMode = () => {
         const idEventEditMode = localStorageEventEditUtils.getId()
@@ -127,6 +140,7 @@ const EventRegisterPage: React.FC<{}> = () => {
             }
 
             setIdEvent(event.id)
+            setIdInstituition(event.institution?.id)
             setIdAddress(event.address?.id)
             setDateTime(event.dateTimeOfExecution);
             setTime(event.dateTimeOfExecution)
