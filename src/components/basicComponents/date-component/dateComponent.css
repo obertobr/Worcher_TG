@@ -1,7 +1,12 @@
 .dateComponent{
     background: var(--backgroundColor);
     color: var(--primaryColorFont, #e0b3b3);
-    --ion-background-color-rgb: transparent;
+    --ion-background-color-rgb: rgba(255, 0, 0, 0);
+    --background-rgb: rgba(255, 0, 0, 0);
+}
+
+*{
+  --wheel-highlight-background: rgba(147, 143, 202, 0.22);
 }
 
 .labelInput {    
