@@ -22,3 +22,20 @@
     --background: aliceblue;
     
   }
+
+  .button-native{
+    background-color: aliceblue;
+  }
+
+  .button-native .ion-activated{
+    background-color: aliceblue;
+  }
+
+  .ion-activated .button-native::after {
+    background: red;
+    opacity: 2;
+  }
+
+*{
+  --background-activated: rgba(0, 0, 0, 0.1);
+}
