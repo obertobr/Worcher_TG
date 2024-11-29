@@ -17,9 +17,14 @@ import Address from "../../../../Models/Address/address.entity";
 import LocalStorageInstitutionUtils from "../../../../Utils/LocalStorage/local.storage.institution.utils"
 import LocalStorageLoginUtils from "../../../../Utils/LocalStorage/local.storage.login.utils";
 import InputCepComponent from "../../basicComponents/input-cep-component/input.cep.component";
+import LocalStorageInstitutionEditUtils from '../../../../Utils/LocalStorage/local.storage.institution.edit.utils';
+import ImageUtils from "../../../../Utils/image/image.utils";
+import RouterUtil from "../../../../Utils/Components/RouterUtil";
+import { useHistory } from "react-router";
 
 
 const InstitutionRegister: React.FC<{}> = () => {
+    const history = useHistory()
 
     const stateService = new StateService()
     const [states, setStates] = useState<State[]>([])
@@ -36,9 +41,16 @@ const InstitutionRegister: React.FC<{}> = () => {
     const [neighborhood, setNeighborhood] = useState<string>("")
     const [street, setStreet] = useState<string>("")
     const [number, setNumber] = useState<string>("")
-    const [cep,setCep] = useState<string>("")
+    const [cep, setCep] = useState<string>("")
     const [description, setDescription] = useState<string>("")
     const [image, setImage] = useState<File>()
+    const [urlImagem, setUrlImage] = useState<string>()
+
+    const [idEvent,setIdEvent] = useState<number>()
+    const [idAddress,setIdAddress] = useState<number | undefined>()
+
+    const [IsEditMode, setIsEditMode] = useState<boolean>(false);
+    const localStorageInstitutionEditUtils = new LocalStorageInstitutionEditUtils()
 
     const loadStates = async () => {
 
@@ -47,6 +59,7 @@ const InstitutionRegister: React.FC<{}> = () => {
 
     useEffect(() => {
         loadStates()
+        loadInstitutionIfIsEditMode()
     }, []);
 
     const stateChange = async (event: any) => {
@@ -104,18 +117,70 @@ const InstitutionRegister: React.FC<{}> = () => {
             const institution = createNewInstitution()
 
             const service = new InstitutionService()
-            const response = await service.save({institution: institution, user: {id: userId}}, image)
+            const response = await service.save({ institution: institution, user: { id: userId } }, image)
+            if (Array.isArray(response)) {
+                setMessagesErrorModal(response)
+                setShowModal(true)
+            } else {
+                const localStorageInstitutionUtils = new LocalStorageInstitutionUtils()
+
+                if (response?.id) {
+                    localStorageInstitutionUtils.setId(response.id)
+                }
+                RouterUtil.returnOfLastPage(history)
+            }
+        }
+    }
+
+    const loadInstitutionIfIsEditMode = () => {
+        const idRoleEditMode = localStorageInstitutionEditUtils.getId()
+
+        if (idRoleEditMode) {
+            setIsEditMode(true)
+            loadInstitution(idRoleEditMode)
+        }
+    }
+
+    const loadInstitution = async (idInstitution: number) => {
+        const service = new InstitutionService()
+        const institution = await service.getById(idInstitution)
+        if (institution) {
+            setIdEvent(institution.id)
+            setIdAddress(institution.address?.id)
+
+            setNameOfInstitition(institution.name || "")
+            setState(institution.address?.city?.state)
+            stateChange(institution.address?.city?.state)
+            setCity(institution.address?.city)
+            setNeighborhood(institution.address?.neighborhood || "")
+            setStreet(institution.address?.street || "")
+            setNumber(institution.address?.number || "")
+            setCep(institution.address?.cep || "")
+            setDescription(institution.description || "")
+            setUrlImage(ImageUtils.getImageByUrl(institution.image?.url))
+        }
+    }
+
+    const updateEvent = async () => {
+        if (applyRegisterValidation()) {
+            const institution = createNewInstitution()
+            institution.id = idEvent
+
+            if(institution.address){
+                institution.address.id = idAddress
+            }
+
+            const service = new InstitutionService()
+            const response = await service.update(institution, image)
+
             if(Array.isArray(response)){
                 setMessagesErrorModal(response)
                 setShowModal(true)
             }else{
-                const localStorageInstitutionUtils = new LocalStorageInstitutionUtils()
-
-                if(response?.id){
-                    localStorageInstitutionUtils.setId(response.id)
-                }
-
+                localStorageInstitutionEditUtils.setId(null)
+                RouterUtil.returnOfLastPage(history)
             }
+
         }
     }
 
@@ -128,17 +193,18 @@ const InstitutionRegister: React.FC<{}> = () => {
                 titleText={"Não foi possível realizar o registro da instituição"}
             />
 
-            <HeaderComponent type='simple' showCircleImage={false}></HeaderComponent>
+            <HeaderComponent executeBeforeArrowclicked={() => { localStorageInstitutionEditUtils.setId(null) }} type='simple' showCircleImage={false}></HeaderComponent>
 
             <div className="contentInstitutionRegister">
                 <main>
-                    <h1 className="mainTitle">Cadastro de Instituição</h1>
+                    <h1 className="mainTitle">{IsEditMode ? "Editar Instituição" : "Cadastro de Instituição"}</h1>
 
 
                     <div className="inputsSection" >
                         <TextInputComponent
                             textLabel="Nome da Instituição"
                             placeHolder="Nome da Instituição"
+                            value={nameOfInstitition}
                             onInputChange={(e) => setNameOfInstitition(e)}
                         />
 
@@ -146,6 +212,7 @@ const InstitutionRegister: React.FC<{}> = () => {
                             textLabel='Estado'
                             placeHolder='Estado'
                             itens={states}
+                            value={state?.id}
                             onInputChange={stateChange}
                         ></SelectInputComponent>
 
@@ -154,46 +221,57 @@ const InstitutionRegister: React.FC<{}> = () => {
                             textLabel='Cidade'
                             placeHolder='Cidade'
                             itens={cities}
+                            value={city?.id}
                             onInputChange={setCity}
                         ></SelectInputComponent>
 
                         <TextInputComponent
                             textLabel='Bairro'
                             placeHolder='Bairro'
+                            value={neighborhood}
                             onInputChange={(e) => setNeighborhood(e)}
                         ></TextInputComponent>
 
                         <TextInputComponent
                             textLabel='Rua'
                             placeHolder='Rua'
+                            value={street}
                             onInputChange={(e) => setStreet(e)}
                         ></TextInputComponent>
 
                         <TextInputComponent
                             textLabel='Número'
                             placeHolder='Número'
+                            value={number}
                             onInputChange={(e) => setNumber(e)}
                         ></TextInputComponent>
 
                         <InputCepComponent textLabel="CEP"
-                              placeHolder="CEP"
-                              onInputChange={(e) => setCep(e)}
+                            placeHolder="CEP"
+                            value={cep}
+                            onInputChange={(e) => setCep(e)}
                         ></InputCepComponent>
 
                         <TextAreaInputComponent
                             textLabel='Descrição'
                             placeHolder='Descrição'
+                            value={description}
                             onInputChange={(e) => setDescription(e)}
                         ></TextAreaInputComponent>
 
                         <UploadImageComponent
                             text="Imagem da Instituição"
+                            value={urlImagem}
                             onInputChange={setImage}
                         ></UploadImageComponent>
                     </div>
 
                     <div className="buttonActions">
-                        <ButtonComponent width="230px" text="Criar" onClick={register} />
+                        {IsEditMode ?
+                            <ButtonComponent width="230px" text="Salvar alterações" onClick={updateEvent} />
+                            :
+                            <ButtonComponent width="230px" text="Criar" onClick={register} />
+                        }
                     </div>
 
                 </main>

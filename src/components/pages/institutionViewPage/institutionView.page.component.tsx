@@ -20,13 +20,14 @@ import LocalStorageInstituionUtils from '../../../../Utils/LocalStorage/local.st
 import MemberService from '../../../../Service/User/member.service';
 import Member from '../../../../Models/User/member.entity';
 import FullScreenLoader from '../../basicComponents/layoutComponents/full-screen-loader/full.screen.loader.component';
+import LocalStorageInstitutionEditUtils from '../../../../Utils/LocalStorage/local.storage.institution.edit.utils';
 
 interface instituitionViewInterface {
 }
 
 const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
 }) => {
-  
+
   const history = useHistory()
   const service = new InstitutionService()
 
@@ -40,7 +41,8 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
 
   const [showModal, setShowModal] = useState(false);
   const [messagesErrorModal, setMessagesErrorModal] = useState<string[]>([])
-  
+
+  const localStorageInstitutionEditUtils = new LocalStorageInstitutionEditUtils()
   const localStorageMember = new LocalStorageMemberUtils()
   const [isMemberLocalStorage, setIsMemberLocalStorage] = useState<boolean>(!!localStorageMember.getItem());
   const [member, setMember] = useState<Member>()
@@ -53,12 +55,12 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
 
   useEffect(() => {
     loadDataInstitution()
-    if(isMemberLocalStorage){
+    if (isMemberLocalStorage) {
       loadMemberPermissions()
     }
   }, [])
 
-  useEffect( () => {
+  useEffect(() => {
     loadPermissionButton()
   }, [member])
 
@@ -71,152 +73,167 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
   }
 
   const memberHaveIdPermission = (idPermission: number) => {
-     const index = member?.role?.permission?.findIndex(e => e.id == idPermission)
-     return index != -1 && index != undefined
+    const index = member?.role?.permission?.findIndex(e => e.id == idPermission)
+    return index != -1 && index != undefined
   }
 
   const loadMemberPermissions = async () => {
     const memberService = new MemberService()
     const idMember = localStorageMember.getItem()
 
-    if(idMember){
-      await memberService.getById(idMember).then( (e) => {
+    if (idMember) {
+      await memberService.getById(idMember).then((e) => {
         setMember(e)
       })
     }
   }
 
   const loadDataInstitution = async () => {
-    if(idParsed){
+    if (idParsed) {
       const response = await service.getById(idParsed)
       setInstitution(response)
     }
   }
 
   const requestEntry = async () => {
-    if(id){
+    if (id) {
       const localStorageLogin = new LocalStorageLoginUtils()
-      
+
       const dataRequest = new requestEntryInterface()
       dataRequest.idInstitution = idParsed
       dataRequest.userId = localStorageLogin.getIdUser()
-      
+
       const response = await service.requestEntry(dataRequest)
 
-      if(Array.isArray(response)){
+      if (Array.isArray(response)) {
         setMessagesErrorModal(response)
         setShowModal(true)
-     }else{
-        RouterUtil.goToPage(history,`my-institution`)
-     }
+      } else {
+        RouterUtil.goToPage(history, `my-institution`)
+      }
     }
   }
 
-  return(
+  const editInstitution = async () => {
+    const id = await localStorageInstitution.getId()
+    if (id) {
+      localStorageInstitutionEditUtils.setId(id)
+      RouterUtil.goToPage(history, "institution-register")
+    }
+  }
+
+  return (
     <>
 
       <AlertComponent
-                    isOpen={showModal}
-                    onDidDismiss={() => setShowModal(false)}
-                    messages={messagesErrorModal} 
-                    titleText={"Não foi possível fazer a solicitação de entrada"}      
-                />
+        isOpen={showModal}
+        onDidDismiss={() => setShowModal(false)}
+        messages={messagesErrorModal}
+        titleText={"Não foi possível fazer a solicitação de entrada"}
+      />
 
 
-    <HeaderComponent showHome={isMemberLocalStorage} showArrowBack={!isMemberLocalStorage} type='complex' circleImage={instituition?.image?.url} showCircleImage={!!instituition}></HeaderComponent>
+      <HeaderComponent showHome={isMemberLocalStorage} showArrowBack={!isMemberLocalStorage} type='complex' circleImage={instituition?.image?.url} showCircleImage={!!instituition}></HeaderComponent>
       <div className="contentIntView">
-      
-      {
-        instituition ? (
-          <>
-          <main className='mainInstitutionViewPage'>
-            <div className="intViewContainer">
-              <h2 className='title center'>{instituition?.name}</h2>
-              <p className='center'>{instituition?.description}</p>
-            </div>
 
-            <div className="intViewAddressContainer">
-              <h2 className='titleSecond'>ENDEREÇO</h2>
-              <p>{"Cidade: " + instituition?.address?.city?.name + ", Bairro: " + instituition?.address?.neighborhood +
-                  ", Rua: " + instituition?.address?.street + ", N°: " + instituition?.address?.number + ", CEP: " +
-                  instituition?.address?.cep
-                }</p>
-            </div>
+        {
+          instituition ? (
+            <>
+              <main className='mainInstitutionViewPage'>
+                <div className="intViewContainer">
+                  <h2 className='title center'>{instituition?.name}</h2>
+                  <p className='center'>{instituition?.description}</p>
+                </div>
 
-            <div className='codeInst'>
-              <p>Código da instituição:</p>
-              <p>{instituition?.code}</p>
-            </div>
+                <div className="intViewAddressContainer">
+                  <h2 className='titleSecond'>ENDEREÇO</h2>
+                  <p>{"Cidade: " + instituition?.address?.city?.name + ", Bairro: " + instituition?.address?.neighborhood +
+                    ", Rua: " + instituition?.address?.street + ", N°: " + instituition?.address?.number + ", CEP: " +
+                    instituition?.address?.cep
+                  }</p>
+                </div>
 
-            {
-                isMemberLocalStorage && showButtonCriarEvento ? 
-                (
-                  <ButtonComponent width='80%' text='Criar Evento' onClick={() => RouterUtil.goToPage(history,"event-register") } />
-                ) : (<></>)
-              }
-
-              {
-                isMemberLocalStorage && showButtonGerenciarMembros ? 
-                (
-                  <ButtonComponent width='80%' text='Gerenciar Membros' onClick={() => RouterUtil.goToPage(history,"member-view") } />
-                ) : (<></>)
-              }
-
-              {
-                isMemberLocalStorage && showButtonGerenciarCategorias ? 
-                (
-                  <ButtonComponent width='80%' text='Gerenciar Categorias de Eventos' onClick={() => RouterUtil.goToPage(history,"eventcategorymanegerpage") } />
-                ) : (<></>)
-              }
-
-              {
-                isMemberLocalStorage && showButtonGerenciarCargos ? 
-                (
-                  <ButtonComponent width='80%' text='Gerenciar Cargos' onClick={() => RouterUtil.goToPage(history,"rolesmangerpage") } />
-                ) : (<></>)
-              }
-
-
-              {
-                !isMemberLocalStorage ? (
-
-                  <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => requestEntry() } />
-                )
-
-                :
-
-                (
-                  <ButtonComponent isCancel={true} width='80%' text='Sair da instituição' onClick={() => console.log("Sair") } />
-                )
-              }
+                <div className='codeInst'>
+                  <p>Código da instituição:</p>
+                  <p>{instituition?.code}</p>
+                </div>
 
                 {
-                isMemberLocalStorage && showButtonExcluirInstituicao ? 
-                (
-                  <ButtonComponent isCancel={true} width='80%' text='Excluir instituição' onClick={() => console.log("Sair") } />
-                ) : (<></>)
-              }
+                  isMemberLocalStorage && showButtonExcluirInstituicao ?
+                    (
+                      <ButtonComponent width='80%' text='Editar instituição' onClick={editInstitution} />
+                    ) : (<></>)
+                }
 
-              
+                {
+                  isMemberLocalStorage && showButtonCriarEvento ?
+                    (
+                      <ButtonComponent width='80%' text='Criar Evento' onClick={() => RouterUtil.goToPage(history, "event-register")} />
+                    ) : (<></>)
+                }
+
+                {
+                  isMemberLocalStorage && showButtonGerenciarMembros ?
+                    (
+                      <ButtonComponent width='80%' text='Gerenciar Membros' onClick={() => RouterUtil.goToPage(history, "member-view")} />
+                    ) : (<></>)
+                }
+
+                {
+                  isMemberLocalStorage && showButtonGerenciarCategorias ?
+                    (
+                      <ButtonComponent width='80%' text='Gerenciar Categorias de Eventos' onClick={() => RouterUtil.goToPage(history, "eventcategorymanegerpage")} />
+                    ) : (<></>)
+                }
+
+                {
+                  isMemberLocalStorage && showButtonGerenciarCargos ?
+                    (
+                      <ButtonComponent width='80%' text='Gerenciar Cargos' onClick={() => RouterUtil.goToPage(history, "rolesmangerpage")} />
+                    ) : (<></>)
+                }
+
+
+                {
+                  !isMemberLocalStorage ? (
+
+                    <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => requestEntry()} />
+                  )
+
+                    :
+
+                    (
+                      <ButtonComponent isCancel={true} width='80%' text='Sair da instituição' onClick={() => console.log("Sair")} />
+                    )
+                }
+
+                {
+                  isMemberLocalStorage && showButtonExcluirInstituicao ?
+                    (
+                      <ButtonComponent isCancel={true} width='80%' text='Excluir instituição' onClick={() => console.log("Sair")} />
+                    ) : (<></>)
+                }
 
 
 
-          </main>
-          </>
-        )
 
-        : 
 
-        (
-          <FullScreenLoader value={instituition} />
-        )
+              </main>
+            </>
+          )
 
-      }
+            :
+
+            (
+              <FullScreenLoader value={instituition} />
+            )
+
+        }
 
 
 
       </div>
-        <FooterComponent isWithinTheInstitution={isMemberLocalStorage}></FooterComponent>
+      <FooterComponent isWithinTheInstitution={isMemberLocalStorage}></FooterComponent>
     </>
   );
 }
