@@ -130,6 +130,7 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
 
     if(idMember){
       await memberService.delete(idMember)
+      localStorageMemberUtils.setItem(null)
       RouterUtil.goToPage(history,"my-institution")
 
     }

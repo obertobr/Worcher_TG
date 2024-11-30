@@ -60,7 +60,7 @@ const EventCard: React.FC<EventCardProps> = ({
 
     const removeMemberFromEvent = async () => {
         const idMember = localStorageMember.getItem()
-
+        console.log(idMember)
         if(idMember){
             if(id)
                 await eventService.removeMemberFromEvent(id,idMember)

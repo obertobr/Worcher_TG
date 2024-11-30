@@ -47,7 +47,7 @@ const MyEventsPage: React.FC<{}> = () => {
 
         <div className="contentEventFeed">
           {
-            eventList.map( (event,index) => {
+            eventList != null && eventList.length > 0 && eventList.map( (event,index) => {
               return (
                   <EventCard key={index}
                              id={event.id}
@@ -65,6 +65,12 @@ const MyEventsPage: React.FC<{}> = () => {
                   
               )
             })
+          }
+
+          {
+            eventList && eventList.length == 0 ? (<>
+              <p style={{color: "var(--primaryColorFont)", fontSize: "22px"}} >Você não possui eventos!</p>
+            </>) : (<></>)
           }
         </div>
       </main>
