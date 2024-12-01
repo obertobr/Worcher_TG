@@ -17,6 +17,8 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
 }) => {
 
   const history = useHistory()
+  const localStorageLogin = new LocalStorageLoginUtils()
+
 
   const [user,setUser] = useState<User | undefined>()
 
@@ -25,7 +27,6 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
   },[])
 
   const loadUser = async () =>{
-    const localStorageLogin = new LocalStorageLoginUtils()
     const userService = new UserService()
 
     const idUser = localStorageLogin.getIdUser()
@@ -45,6 +46,16 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
     RouterUtil.goToPage(history,"singup")
   }
 
+  const deleteAccount = async () => {
+    const idUser = localStorageLogin.getIdUser()
+
+    if(idUser){
+      const serviceUser = new UserService()
+      await serviceUser.delete(idUser)
+      RouterUtil.goToPage(history,"login")
+    }
+  }
+
   return(
     <>
     <HeaderComponent showArrowBack={true} showButtonChangeImage={true} type="complex"/>
@@ -62,7 +73,7 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
       </div>
 
         <ButtonComponent width="250px" text="Editar dados cadastrais" onClick={() => editarDadosCadastraisClicked() }/>
-        <ButtonComponent width="250px" text="Excluir Conta" onClick={() => {} } isCancel />
+        <ButtonComponent width="250px" text="Excluir Conta" onClick={deleteAccount} isCancel />
     </main>
     </>
   )

@@ -154,7 +154,7 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
       />
 
 
-      <HeaderComponent showHome={isMemberLocalStorage} showArrowBack={!isMemberLocalStorage} type='complex' circleImage={instituition?.image?.url} showCircleImage={!!instituition}></HeaderComponent>
+      <HeaderComponent showCircleImageIfExistsCircleImage={true} showHome={isMemberLocalStorage} showArrowBack={!isMemberLocalStorage} type='complex' circleImage={instituition?.image?.url} showCircleImage={!!instituition}></HeaderComponent>
       <div className="contentIntView">
 
         {

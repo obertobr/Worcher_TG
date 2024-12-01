@@ -129,8 +129,29 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
                     showHome ? (<IonIcon icon={homeSharp} className="home-icon" onClick={homeClicked} />) : (<></>)
                 }
 
-
                 {
+                    showCircleImageJustImageExists &&
+                   ((showCircleImageIfExistsCircleImage && !circleImage) || showCircleImage && !image) ? 
+                    (
+                        <div className={"circleImage userUndefined" + (type == 'simple' ? " circleSimple" : " circleComplex")}
+                             onClick={() => type == 'simple' ? setSidePanelVisible(true) : ""}
+                        >
+                            <IonIcon className="userUndefinedIcon" icon={person} ></IonIcon>
+
+                                {
+                                    showButtonChangeImage ? (<>
+                                        <IonIcon onClick={() => {takePicture()}} className="cameraIcon" icon={camera} ></IonIcon>
+                                    </>) : (<></>)
+                                }
+                        </div>
+                    ) :
+
+                    (
+                        <></>
+                    )
+                }
+
+{
                   showCircleImageJustImageExists &&
                   ((showCircleImageIfExistsCircleImage && circleImage) || showCircleImage && image) ? 
                         (
@@ -152,28 +173,6 @@ const HeaderComponent: React.FC<HeaderComponentPropsInterface> = ({
                         (
                             <></>
                         ) 
-                }
-
-                {
-                    showCircleImageJustImageExists &&
-                   ((showCircleImageIfExistsCircleImage && !circleImage) || showCircleImage && !image) ? 
-                    (
-                        <div className={"circleImage userUndefined" + (type == 'simple' ? " circleSimple" : " circleComplex")}
-                             onClick={() => type == 'simple' ? setSidePanelVisible(true) : ""}
-                        >
-                            <IonIcon className="userUndefinedIcon" icon={person} ></IonIcon>
-
-                                {
-                                    showButtonChangeImage ? (<>
-                                        <IonIcon onClick={() => {takePicture()}} className="cameraIcon" icon={camera} ></IonIcon>
-                                    </>) : (<></>)
-                                }
-                        </div>
-                    ) :
-
-                    (
-                        <></>
-                    )
                 }
                 
             </header>
