@@ -117,6 +117,11 @@ const SingUpPage: React.FC<{}> = () => {
     }
   }
 
+  const removeIdUserLocalStorage = () => {
+    if(isEditMode)
+      localStorageUserEditUtils.setId(null)
+  }
+
   return(
     <>
       
@@ -134,7 +139,7 @@ const SingUpPage: React.FC<{}> = () => {
         messages={messagesErrorModal} 
         titleText={ isEditMode ? "Não foi possível atualizar os dados" : "Não foi possível realizar o cadastro"}      
       />
-      <HeaderComponent showCircleImage={false}></HeaderComponent>
+      <HeaderComponent executeBeforeArrowclicked={removeIdUserLocalStorage} showCircleImage={false}></HeaderComponent>
 
       <div className="contentSingUp">
         <main>

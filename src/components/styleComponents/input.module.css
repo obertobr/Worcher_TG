@@ -42,5 +42,5 @@
     top: 50%; 
     transform: translateY(0%);
     cursor: pointer;
-    color: var(--iconColor);
+    color: var(--primaryColorFont);
 }
