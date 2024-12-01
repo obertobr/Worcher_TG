@@ -136,6 +136,13 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
     }
   }
 
+  const deleteInstitution = async () => {
+    if(instituition && instituition.id){
+      const response = await service.delete(instituition.id)
+      RouterUtil.goToPage(history,"my-institution")
+    }
+  }
+
   return (
     <>
 
@@ -224,7 +231,7 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
                 {
                   isMemberLocalStorage && showButtonExcluirInstituicao ?
                     (
-                      <ButtonComponent isCancel={true} width='80%' text='Excluir instituição' onClick={() => console.log("Sair")} />
+                      <ButtonComponent isCancel={true} width='80%' text='Excluir instituição' onClick={deleteInstitution} />
                     ) : (<></>)
                 }
 
