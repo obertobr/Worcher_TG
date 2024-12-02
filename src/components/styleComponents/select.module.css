@@ -55,11 +55,8 @@
 
 *{
     --ion-overlay-background-color: var(--backgroundColor);
-    --ion-color-step-850: var(--primaryFontColor);
+    --ion-color-step-850: var(--primaryColorFont);
     --ion-text-color-step-150: var(--fontSelect);
+    --ion-text-color: rgb(130, 130, 226);
+    --ion-item-background: var(--backgroundColor);
 }
-
-.alert-radio-label.sc-ion-alert-md {
-    color: red;
-}
-
