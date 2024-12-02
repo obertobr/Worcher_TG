@@ -20,9 +20,11 @@ const DateComponent: React.FC<DateComponentProps> = ({
 }) => {
 
   useEffect(() => {
+    value = value ? value : new Date()
     if(value){
       const date = new Date(value)
       setSelectedDate(date)
+      valueChange(date);
     }
       
   },[value])

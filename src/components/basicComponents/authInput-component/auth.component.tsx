@@ -1,6 +1,6 @@
 import { IonInput } from "@ionic/react";
-import React, { useRef, useState } from 'react';
-import './authComponent.css';
+import React, { useRef, useState } from "react";
+import "./authComponent.css";
 
 interface AuthComponentProps {
   onCodeComplete: (code: string) => void;
@@ -22,9 +22,19 @@ const AuthComponent: React.FC<AuthComponentProps> = ({ onCodeComplete }) => {
     setCode([...code]);
 
     onCodeComplete(code.join(""));
-    
+
     if (value.match(/^[0-9]$/) && index < inputRefs.current.length - 1) {
       inputRefs.current[index + 1]?.setFocus();
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLIonInputElement>) => {
+    const allowedKeys = ["Backspace", "ArrowLeft", "ArrowRight", "Tab"];
+    if (
+      !e.key.match(/^[0-9]$/) &&
+      !allowedKeys.includes(e.key)
+    ) {
+      e.preventDefault();
     }
   };
 
@@ -38,6 +48,7 @@ const AuthComponent: React.FC<AuthComponentProps> = ({ onCodeComplete }) => {
             maxlength={1}
             ref={(el) => (inputRefs.current[index] = el)}
             onIonInput={(e) => handleInputChange(e, index)}
+            onKeyDown={handleKeyDown}
             type="tel"
           />
         ))}
