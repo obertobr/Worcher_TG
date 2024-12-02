@@ -80,7 +80,7 @@ const EventCaegoryManagerPage: React.FC<{}> = () => {
 
           <div className="containerEventCategory">
             {eventCategoryList && eventCategoryList.map((eventCategory, index) => {
-              return <div className="eventCategoryCard">
+              return <div key={index} className="eventCategoryCard">
                 <p>{eventCategory.name}</p>
                 <div>
                   <button className="editButton" onClick={() => { editCategory(eventCategory.id) }}>✏️</button>

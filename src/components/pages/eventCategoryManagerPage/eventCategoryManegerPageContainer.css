@@ -18,13 +18,13 @@
     box-shadow: var(--mediumShadow);
 
     p {
-      font-size: 30px;
-      width: 60%;
+      font-size: 25px;
+      width: 65%;
     }
 
     button {
       font-size: 20px;
-      width: 45px;
+      width: 40px;
       aspect-ratio: 1/1;
       border-radius: 50%;
       margin-left: 5px;

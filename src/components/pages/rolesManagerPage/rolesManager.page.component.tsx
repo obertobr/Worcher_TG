@@ -79,7 +79,7 @@ const RolesManagerPage: React.FC<{}> = () => {
 
           <div className="containerRole">
             {roleList && roleList.map((role, index) => {
-              return <div className="roleCard">
+              return <div className="roleCard" key={index}>
                 <p>{role.name}</p>
                 {index != 0 &&
                   <div>
