@@ -14,6 +14,7 @@ const variables = {
     backgroundColorFooter: "#dee5f3",
     colorOffItem : "#858B8B",
     sidePanelBackground: "#E5EEFF",
+    fontSelect: "#000000",
 }
 
 export default variables ;

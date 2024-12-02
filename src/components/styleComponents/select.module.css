@@ -51,3 +51,15 @@
 .selectItemInput ion-select::part(text) {
     color: var(--primaryColorFont); 
 }
+
+
+*{
+    --ion-overlay-background-color: var(--backgroundColor);
+    --ion-color-step-850: var(--primaryFontColor);
+    --ion-text-color-step-150: var(--fontSelect);
+}
+
+.alert-radio-label.sc-ion-alert-md {
+    color: red;
+}
+

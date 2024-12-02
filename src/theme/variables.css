@@ -9,6 +9,8 @@ http://ionicframework.com/docs/theming/ */
     --primaryColorFont: #000000;
     --primaryColorFontTransparent: rgba(0, 0, 0, 0.6);
 
+    --fontSelect: #ffffff;
+
     /* THEME COLOR */
 
     --backgroundColor: #FFFFFF;
