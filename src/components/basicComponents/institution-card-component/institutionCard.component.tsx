@@ -54,7 +54,6 @@ const InstitutionCard: React.FC<InstitutionCardInterface> = ({
           </div>
         </div>
 
-          <ButtonComponent isCancel={true} text='Sair' width='100px' onClick={() => {console.log("Remover")} } />
       </div>
     </>
   );

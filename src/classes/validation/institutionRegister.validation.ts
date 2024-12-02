@@ -17,7 +17,7 @@ export default class InstitutionRegisterValidation extends AbstractValidation {
     }
 
     validateImage(image: File | undefined): string | null{
-        if(!image) return "O evento deve ter uma imagem!"
+        if(!image) return "A instituição deve ter uma imagem!"
         
         return null;
     }

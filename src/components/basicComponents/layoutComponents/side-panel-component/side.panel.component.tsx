@@ -6,6 +6,7 @@ import { useHistory } from "react-router";
 import { IonIcon } from "@ionic/react";
 import { person } from "ionicons/icons";
 import ImageUtils from "../../../../../Utils/image/image.utils";
+import LocalStorageInstitutionUtils from "../../../../../Utils/LocalStorage/local.storage.institution.utils";
 
 interface SidePanelProps {
   isVisible: boolean;
@@ -29,6 +30,8 @@ const SidePanelComponent: React.FC<SidePanelProps> = ({ isVisible, onClose }) =>
 
   const logOut = () => {
     localStorageLogin.setIdUser(undefined)
+    const localStorageInstituionUtils = new LocalStorageInstitutionUtils()
+    localStorageInstituionUtils.setId(null)
     RouterUtil.goToPage(history,"login")
   }
 

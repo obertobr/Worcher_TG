@@ -330,6 +330,7 @@ const EventRegisterPage: React.FC<{}> = () => {
                             value={category?.id}
                             textLabel='Categoria'
                             placeHolder='Categoria'
+                            disabled={!categorys || categorys.length == 0}
                             itens={categorys}
                             onInputChange={(e) => setCategory(e)}
                         ></SelectInputComponent>
