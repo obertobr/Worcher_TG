@@ -52,6 +52,7 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
   const [showButtonGerenciarCargos, setShowButtonGerenciarCargos] = useState<boolean>(false)
   const [showButtonGerenciarCategorias, setShowButtonGerenciarCategoria] = useState<boolean>(false)
   const [showButtonCriarEvento, setShowButtonCriarEvento] = useState<boolean>(false)
+  const [showButtonEntryRequested, setShowButtonEntryRequested] = useState<boolean>(false)
 
   useEffect(() => {
     loadDataInstitution()
@@ -92,6 +93,11 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
     if (idParsed) {
       const response = await service.getById(idParsed)
       setInstitution(response)
+
+      const localStorageLogin = new LocalStorageLoginUtils()
+      const userId = localStorageLogin.getIdUser()
+      const hasUser = response?.memberList?.some(member => member.user?.id === userId) || response?.membershipRequest?.some(member => member.user?.id === userId)
+      setShowButtonEntryRequested(hasUser || false)
     }
   }
 
@@ -128,18 +134,18 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
 
     const idMember = localStorageMemberUtils.getItem()
 
-    if(idMember){
+    if (idMember) {
       await memberService.delete(idMember)
       localStorageMemberUtils.setItem(null)
-      RouterUtil.goToPage(history,"my-institution")
+      RouterUtil.goToPage(history, "my-institution")
 
     }
   }
 
   const deleteInstitution = async () => {
-    if(instituition && instituition.id){
+    if (instituition && instituition.id) {
       const response = await service.delete(instituition.id)
-      RouterUtil.goToPage(history,"my-institution")
+      RouterUtil.goToPage(history, "my-institution")
     }
   }
 
@@ -217,8 +223,11 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
 
                 {
                   !isMemberLocalStorage ? (
-
-                    <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => requestEntry()} />
+                    showButtonEntryRequested ? (
+                      <ButtonComponent width='80%' text='Solicitação Enviada' disabled={true} onClick={() => {}} />
+                    ) : (
+                      <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => requestEntry()} />
+                    )
                   )
 
                     :
