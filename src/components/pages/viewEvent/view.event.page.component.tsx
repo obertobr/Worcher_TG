@@ -66,7 +66,11 @@ const removeMemberFromEvent = async () => {
 
     if(idMember){
         if(event?.id){
-            await eventService.removeMemberFromEvent(event?.id,idMember)
+            const response = await eventService.removeMemberFromEvent(event?.id,idMember)
+            if(Array.isArray(response)){
+                RouterUtil.returnOfLastPage(history)
+                return
+            }
             loadEvent(event?.id)
         }
     }else if(event?.id){
