@@ -40,6 +40,12 @@ const ViewEventPage: React.FC<{}> = () => {
 
   const loadEvent = async (idEvent: number) => {
     const event = await service.getById(idEvent)
+
+    if(Array.isArray(event)){
+        RouterUtil.returnOfLastPage(history)
+        return
+    }
+
     setEvent(event)
 
     const userService = new UserService()
@@ -56,7 +62,11 @@ const ViewEventPage: React.FC<{}> = () => {
     const idMember = localStorageMember.getItem()
 
     if(idMember && event?.id){
-        await eventService.addMemberToEvent(event?.id,idMember)
+        const response = await eventService.addMemberToEvent(event?.id,idMember)
+        if(Array.isArray(response)){
+            RouterUtil.returnOfLastPage(history)
+            return
+        }
         loadEvent(event?.id)
     }
 }
