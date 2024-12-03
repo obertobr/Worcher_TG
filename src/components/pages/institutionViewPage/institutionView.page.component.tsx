@@ -146,6 +146,8 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
   const deleteInstitution = async () => {
     if (instituition && instituition.id) {
       const response = await service.delete(instituition.id)
+      const localStorageMemberUtils = new LocalStorageMemberUtils()
+      localStorageMemberUtils.setItem(null)
       RouterUtil.goToPage(history, "my-institution")
     }
   }

@@ -9,6 +9,7 @@ import UserService from "../../../../Service/User/user.service"
 import LocalStorageUserEditUtils from "../../../../Utils/LocalStorage/local.storage.user.edit.utils"
 import RouterUtil from "../../../../Utils/Components/RouterUtil"
 import { useHistory } from "react-router"
+import LocalStorageMemberUtils from "../../../../Utils/LocalStorage/local.storage.member.utils"
 
 interface ProfilePageInterface {
 }
@@ -52,6 +53,8 @@ const ProfilePage: React.FC<ProfilePageInterface> = ({
     if(idUser){
       const serviceUser = new UserService()
       await serviceUser.delete(idUser)
+      const localStorageMemberUtils = new LocalStorageMemberUtils()
+      localStorageMemberUtils.setItem(null)
       RouterUtil.goToPage(history,"login")
     }
   }
