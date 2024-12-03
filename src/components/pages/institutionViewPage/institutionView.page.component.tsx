@@ -53,6 +53,7 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
   const [showButtonGerenciarCategorias, setShowButtonGerenciarCategoria] = useState<boolean>(false)
   const [showButtonCriarEvento, setShowButtonCriarEvento] = useState<boolean>(false)
   const [showButtonEntryRequested, setShowButtonEntryRequested] = useState<boolean>(false)
+  const [showButtonPartOfOnstitution, setShowButtonPartOfOnstitution] = useState<boolean>(false)
 
   useEffect(() => {
     loadDataInstitution()
@@ -96,8 +97,8 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
 
       const localStorageLogin = new LocalStorageLoginUtils()
       const userId = localStorageLogin.getIdUser()
-      const hasUser = response?.memberList?.some(member => member.user?.id === userId) || response?.membershipRequest?.some(member => member.user?.id === userId)
-      setShowButtonEntryRequested(hasUser || false)
+      setShowButtonPartOfOnstitution(response?.memberList?.some(member => member.user?.id === userId) || false)
+      setShowButtonEntryRequested(response?.membershipRequest?.some(member => member.user?.id === userId) || false)
     }
   }
 
@@ -224,7 +225,9 @@ const InstituitionViewPage: React.FC<instituitionViewInterface> = ({
                 {
                   !isMemberLocalStorage ? (
                     showButtonEntryRequested ? (
-                      <ButtonComponent width='80%' text='Solicitação Enviada' disabled={true} onClick={() => {}} />
+                      <ButtonComponent width='80%' text='Solicitação Enviada' disabled={true} onClick={() => { }} />
+                    ) : showButtonPartOfOnstitution ? (
+                      <ButtonComponent width='80%' text='Você é membro desta instituição' disabled={true} onClick={() => { }} />
                     ) : (
                       <ButtonComponent width='80%' text='Solicitar Entrada' onClick={() => requestEntry()} />
                     )
