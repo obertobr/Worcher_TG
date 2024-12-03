@@ -27,24 +27,24 @@ const LoginPage: React.FC<{}> = () => {
     // VALUES
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [rememberData,setRememberData] = useState<boolean>(localStorageLoginUtils.getRememberData())
+    const [rememberData, setRememberData] = useState<boolean>(localStorageLoginUtils.getRememberData())
 
     useEffect(() => {
-        if(rememberData){
-           const account = localStorageLoginUtils.getAccount()
+        if (rememberData) {
+            const account = localStorageLoginUtils.getAccount()
 
-           if(account){
+            if (account) {
                 setEmail(account.email ? account.email : "")
                 setPassword(account.password ? account.password : "")
-           }
+            }
         }
-    },[])
+    }, [])
 
     const applyLoginValidation = () => {
         const loginValidation = new LoginValidation()
-        loginValidation.validate(email,password)
+        loginValidation.validate(email, password)
 
-        if(loginValidation.hasErrors()){
+        if (loginValidation.hasErrors()) {
             setMessagesErrorModal(loginValidation.errors)
             setShowModal(true)
 
@@ -55,14 +55,14 @@ const LoginPage: React.FC<{}> = () => {
     }
 
     const login = async () => {
-        if(applyLoginValidation()){
+        if (applyLoginValidation()) {
             const userService = new UserService()
-            const response = await userService.login(email,password)
+            const response = await userService.login(email, password)
 
-            if(Array.isArray(response)){
+            if (Array.isArray(response)) {
                 setMessagesErrorModal(response)
                 setShowModal(true)
-            }else{
+            } else {
                 executeAfterLogin(response)
             }
         }
@@ -71,44 +71,43 @@ const LoginPage: React.FC<{}> = () => {
     const executeAfterLogin = (user: User | null) => {
         localStorageLoginUtils.setRememberData(rememberData)
 
-        if(rememberData){
-            const account = new Account()
-            account.email = email
-            account.password = password
+        const account = new Account()
+        account.email = email
+        account.password = password
 
-            account.user = new User()
-            account.user.id = user?.id
-            account.user.name = user?.name
-            account.user.cpf = user?.cpf
-            account.user.dateOfBirth = user?.dateOfBirth
-            account.user.image = user?.image
+        account.user = new User()
+        account.user.id = user?.id
+        account.user.name = user?.name
+        account.user.cpf = user?.cpf
+        account.user.dateOfBirth = user?.dateOfBirth
+        account.user.image = user?.image
 
-            localStorageLoginUtils.setAccount(account)
+        localStorageLoginUtils.setAccount(account)
 
-            if(user && user.config){
-                localStorageLoginUtils.setConfig(user.config)
-            }
+        if (user && user.config) {
+            localStorageLoginUtils.setConfig(user.config)
         }
+
 
         console.log(user)
         localStorageLoginUtils.setIdUser(user?.id ? user.id : undefined)
-        
-        RouterUtil.goToPage(history,"my-institution")
+
+        RouterUtil.goToPage(history, "my-institution")
     }
-    
+
     return (
         <>
             <AlertComponent
                 isOpen={showModal}
                 onDidDismiss={() => setShowModal(false)}
-                messages={messagesErrorModal} 
-                titleText={"Não foi possível realizar o login"}      
+                messages={messagesErrorModal}
+                titleText={"Não foi possível realizar o login"}
             />
 
             <div className="contentLogin">
                 <header>
                     <div className="squareBackground">
-                        
+
                     </div>
 
                     <div className="logo">
@@ -122,33 +121,33 @@ const LoginPage: React.FC<{}> = () => {
                     </h1>
 
 
-                <div className="inputsSection" >
-                    <TextInputComponent
-                              value={email}
-                              textLabel='Email'
-                              placeHolder='Digite seu email...'
-                              onInputChange={(e) => setEmail(e)}
-                    ></TextInputComponent>
+                    <div className="inputsSection" >
+                        <TextInputComponent
+                            value={email}
+                            textLabel='Email'
+                            placeHolder='Digite seu email...'
+                            onInputChange={(e) => setEmail(e)}
+                        ></TextInputComponent>
 
-                    <TextInputComponent 
+                        <TextInputComponent
                             value={password}
-                              textLabel='Senha'
-                              typeInput='password'
-                              placeHolder='Digite sua senha...'
-                              onInputChange={(e) => setPassword(e)}
-                    ></TextInputComponent>
-                </div>
-
-                    <div className="actionsSenha">
-                        <CheckBoxComponent value={rememberData} textCheckBox="Lembrar dados" changeValue={(e: boolean) => {setRememberData(e)}}  />
-
-                        <LinkTextComponent text="Esqueceu a senha?" onClick={() => {RouterUtil.goToPage(history, "rememberPassword")} } />
+                            textLabel='Senha'
+                            typeInput='password'
+                            placeHolder='Digite sua senha...'
+                            onInputChange={(e) => setPassword(e)}
+                        ></TextInputComponent>
                     </div>
 
-                <div className="buttonActions">
-                    <ButtonComponent width="230px" text="Entrar" onClick={login} />
-                    <LinkTextComponent text="Novo Cadastro? Crie sua conta aqui." onClick={() => {RouterUtil.goToPage(history, "singup")} } />
-                </div>
+                    <div className="actionsSenha">
+                        <CheckBoxComponent value={rememberData} textCheckBox="Lembrar dados" changeValue={(e: boolean) => { setRememberData(e) }} />
+
+                        <LinkTextComponent text="Esqueceu a senha?" onClick={() => { RouterUtil.goToPage(history, "rememberPassword") }} />
+                    </div>
+
+                    <div className="buttonActions">
+                        <ButtonComponent width="230px" text="Entrar" onClick={login} />
+                        <LinkTextComponent text="Novo Cadastro? Crie sua conta aqui." onClick={() => { RouterUtil.goToPage(history, "singup") }} />
+                    </div>
 
                 </main>
 
